@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+	<div class="12u">
+			<section>
+				<div>
+					<div class="row">
+						<div class="12u skel-cell-mainContent">
+							<!-- Content -->
+								<article class="box is-post">
+									{% if article.picture is defined %}
+									<div class="image image-full"><img src="{{ SITEURL }}/{{ article.picture }}"/><a href="{{ article.picturecopyrights }}" class="img-copy">{{ article.picturecopyrights }}</a></div>
+									{% endif %}
+									<div class="post-infos">
+										<ul class="tags">
+											{% if article.category %}
+											<li><a class="button" href="{{ article.category.url }}">{{ article.category|capitalize }}</a></li>
+											{% endif %}
+											{% for tag in article.tags %}
+												<li><a class="button button-alt" href="{{ tag.url }}">{{ tag|capitalize }}</a></li>
+
+											{% endfor %}
+										</ul>
+									</div>
+
+									<div class="pennant pennant-alt date">{{ article.date|strftime('%Y-%m-%d') }}</div>
+									<h2>{{ article.title }}</h2>
+									{{ article.content }}
+								</article>
+								{% include 'disqus_script.html' %}
+						</div>
+					</div>
+				</div>
+			</section>
+	</div>
+</div>
+{% endblock %}
