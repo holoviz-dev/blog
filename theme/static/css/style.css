@@ -782,10 +782,6 @@ img.logo {
   height: 128px;
 }
 
-div.inner_cell {
-  font-size: 1.2em;
-}
-
 .inner_cell ul {
   list-style: circle;
   margin-left: 1em;

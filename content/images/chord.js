@@ -1,7 +1,6 @@
 
 // Ugly hack - see #2574 for more information
 if (!(document.getElementById('17602564-0583-4f43-a940-e09afb657012')) && !(document.getElementById('_anim_imgNone'))) {
-  console.log("Creating DOM nodes dynamically for assumed nbconvert export. To generate clean HTML output set HV_DOC_HTML as an environment variable.")
   var htmlObject = document.createElement('div');
   htmlObject.innerHTML = `<div id='17602564-0583-4f43-a940-e09afb657012' style='display: table; margin: 0 auto;'>
 <div class="bk-root">
