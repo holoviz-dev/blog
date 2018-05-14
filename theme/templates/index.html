@@ -9,13 +9,14 @@
             {% endif %}
                 <div class="4u">
                     <section class="box">
-                        {% if article.picture is defined %}
-                        <a href="{{ SITEURL }}/{{ article.url }}" class="image image-full"><img src="{{ SITEURL }}/{{ article.picture }}" alt=""/></a>
-                        {% endif %}
                         <header>
                             <h3>{{article.title }}</h3>
                             <span class="byline">{{ article.date }}</span>
                         </header>
+                        {% if article.picture is defined %}
+						<br>
+                        <a href="{{ SITEURL }}/{{ article.url }}" class="image image-full"><img src="{{ SITEURL }}/{{ article.picture }}" alt=""/></a>
+                        {% endif %}
                         {{ article.summary }}
                         <footer class="actions">
                             <a href="{{ SITEURL }}/{{ article.url }}" class="button button-icon button-icon-1">Continue Reading</a>

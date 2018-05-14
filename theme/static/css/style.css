@@ -274,11 +274,12 @@
 			display: inline-block;
 			outline: 0;
 		}
-		
+
 			.image img
 			{
 				display: block;
-				width: 100%;
+				width: 85%;
+				margin: auto;
 			}
 
 		.image-centered
