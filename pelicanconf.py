@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'PyViz Developers'
-SITENAME = 'HoloViews Blog'
+SITENAME = 'PyViz Blog'
 SITEURL = 'http://blog.holoviews.org'
 
 PATH = 'content'
