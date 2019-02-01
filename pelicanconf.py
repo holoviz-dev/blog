@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'PyViz Developers'
 SITENAME = 'PyViz Blog'
-SITEURL = 'http://blog.holoviews.org'
+SITEURL = 'http://blog.pyviz.org'
 
 PATH = 'content'
 
@@ -23,8 +23,8 @@ LINKS = (('HoloViews.org', 'https://holoviews.org/'),
          ('GeoViews.org', 'https://geoviews.org/'),
          ('PyViz.org', 'http://pyviz.org/'),)
 
-GITHUB_ORG = 'ioam'
-GITHUB_REPO = 'holoviews'
+GITHUB_ORG = 'pyviz'
+GITHUB_REPO = 'blog'
 TWITTER_USER = 'HoloViews'
 
 DEFAULT_PAGINATION = 10
