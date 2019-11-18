@@ -343,3 +343,9 @@
 article h2 {
 	clear:right;
 }
+
+
+div.prompt {
+  visibility: hidden;
+  width: 0px;	
+}

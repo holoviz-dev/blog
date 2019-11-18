@@ -475,3 +475,9 @@ pre {
 	font-family: Inconsolata, Monaco, monospace;
 	padding: 1em;
 }
+
+
+div.prompt {
+  visibility: hidden;
+  width: 0px;	
+}
