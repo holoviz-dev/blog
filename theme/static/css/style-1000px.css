@@ -137,3 +137,9 @@
 	{
 		margin: 0;
 	}
+
+
+div.prompt {
+  visibility: hidden;
+  width: 0px;	
+}

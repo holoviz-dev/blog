@@ -779,7 +779,7 @@ article em {
 }
 
 img.logo {
-  width: 136px;
+  width: 155px;
   height: 155px;
 }
 
@@ -842,4 +842,11 @@ dl.dl-horizontal {
 
 div.prompt {
   visibility: hidden;
+  min-width: 0px;
+  width: 0px;
+  padding: 0px;
+}
+
+div.input_area {
+  margin-left: 5px
 }

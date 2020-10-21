@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = 'PyViz Developers'
-SITENAME = 'PyViz Blog'
-SITEURL = 'http://blog.pyviz.org'
+AUTHOR = 'HoloViz Developers'
+SITENAME = 'HoloViz Blog'
+SITEURL = 'http://blog.holoviz.org'
 
 PATH = 'content'
 
