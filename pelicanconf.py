@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'HoloViz Developers'
 SITENAME = 'HoloViz Blog'
-SITEURL = 'http://blog.holoviz.org'
+SITEURL = 'https://blog.holoviz.org'
 
 PATH = 'content'
 
@@ -46,6 +46,5 @@ THEME = 'theme'
 LOGO = 'images/logo.png'
 
 IPYNB_USE_META_SUMMARY = True
-IPYNB_EXPORT_TEMPLATE = "templates/hide_code.tpl"
 
 READERS = {"html": None}
