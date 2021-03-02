@@ -20,10 +20,11 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 LINKS = (('HoloViews.org', 'https://holoviews.org/'),
+         ('Panel.holoviz.org', 'https://panel.holoviz.org/'),
          ('GeoViews.org', 'https://geoviews.org/'),
          ('PyViz.org', 'http://pyviz.org/'),)
 
-GITHUB_ORG = 'pyviz'
+GITHUB_ORG = 'holoviz'
 GITHUB_REPO = 'blog'
 TWITTER_USER = 'HoloViews'
 
@@ -45,5 +46,6 @@ THEME = 'theme'
 LOGO = 'images/logo.png'
 
 IPYNB_USE_META_SUMMARY = True
+IPYNB_EXPORT_TEMPLATE = "templates/hide_code.tpl"
 
 READERS = {"html": None}
