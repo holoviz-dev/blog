@@ -30,3 +30,7 @@ jQuery(function() {
 		detach: false
 	});
 });
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    window.dispatchEvent(new Event('resize'));
+});
