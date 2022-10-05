@@ -97,7 +97,7 @@
 	
 	p, ul, ol, dl, table
 	{
-		margin-bottom: 2em;
+		margin-bottom: 1em;
 	}
 	
 	section,
@@ -789,9 +789,13 @@ img.logo {
 }
 
 .inner_cell code {
-  font-style: italic;
+  padding: 2px;
+  font-family: monospace;
 }
 
+.inner-cell {
+  line-height: 1.8em;
+}
 
 /* CSS for pandas tables (dataframes) */
 
@@ -849,4 +853,13 @@ div.prompt {
 
 div.input_area {
   margin-left: 5px
+}
+
+.cell {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1em;
+}
+
+.highlight pre {
+  font-family: monospace;
 }
