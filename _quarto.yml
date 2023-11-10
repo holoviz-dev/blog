@@ -31,7 +31,7 @@ website:
 format:
   html:
     theme: materia
-    css: styles.css
+    # css: styles.css
     # code-fold: true
     code-copy: true
     max-width: 1200px
