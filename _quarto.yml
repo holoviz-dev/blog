@@ -40,4 +40,4 @@ format:
     toc: true
     grid:
       body-width: 1100px
-highlight-style: github
+    highlight-style: tango
