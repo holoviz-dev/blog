@@ -15,7 +15,7 @@ website:
   # site-url required for the RSS feed
   site-url: "https://blog.holoviz.org"
   navbar:
-    background: primary
+    background: light
     logo: holoviz-logo-unstacked.svg
     # left:
     #   - text: HoloViz
@@ -32,7 +32,7 @@ website:
   page-footer: "© Copyright 2023 Holoviz contributors"
 format:
   html:
-    theme: materia
+    theme: default
     # css: styles.css
     # code-fold: true
     code-copy: true
