@@ -1,8 +1,5 @@
 .ipynb_checkpoints
 
-# Temporary ignore the output of pelican
-output/
-
 # quarto built docs
 /.quarto/
 /builtdocs

@@ -1,7 +1,6 @@
 project:
   type: website
   render:
-    - "!content"
     - "*.qmd"
     - "*.md"
     - "*.ipynb"
