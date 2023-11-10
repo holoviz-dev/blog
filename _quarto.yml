@@ -11,10 +11,11 @@ project:
     - "*.png"
 
 website:
-  # title: "Blog"
+  title: "Holoviz Blog"
   # site-url required for the RSS feed
   site-url: "https://blog.holoviz.org"
   navbar:
+    title: false
     background: light
     logo: holoviz-logo-unstacked.svg
     # left:
