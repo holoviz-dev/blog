@@ -8,6 +8,7 @@ project:
   output-dir: builtdocs
   resources: 
     - "*.mp4"
+    - "*.png"
 
 website:
   # title: "Blog"
