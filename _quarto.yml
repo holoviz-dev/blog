@@ -37,6 +37,7 @@ format:
     # css: styles.css
     # code-fold: true
     code-copy: true
-    max-width: 1200px
     toc: true
+    grid:
+      body-width: 1100px
 highlight-style: github
