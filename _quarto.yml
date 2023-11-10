@@ -3,6 +3,7 @@ project:
   render:
     - "!content"
     - "*.qmd"
+    - "*.md"
     - "*.ipynb"
   output-dir: builtdocs
   resources: 
