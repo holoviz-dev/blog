@@ -2,6 +2,7 @@ project:
   type: website
   render:
     - "*.qmd"
+    - "posts/**/*.*"
     - "!*.ipynb"
   output-dir: builtdocs
 
