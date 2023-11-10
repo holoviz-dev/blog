@@ -8,7 +8,7 @@ author:
 categories: [scipy]
 image: "images/pyviz_graph.png"
 aliases:
-  - pyviz-scipy-bof-2019.html
+  - ../../pyviz-scipy-bof-2019.html
 ---
 
 
