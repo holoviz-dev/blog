@@ -8,7 +8,7 @@ listing:
   categories: true
   # RSS feed
   # TODO: customize the feed more https://quarto.org/docs/websites/website-listings.html#feeds
-  feed: true
+  # feed: true
   sort-ui: false
   filter-ui: false
 page-layout: full
