@@ -1,0 +1,36 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "!*.ipynb"
+  output-dir: builtdocs
+
+website:
+  # title: "Blog"
+  # site-url required for the RSS feed
+  site-url: "https://blog.holoviz.org"
+  navbar:
+    background: primary
+    logo: holoviz-logo-unstacked.svg
+    # left:
+    #   - text: HoloViz
+    #     href: https://holoviz.org
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/holoviz
+      - icon: twitter
+        href: https://twitter.com/holoviz_org
+  page-navigation: true
+  back-to-top-navigation: true
+  favicon: favicon.ico
+  page-footer: "© Copyright 2023 Holoviz contributors"
+format:
+  html:
+    theme: materia
+    css: styles.css
+    # code-fold: true
+    code-copy: true
+    max-width: 1200px
+    toc: true
+highlight-style: github
