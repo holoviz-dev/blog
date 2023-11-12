@@ -6,6 +6,9 @@ listing:
   sort-ui: false
   filter-ui: false
   # RSS feed
-  feed: true
+  # Come back to it when https://github.com/quarto-dev/quarto-cli/issues/7290 is resolved
+  feed:
+    items: 10
+    type: partial
 page-layout: full
 ---
