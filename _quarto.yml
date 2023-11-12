@@ -4,13 +4,14 @@ project:
     - "*.qmd"
     - "*.md"
     - "*.ipynb"
+    - "!posts/template"
   output-dir: builtdocs
   resources: 
     - "*.mp4"
     - "*.png"
 
 website:
-  title: "Holoviz Blog"
+  title: "HoloViz Blog"
   # site-url required for the RSS feed
   site-url: "https://blog.holoviz.org"
   navbar:
