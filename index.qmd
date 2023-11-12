@@ -1,16 +1,11 @@
 ---
-# title: "HoloViz blog"
 listing:
   contents: posts
   sort: "date desc"
-  # type: default
-  type: grid
   categories: true
-  # RSS feed
-  # TODO: customize the feed more https://quarto.org/docs/websites/website-listings.html#feeds
-  # feed: true
   sort-ui: false
   filter-ui: false
+  # RSS feed
+  feed: true
 page-layout: full
-title-block-banner: true
 ---

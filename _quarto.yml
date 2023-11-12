@@ -12,8 +12,9 @@ project:
 
 website:
   title: "HoloViz Blog"
-  # site-url required for the RSS feed
+  # site-url and description required for the RSS feed
   site-url: "https://blog.holoviz.org"
+  description: "The HoloViz Blog"
   navbar:
     title: false
     background: "#FFFFFF"
