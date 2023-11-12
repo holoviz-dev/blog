@@ -59,6 +59,9 @@ website:
   back-to-top-navigation: true
   favicon: favicon.ico
   page-footer: "© Copyright 2023 Holoviz contributors"
+  twitter-card:
+    site: "@HoloViz_org"
+  open-graph: true
 format:
   html:
     theme: cosmo
