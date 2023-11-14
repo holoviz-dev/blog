@@ -1,0 +1,56 @@
+name: docs
+on:
+  # To build the dev site on every PR targetting main
+  pull_request:
+    branches:
+      - "main"
+  # To build the main site when pushing to main
+  push:
+    branches:
+      - "main"
+  # To build the docs on demand
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Site to build and deploy'
+        type: choice
+        options:
+        - dev
+        - main
+        - dryrun
+        required: true
+        default: dryrun
+  # Weekly dry runs
+  schedule:
+    - cron: '0 19 * * SUN'
+
+jobs:
+  build_docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+      - name: build docs
+        run: quarto render
+      - name: Deploy dev
+        if: |
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'dev') ||
+          (github.event_name == 'pull_request')
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.ACCESS_TOKEN }}
+          external_repository: holoviz-dev/blog-dev
+          publish_dir: ./builtdocs
+          force_orphan: true
+      - name: Deploy main
+        if: |
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'main') ||
+          (github.event_name == 'push')
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./builtdocs
+          cname: blog.holoviz.org
+          force_orphan: true

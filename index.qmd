@@ -1,0 +1,14 @@
+---
+listing:
+  contents: posts
+  sort: "date desc"
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  # RSS feed
+  # Come back to it when https://github.com/quarto-dev/quarto-cli/issues/7290 is resolved
+  feed:
+    items: 10
+    type: partial
+page-layout: full
+---

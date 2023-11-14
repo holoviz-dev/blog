@@ -1,28 +1,5 @@
-/doc/test_data
-*.py[cod]
-#*#
-*~
-*.egg
-*.egg-info
-*.swp
-*.DS_Store
-*.so
-*.o
-*.out
-*.lock
-/doc/Tutorials/*.rst
-/doc/Tutorials/example*.svg
-/doc/Tutorials/example*.gif
-/doc/_build
-/doc/Reference_Manual/*
-!/doc/Reference_Manual/index.rst
 .ipynb_checkpoints
-.coverage
 
-/release
-/doc/Tutorials-WIP/*.ipynb
-.idea
-holoviews.rc
-/examples/assets/
-ghostdriver.log
-holoviews/.version
+# quarto built docs
+/.quarto/
+/builtdocs

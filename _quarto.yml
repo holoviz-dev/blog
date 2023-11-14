@@ -1,0 +1,73 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "*.md"
+    - "*.ipynb"
+    - "!posts/template"
+  output-dir: builtdocs
+  resources: 
+    - "*.mp4"
+    - "*.png"
+
+website:
+  title: "HoloViz Blog"
+  # site-url and description required for the RSS feed
+  site-url: "https://blog.holoviz.org"
+  description: "The HoloViz Blog"
+  navbar:
+    title: false
+    background: "#FFFFFF"
+    logo: holoviz-logo-unstacked.svg
+    logo-href: https://holoviz.org
+    logo-alt: "HoloViz logo."
+    left:
+      - text: "Background"
+        href: https://holoviz.org/background.html
+      - text: "Installation"
+        href: https://holoviz.org/installation.html
+      - text: "Tutorial"
+        href: https://holoviz.org/tutorial/index.html
+      - text: "Blog"
+        file: index.qmd
+      - text: "Contributing"
+        href: https://holoviz.org/contributing.html
+      - text: "Roadmap"
+        href: https://holoviz.org/Roadmap.html
+      - text: "FAQ"
+        href: https://holoviz.org/FAQ.html
+      - text: "About"
+        href: https://holoviz.org/about.html
+      - text: "Community"
+        href: https://holoviz.org/FAQ.html
+    tools:
+      - icon: github
+        href: https://github.com/holoviz
+        text: HoloViz Github
+      - icon: twitter
+        href: https://twitter.com/holoviz_org
+        text: HoloViz Twitter
+      - icon: chat-text
+        href: https://discourse.holoviz.org
+        text: HoloViz Forum
+      - icon: discord
+        href: https://discord.gg/UXdtYyGVQX
+        text: HoloViz Discord
+  repo-url: https://github.com/holoviz-dev/blog
+  repo-actions: [edit, issue]
+  page-navigation: true
+  back-to-top-navigation: true
+  favicon: favicon.ico
+  page-footer: "© Copyright 2023 Holoviz contributors"
+  twitter-card:
+    site: "@HoloViz_org"
+  open-graph: true
+format:
+  html:
+    theme: cosmo
+    css: custom.css
+    code-copy: true
+    toc: true
+    grid:
+      body-width: 900px
+    highlight-style: tango
