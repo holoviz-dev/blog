@@ -30,13 +30,13 @@ The migration all happened in [this PR](https://github.com/holoviz-dev/blog/pull
 
 - We had to convert the `<post>.ipynb-meta` sidecar files used by the `pelican-jupyter` files to the special header Quarto needs at the beginning of every document.
 - In the notebooks themselves we had very little changes to make, except to handle nested and indented raw HTML included in Markdown cells that wasn't displayed as HTML by Quarto but partially wrapped in a `<code>` HTML element, removing the indentation fixed that (wrapping it in `:::{=html} <... :::` would also have worked).
-- Since we had to move all the posts to the `/posts` directory, the links to our old blog posts changed. We set up redirect links using the `alisases` document option to preserve these old links.
+- Since we had to move all the posts to the `/posts` directory, the links to our old blog posts changed. We set up redirect links using the `aliases` document option to preserve these old links.
 - For a change compared to our old blog we went for the *default* listing layout instead of *grid*.
 - We customised a little the styling to attempt to align it with the styling of other HoloViz websites.
 
 ![Quarto version of the blog](./images/new_site.png)
 
-While the migration went well and was pretty quick to complete, we listed [a few issues](https://github.com/holoviz-dev/blog/issues/34) that we might fix in future iterations. However we're not too surprised by experiencing some problems, our blog posts often contain a lot of complex HMTL and Javascript bits that aren't necessarily easy to handle.
+While the migration went well and was pretty quick to complete, we listed [a few issues](https://github.com/holoviz-dev/blog/issues/34) that we might fix in future iterations. However we're not too surprised by experiencing some problems, our blog posts often contain a lot of complex HTML and Javascript bits that aren't necessarily easy to handle. We welcome contributions!
 
 ## Easier contribution
 
