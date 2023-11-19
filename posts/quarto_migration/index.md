@@ -1,6 +1,6 @@
 ---
 title: "Reviving the blog with Quarto"
-date: "2023-11-14"
+date: "2023-11-19"
 description: "Announcing the migration of our blog to Quarto."
 author: Maxime Liquet
 categories: [announcement]
