@@ -71,3 +71,7 @@ format:
     grid:
       body-width: 900px
     highlight-style: tango
+    include-in-header: 
+      - text: |
+          <script data-goatcounter="https://hv-blog.goatcounter.com/count" 
+          async src="//gc.zgo.at/count.js"></script>
