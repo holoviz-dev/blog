@@ -6,7 +6,7 @@ author:
   - Andrew Huang
   - Philipp Rudiger
   - Sophia Yang
-categories: [showcase, panel]
+categories: [showcase, panel, ai, llm, chatbot]
 image: "images/chatbot.png"
 ---
 
