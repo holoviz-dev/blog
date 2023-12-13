@@ -1,7 +1,7 @@
 ---
 title: "Build a Mixtral Chatbot with Panel"
 date: "2023-12-12"
-description: "With Transformers and llama.cpp"
+description: "With Mistral API, Transformers, and llama.cpp"
 author:
   - Andrew Huang
   - Philipp Rudiger
@@ -10,7 +10,7 @@ categories: [showcase, panel, ai, llm, chatbot]
 image: "images/chatbot.png"
 ---
 
-Mistral AI just announced the Mixtral 8x7B and the Mixtral 8x7B Instruct models. These models have shown really amazing performance, outperforming Llama 2 and GPT 3.5 in many benchmarks. They've quickly became the most popular open weights models in the AI world. In this blog post, we will walk you through how to build AI chatbots with the Mixtral 8x7B Instruct model using the Panel chat interface. We will cover two methods: 
+Mistral AI just announced the Mixtral 8x7B and the Mixtral 8x7B Instruct models. These models have shown really amazing performance, outperforming Llama 2 and GPT 3.5 in many benchmarks. They've quickly became the most popular open weights models in the AI world. In this blog post, we will walk you through how to build AI chatbots with the Mixtral 8x7B Instruct model using the Panel chat interface. We will cover three methods: 
 
 - Method 1: Run Mixtral with Mistral API (fastest)
 - Method 2: Run Mixtral with transformers (A100 required)
