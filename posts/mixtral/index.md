@@ -21,7 +21,7 @@ Mistral AI just announced the Mixtral 8x7B and the Mixtral 8x7B Instruct models.
 
 We just got access to the Mistral API, so we have to give it a try! 
 
-Let's first generated a Mistral API from [https://console.mistral.ai/users/api-keys/](https://console.mistral.ai/users/api-keys/). 
+Let's first generate a Mistral API from [https://console.mistral.ai/users/api-keys/](https://console.mistral.ai/users/api-keys/). 
 
 <img src="./images/mistral_api.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
 
