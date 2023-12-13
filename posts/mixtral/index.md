@@ -123,7 +123,7 @@ To launch a server using CLI and interact with this app, simply run `panel serve
 
 # Method 2: Run Mixtral with transformers (GPU required)
 
-The first method is to use the latest Transformers from HuggingFace. We adapted the code from this blog post: [https://huggingface.co/blog/mixtral](https://huggingface.co/blog/mixtral). 
+The second method is to use the latest Transformers from HuggingFace. We adapted the code from this blog post: [https://huggingface.co/blog/mixtral](https://huggingface.co/blog/mixtral). 
 
 The following code: 
 
