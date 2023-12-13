@@ -13,7 +13,7 @@ image: "images/chatbot.png"
 Mistral AI just announced the Mixtral 8x7B and the Mixtral 8x7B Instruct models. These models have shown really amazing performance, outperforming Llama 2 and GPT 3.5 in many benchmarks. They've quickly became the most popular open weights models in the AI world. In this blog post, we will walk you through how to build AI chatbots with the Mixtral 8x7B Instruct model using the Panel chat interface. We will cover three methods: 
 
 - Method 1: Run Mixtral with Mistral API (fastest)
-- Method 2: Run Mixtral with transformers (A100 required)
+- Method 2: Run Mixtral with transformers (GPU required)
 - Method 3: Run Mixtral with llama.cpp (can run on Macbook)
 
 
@@ -121,7 +121,7 @@ To launch a server using CLI and interact with this app, simply run `panel serve
 
 <img src="./images/mistral_api.gif" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
 
-# Method 2: Run Mixtral with transformers (A100 required)
+# Method 2: Run Mixtral with transformers (GPU required)
 
 The first method is to use the latest Transformers from HuggingFace. We adapted the code from this blog post: [https://huggingface.co/blog/mixtral](https://huggingface.co/blog/mixtral). 
 
