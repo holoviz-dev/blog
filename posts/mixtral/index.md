@@ -117,6 +117,8 @@ chat_interface.send(
 chat_interface.servable()
 ```
 
+To launch a server using CLI and interact with this app, simply run `panel serve app.py` and you can interact with the model:
+
 <img src="./images/mistral_api.gif" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
 
 # Method 2: Run Mixtral with transformers (A100 required)
@@ -194,7 +196,7 @@ chat_interface.send(
 chat_interface.servable()
 ```
 
-To launch a server using CLI and interact with this app, simply run `panel serve app.py`. Here is an example of our interaction with the model:
+Run `panel serve app.py` in CLI to interact with this app. Here is an example of our interaction with the model:
 
 <img src="./images/transformers_chatbot.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
 
