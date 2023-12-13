@@ -33,7 +33,7 @@ tuning of the initial Mistral-7B
 - Mistral-small:  Mixtral 8x7B, mastering multiple languages and code
 - Mistral-medium: a top serviced model, outperforming GPT3.5
 
-Since this blog post is about Mixtral 8x7B, let's use Mistral-small. Fun side note: we found Mistral-small and Mistral-medium generate much better code than Mistral-tiny. 
+Since this blog post is about Mixtral 8x7B, let's use Mistral-small when we create the chatbot. Fun side note: we found Mistral-small and Mistral-medium generate much better code than Mistral-tiny. 
 
 After we install `mistralai` in our Python environment, we can try some basic code to see how it works: 
 
@@ -97,7 +97,7 @@ pn.extension()
 
 async def callback(contents: str, user: str, instance: pn.chat.ChatInterface):
 
-    model = "mistral-medium"
+    model = "mistral-small"
     messages = [ChatMessage(role="user", content=contents)]
     response = client.chat_stream(model=model, messages=messages)
     
