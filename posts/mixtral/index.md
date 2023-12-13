@@ -1,6 +1,6 @@
 ---
 title: "Build a Mixtral Chatbot with Panel"
-date: "2023-12-12"
+date: "2023-12-13"
 description: "With Mistral API, Transformers, and llama.cpp"
 author:
   - Andrew Huang
