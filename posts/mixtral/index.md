@@ -12,10 +12,114 @@ image: "images/chatbot.png"
 
 Mistral AI just announced the Mixtral 8x7B and the Mixtral 8x7B Instruct models. These models have shown really amazing performance, outperforming Llama 2 and GPT 3.5 in many benchmarks. They've quickly became the most popular 7B parameter open weights models in the AI world. In this blog post, we will walk you through how to build AI chatbots with the Mixtral 8x7B Instruct model using the Panel chat interface. We will cover two methods: 
 
-- Method 1: Run Mixtral with transformers (A100 required)
-- Method 2: Run Mixtral with llama.cpp (can run on Macbook)
+- Method 1: Run Mixtral with Mistral API (fastest)
+- Method 2: Run Mixtral with transformers (A100 required)
+- Method 3: Run Mixtral with llama.cpp (can run on Macbook)
 
-# Method 1: Run Mixtral with transformers (A100 required)
+
+# Method 1: Run Mixtral with Mistral API (fastest)
+
+We just got access to the Mistral API, so we have to give it a try! 
+
+Let's first generated a Mistral API from [https://console.mistral.ai/users/api-keys/](https://console.mistral.ai/users/api-keys/). 
+
+<img src="./images/mistral_api.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+
+
+There are three chat endpoints with the Mistral API:
+
+- Mistral-tiny: Mistral 7B Instruct v0.2, a better fine
+tuning of the initial Mistral-7B
+- Mistral-small:  Mixtral 8x7B, mastering multiple languages and code
+- Mistral-medium: a top serviced model, outperforming GPT3.5
+
+Since this blog post is about Mixtral 8x7B, let's use Mistral-small. Fun side note: we found Mistral-small and Mistral-medium generate much better code than Mistral-tiny. 
+
+After we install `mistralai` in our Python environment, we can try some basic code to see how it works: 
+
+- No streaming: 
+```python
+
+from mistralai.client import MistralClient
+from mistralai.models.chat_completion import ChatMessage
+model = "mistral-tiny"
+messages = [
+    ChatMessage(role="user", content="What is the best French cheese?")
+]
+client = MistralClient(api_key=api_key)
+
+# No streaming 
+chat_response = client.chat(
+    model=model,
+    messages=messages,
+)
+
+chat_response
+```
+<img src="./images/mistral_api1.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+
+
+- With streaming: 
+```python
+model = "mistral-small"
+messages = [ChatMessage(role="user", content="What is the best French cheese?")]
+response = client.chat_stream(model=model, messages=messages)
+
+message = ""
+for chunk in response:
+    part = chunk.choices[0].delta.content
+    if part is not None:
+        message += part
+ 
+```
+<img src="./images/mistral_api2.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+
+
+## Build a Panel chatbot 
+
+Before we build a Panel chatbot, let's make sure we install `mistralai` and `panel` in our Python environment and set up Mistal API key as an environment variable: `export MISTRAL_API_KEY="TYPE YOUR KEY"`.
+
+- We wrap the code above in a function `callback`.
+- The key to building a Panel chatbot is to define `pn.chat.ChatInterface`. Specifically, in the `callback` method, we need to define how the chat bot responds to user message -- the `callback` function.
+- To turn a Python file or a notebook into a deployable app, simply append `.servable()` to the Panel object `chat_interface`.
+
+```python
+"""
+Demonstrates how to use the `ChatInterface` to create a chatbot using
+Mistral API.
+"""
+import os
+import panel as pn
+from mistralai.client import MistralClient
+from mistralai.models.chat_completion import ChatMessage
+
+pn.extension()
+
+async def callback(contents: str, user: str, instance: pn.chat.ChatInterface):
+
+    model = "mistral-medium"
+    messages = [ChatMessage(role="user", content=contents)]
+    response = client.chat_stream(model=model, messages=messages)
+    
+    message = ""
+    for chunk in response:
+        part = chunk.choices[0].delta.content
+        if part is not None:
+            message += part
+            yield message
+
+
+client = MistralClient(api_key=os.environ["MISTRAL_API_KEY"])
+chat_interface = pn.chat.ChatInterface(callback=callback, callback_user="Mixtral")
+chat_interface.send(
+    "Send a message to get a reply from Mixtral!", user="System", respond=False
+)
+chat_interface.servable()
+```
+
+<img src="./images/mistral_api.gif" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+
+# Method 2: Run Mixtral with transformers (A100 required)
 
 The first method is to use the latest Transformers from HuggingFace. We adapted the code from this blog post: [https://huggingface.co/blog/mixtral](https://huggingface.co/blog/mixtral). 
 
@@ -55,9 +159,7 @@ We ran the code using one A100 GPU:
 <img src="./images/transformers.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
 
 ## Build a Panel chatbot 
-- We wrap the code above in a function `callback`.
-- The key to building a Panel chatbot is to define `pn.chat.ChatInterface`. Specifically, in the `callback` method, we need to define how the chat bot responds to user message -- the `callback` function.
-- To turn a Python file or a notebook into a deployable app, simply append `.servable()` to the Panel object `chat_interface`.
+Same as what we saw in Method 1, we wrap the code above in a function `callback`, and define the `callback` in the `pn.chat.ChatInterface` function:
 
 ```python
 import panel as pn
@@ -68,7 +170,7 @@ import torch
 pn.extension()
 
 async def callback(contents: str, user: str, instance: pn.chat.ChatInterface):
-    messages = [{"role": "user", "content": content}]
+    messages = [{"role": "user", "content": contents}]
     prompt = pipeline.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     streamer = TextStreamer(tokenizer, skip_prompt=True)
     outputs = pipeline(prompt, streamer=streamer, max_new_tokens=256, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
@@ -96,7 +198,7 @@ To launch a server using CLI and interact with this app, simply run `panel serve
 
 <img src="./images/transformers_chatbot.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
 
-# Method 2: Run Mixtral with llama.cpp (run on Macbook)
+# Method 3: Run Mixtral with llama.cpp (run on Macbook)
 
 ## Set up
 
@@ -159,7 +261,7 @@ Here you can see the code running in Jupyter Notebook cells. Please be patient a
 
 ## Build a Panel chatbot 
 
-- Same as what we have seen in method 1, let's wrap the code logic above in a function called `callback`, which is how we want our chatbot to respond to user messages.
+- Same as what we have seen before, let's wrap the code logic above in a function called `callback`, which is how we want our chatbot to respond to user messages.
 - Then in `pn.chat.ChatInterface`, we define `callback` as this `callback` function.
 
 
@@ -208,7 +310,7 @@ chat_interface.servable()
 
 
 # Conclusion
-In this blog post, we used transformers, llama.cpp, and Panel to create AI chatbots that use the Mixtral 8x7B Instruct model. Whether you have an A100 GPU or a Macbook, you can try the Mixtral 8x7B Instruct model and build chatbots right away.
+In this blog post, we used Mistral API, transformers, llama.cpp, and Panel to create AI chatbots that use the Mixtral 8x7B Instruct model. Whether you have Mistral API access, an A100 GPU, or a Macbook, you can try the Mixtral 8x7B Instruct model and build chatbots right away.
 
 
 If you are interested in learning more about how to build AI chatbot in Panel, please read our related blog posts: 
