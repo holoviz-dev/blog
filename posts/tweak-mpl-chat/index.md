@@ -179,7 +179,8 @@ code_editor.param.watch(update_plot, "value")
 
 ```
 
-So when does the code get? 
+So when does the code get updated? 
+
 - Whenever the AI assistant outputs Python code, this Python code will become the new value of `code_editor`. This is defined in the `callback` function in Step 2. 
 - Whenever we change code directly in the `code_editor`, the code will change and the plot will update automatically. 
 
