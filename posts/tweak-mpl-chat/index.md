@@ -154,7 +154,7 @@ matplotlib_pane = pn.pane.Matplotlib(
 )
 ```
 
-<img src="./images/plot.png" width="80%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+<img src="./images/plot.png" width="60%" style="margin-left: auto; margin-right: auto; display: block;"></img>
 
 3. `code_editor` is another Panel object that allows embedding a code editor. 
 
@@ -164,7 +164,7 @@ code_editor = pn.widgets.CodeEditor(
     sizing_mode="stretch_both",
 )
 ```
-<img src="./images/code.png" width="80%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+<img src="./images/code.png" width="60%" style="margin-left: auto; margin-right: auto; display: block;"></img>
 
 ### How does the plot get updated? 
 Whenever the code changes, the plot gets updates. Specifically, the `matplotlib_pane` watches for the code changes in `code_editor` using the `param.watch` method. 
