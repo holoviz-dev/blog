@@ -1,5 +1,5 @@
 ---
-title: "Build a AI Chatbot to Run Code and Tweak plots"
+title: "Build an AI Chatbot to Run Code and Tweak plots"
 date: "2023-12-22"
 description: "Powered by Panel and Mixtral 8x7B"
 author:
@@ -15,7 +15,7 @@ The future is now; let LLMs improve your plots for you!
 
 <img src="./images/words.jpeg" width="80%" style="margin-left: auto; margin-right: auto; display: block;"></img>
 
-In this blog post, we will build an AI chatbot with Panel and Mixtral 8x7b that will help you generate code and execute code to tweak an Matplotlib plot. It has two functionalities:
+In this blog post, we will build an AI chatbot with Panel and Mixtral 8x7b that will help you generate code and execute code to tweak a Matplotlib plot. It has two functionalities:
 
 1. You can chat with the AI assistant to do small tweaks of a Matplotlib plot or ask it to "make this figure ready for a poster presentation". This is especially helpful when we need help with styling but don't know where to start. This AI chatbot will not only generate ideas, but also runnable code to improve your plot directly. 
 
