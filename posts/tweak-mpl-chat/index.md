@@ -55,7 +55,7 @@ Check out our previous blog post [Build a Mixtral Chatbot with Panel](https://bl
 ## Step 0: Import packages 
 Now let's move on to the actual code. Make sure you install the required packages `panel` and `mistralai` in your Python environment and import the needed packages: 
 
-```
+```python
 import re
 import os
 import panel as pn
@@ -71,7 +71,8 @@ Here is the [code](https://huggingface.co/spaces/ahuang11/tweak-mpl-chat/blob/ma
 
 - The LLM model we would like to use: `LLM_MODEL="mistral-small"`
 - The system message:
-```
+
+```markdown
 You are a renowned data visualization expert
 with a strong background in matplotlib.
 Your primary goal is to assist the user
@@ -80,6 +81,7 @@ using best practices. Simply provide code
 in code fences (```python). You must have `fig`
 as the last line of code
 ```
+
 - The format of user content where we combine the user message the the current Python code. 
 - The default Matplotlib plot that users see when they interact with the chatbot.
 
