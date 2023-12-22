@@ -9,3 +9,7 @@
 #quarto-header {
     box-shadow: 0 .125rem .25rem 0 #d8d8d8;
 }
+
+div.quarto-post .thumbnail img {
+    object-fit: contain;
+}
