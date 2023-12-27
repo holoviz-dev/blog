@@ -35,7 +35,7 @@ When we do not need to keep our conversation history, we are only sending one ro
 ```python
 import os
 import panel as pn
-from mistralai.client import MistralClient
+from mistralai.async_client import MistralAsyncClient
 from mistralai.models.chat_completion import ChatMessage
 
 pn.extension()
@@ -49,14 +49,14 @@ async def callback(contents: str, user: str, instance: pn.chat.ChatInterface):
     response = client.chat_stream(model=model, messages=messages)
 
     message = ""
-    for chunk in response:
+    async for chunk in response:
         part = chunk.choices[0].delta.content
         if part is not None:
             message += part
             yield message
 
 
-client = MistralClient(api_key=os.environ["MISTRAL_API_KEY"])
+client = MistralAsyncClient(api_key=os.environ["MISTRAL_API_KEY"])
 chat_interface = pn.chat.ChatInterface(callback=callback, callback_user="Mixtral")
 chat_interface.send(
     "Send a message to get a reply from Mixtral!", user="System", respond=False
@@ -116,7 +116,7 @@ messages = [
 
 import os
 import panel as pn
-from mistralai.client import MistralClient
+from mistralai.async_client import MistralAsyncClient
 from mistralai.models.chat_completion import ChatMessage
 
 pn.extension()
@@ -131,14 +131,14 @@ async def callback(contents: str, user: str, instance: pn.chat.ChatInterface):
     response = client.chat_stream(model=model, messages=messages)
 
     message = ""
-    for chunk in response:
+    async for chunk in response:
         part = chunk.choices[0].delta.content
         if part is not None:
             message += part
             yield message
 
 
-client = MistralClient(api_key=os.environ["MISTRAL_API_KEY"])
+client = MistralAsyncClient(api_key=os.environ["MISTRAL_API_KEY"])
 chat_interface = pn.chat.ChatInterface(callback=callback, callback_user="Mixtral")
 chat_interface.send(
     "Send a message to get a reply from Mixtral!", user="System", respond=False
@@ -200,7 +200,7 @@ The output is a well-formatted json file that can easily be used for future mode
 ```python
 import os
 import panel as pn
-from mistralai.client import MistralClient
+from mistralai.async_client import MistralAsyncClient
 from mistralai.models.chat_completion import ChatMessage
 from io import StringIO
 import json
@@ -218,7 +218,7 @@ async def callback(contents: str, user: str, instance: pn.chat.ChatInterface):
     response = client.chat_stream(model=model, messages=messages)
 
     message = ""
-    for chunk in response:
+    async for chunk in response:
         part = chunk.choices[0].delta.content
         if part is not None:
             message += part
@@ -236,7 +236,7 @@ file_download = pn.widgets.FileDownload(
 header = pn.Row(pn.HSpacer(), file_download)
 
 
-client = MistralClient(api_key=os.environ["MISTRAL_API_KEY"])
+client = MistralAsyncClient(api_key=os.environ["MISTRAL_API_KEY"])
 chat_interface = pn.chat.ChatInterface(
     callback=callback, 
     callback_user="Mixtral",
