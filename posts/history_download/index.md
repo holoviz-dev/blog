@@ -211,7 +211,7 @@ pn.extension()
 async def callback(contents: str, user: str, instance: pn.chat.ChatInterface):
     model = "mistral-small"
     messages = [
-        ChatMessage(role=message["role"], content=message["content"])
+        ChatMessage(**message)
         for message in instance.serialize()[1:]
     ]
     print(messages)
