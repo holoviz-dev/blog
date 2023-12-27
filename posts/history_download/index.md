@@ -299,7 +299,7 @@ chat_interface.servable()
 
 
 # Conclusion
-In this blog post, we learned two simple tips in building a Panl AI dashboard: how to add memory to pass past conversation to the language models, and how to download our conversation with the models.
+In this blog post, we learned two simple tips in building a Panel AI dashboard: how to add memory to pass past conversation to the language models, and how to download our conversation with the models.
 
 
 If you are interested in learning more about how to build AI chatbot in Panel, please read our related blog posts: 
