@@ -67,7 +67,7 @@ chat_interface.servable()
 <img src="./images/mistral.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
 
 ## OpenAI models
-The code of using OpenAI models looks very similar. We are using OpenAI's API with async/await to use the asynchronous client. To use async, we simply import `AsyncOprnAI` instead of `OpenAI` and add `await` with the API call. 
+The code of using OpenAI models looks very similar. We are using OpenAI's API with async/await to use the asynchronous client. To use async, we simply import `AsyncOpenAI` instead of `OpenAI` and add `await` with the API call. 
 
 ```python
 import panel as pn
