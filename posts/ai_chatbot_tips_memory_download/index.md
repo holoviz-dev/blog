@@ -190,7 +190,7 @@ chat_interface.servable()
 What if you'd like download all the conversations and chat histories? What if you would like to use your chat history for fine-tuning? You can add a download button to download all conversations. 
 
 
-<img src="./images/open_ai_download.gif" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+<img src="./images/download.gif" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
 
 ## Mistral models
 What we are adding here the `file_download` widget. When we click this button, it will execute the `download_history` function, which just dump our chat history (`chat_interface.serialize()`) into a json file and save into the `history.json` file. 
