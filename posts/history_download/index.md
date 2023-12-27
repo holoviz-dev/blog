@@ -302,7 +302,7 @@ chat_interface.servable()
 In this blog post, we learned two simple tips in building a Panel AI dashboard: how to add memory to pass past conversation to the language models, and how to download our conversation with the models.
 
 
-If you are interested in learning more about how to build AI chatbot in Panel, please read our related blog posts: 
+If you are interested in learning more about how to build AI chatbots in Panel, please read our related blog posts: 
 
 - [Build a Mixtral Chatbot with Panel](https://blog.holoviz.org/posts/mixtral/)
 - [Building AI Chatbots with Mistral and Llama2](https://medium.com/@sophiamyang/building-ai-chatbots-with-mistral-and-llama2-9c0f5abc296c) 
