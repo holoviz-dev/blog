@@ -128,7 +128,6 @@ async def callback(contents: str, user: str, instance: pn.chat.ChatInterface):
         ChatMessage(role=message["role"], content=message["content"])
         for message in instance.serialize()[1:]
     ]
-    print(messages)
     response = client.chat_stream(model=model, messages=messages)
 
     message = ""
