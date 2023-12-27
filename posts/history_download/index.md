@@ -12,6 +12,7 @@ image: "images/chatbot.png"
 In this blog post, we'll explore how to build a simple AI chatbot, enhance it with memory capabilities, and finally, implement a feature to download conversations for further fine-tuning.
 
 We will cover: 
+
 - Getting started building a simple AI chatbot (with no memory)
 - Adding memory to manage chat histories 
 - Adding download button to download all conversations 
