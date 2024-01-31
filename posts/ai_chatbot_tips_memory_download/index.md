@@ -64,7 +64,7 @@ chat_interface.send(
 chat_interface.servable()
 ```
 
-<img src="./images/mistral.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/mistral.png)
 
 ## OpenAI models
 The code of using OpenAI models looks very similar. We are using OpenAI's API with async/await to use the asynchronous client. To use async, we simply import `AsyncOpenAI` instead of `OpenAI` and add `await` with the API call. 
@@ -148,7 +148,8 @@ chat_interface.servable()
 
 Here in this example, the model indeed knows what we were talking about previously. 
 
-<img src="./images/mistral_history.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/mistral_history.png)
+
 
 ## OpenAI models
 The code for OpenAI models is even simpler. Simply change `messages` to `instance.serialize()[1:]`, you will send all the chat history except for the first message to OpenAI API. 
@@ -183,14 +184,14 @@ chat_interface.send(
 chat_interface.servable()
 ```
 
-<img src="./images/open_ai_history.gif" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/open_ai_history.gif)
 
 
 # Adding download button to download all conversations 
 What if you'd like download all the conversations and chat histories? What if you would like to use your chat history for fine-tuning? You can add a download button to download all conversations. 
 
 
-<img src="./images/download.gif" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/download.gif)
 
 ## Mistral models
 What we are adding here the `file_download` widget. When we click this button, it will execute the `download_history` function, which just dump our chat history (`chat_interface.serialize()`) into a json file and save into the `history.json` file. 

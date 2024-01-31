@@ -71,6 +71,7 @@ format:
     grid:
       body-width: 900px
     highlight-style: tango
+    lightbox: true
     include-in-header: 
       - text: |
           <script>

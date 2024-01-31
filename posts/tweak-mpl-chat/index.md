@@ -13,18 +13,18 @@ image: "images/chatbot.png"
 Have you wasted hours tweaking a plot for a presentation or academic paper, like searching StackOverflow on how to change the font size of the labels?
 The future is now; let LLMs improve your plots for you!
 
-<img src="./images/words.jpeg" width="80%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/words.jpeg){width=80% fig-align="center"}
 
 In this blog post, we will build an AI chatbot with Panel and Mixtral 8x7b that will help you generate code and execute code to tweak a Matplotlib plot. It has two functionalities:
 
 1. You can chat with the AI assistant to do small tweaks of a Matplotlib plot or ask it to "make this figure ready for a poster presentation". This is especially helpful when we need help with styling but don't know where to start. This AI chatbot will not only generate ideas, but also runnable code to improve your plot directly. 
 
-<img src="./images/app1.gif" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/app1.gif)
 
 
 2. You can also check the code of a figure, edit the code directly, and get the updated version of the plot. This is helpful when you would like to start with your own plot. You can copy and paste the code of your own plot here as a starting point for AI to improve. 
 
-<img src="./images/app2.gif" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/app2.gif)
 
 
 # Hosted App and Code 
@@ -37,7 +37,7 @@ In this blog post, we will build an AI chatbot with Panel and Mixtral 8x7b that 
 
 Before we get started, let's first generate a Mistral API from [https://console.mistral.ai/users/api-keys/](https://console.mistral.ai/users/api-keys/):
 
-<img src="./images/mistral_api.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img> 
+![](./images/mistral_api.png) 
 
 Once you have generated a key, make sure to save it as an environment variable with `export MISTRAL_API_KEY="TYPE YOUR API KEY"`. 
 
@@ -156,7 +156,7 @@ matplotlib_pane = pn.pane.Matplotlib(
 )
 ```
 
-<img src="./images/plot.png" width="60%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/plot.png){width=60% fig-align="center"}
 
 3. `code_editor` is another Panel object that allows embedding a code editor. 
 
@@ -166,7 +166,8 @@ code_editor = pn.widgets.CodeEditor(
     sizing_mode="stretch_both",
 )
 ```
-<img src="./images/code.png" width="60%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/code.png){width=60% fig-align="center"}
+
 
 ### How does the plot get updated? 
 Whenever the code changes, the plot gets updates. Specifically, the `matplotlib_pane` watches for the code changes in `code_editor` using the `param.watch` method. 

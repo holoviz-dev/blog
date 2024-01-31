@@ -14,7 +14,11 @@ Following the tradition, we have decided that our first post after migrating to 
 
 The HoloViz blog dates back to 2018 and at the time [Pelican](https://getpelican.com/) was chosen as the static site generator together with the [pelican-jupyter](https://github.com/danielfrg/pelican-jupyter) plugin to add support to authoring blog posts from Jupyter Notebooks. While this combination served us well over the years, we observed that the notebook plugin was deprecated and that there was not much interest among our maintainers and contributors to update the existing site which was starting to show its age. We were in desperate need of a change!
 
-[![Pelican version of the blog](./images/old_site.png)](http://web.archive.org/web/20230612061338/https://blog.holoviz.org/)
+::: {#fig}
+![](./images/old_site.png)
+
+[Pelican version of the blog](http://web.archive.org/web/20230612061338/https://blog.holoviz.org/)
+:::
 
 ## Choosing a framework
 

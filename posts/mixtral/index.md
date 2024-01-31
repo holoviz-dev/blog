@@ -23,7 +23,7 @@ We just got access to the Mistral API, so we have to give it a try!
 
 Let's first generate a Mistral API from [https://console.mistral.ai/users/api-keys/](https://console.mistral.ai/users/api-keys/). 
 
-<img src="./images/mistral_api.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/mistral_api.png)
 
 
 There are three chat endpoints with the Mistral API:
@@ -56,7 +56,7 @@ chat_response = client.chat(
 
 chat_response
 ```
-<img src="./images/mistral_api1.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/mistral_api1.png)
 
 
 - With streaming: 
@@ -72,7 +72,7 @@ for chunk in response:
         message += part
  
 ```
-<img src="./images/mistral_api2.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/mistral_api2.png)
 
 
 ## Build a Panel chatbot 
@@ -119,7 +119,7 @@ chat_interface.servable()
 
 To launch a server using CLI and interact with this app, simply run `panel serve app.py` and you can interact with the model:
 
-<img src="./images/mistral_api.gif" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/mistral_api.gif)
 
 # Method 2: Run Mixtral with transformers (GPU required)
 
@@ -158,7 +158,7 @@ outputs = pipeline(prompt, streamer=streamer, max_new_tokens=256, do_sample=True
 
 We ran the code using one A100 GPU:
 
-<img src="./images/transformers.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/transformers.png)
 
 ## Build a Panel chatbot 
 Same as what we saw in Method 1, we wrap the code above in a function `callback`, and define the `callback` in the `pn.chat.ChatInterface` function:
@@ -198,7 +198,7 @@ chat_interface.servable()
 
 Run `panel serve app.py` in CLI to interact with this app. Here is an example of our interaction with the model:
 
-<img src="./images/transformers_chatbot.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/transformers_chatbot.png)
 
 # Method 3: Run Mixtral with llama.cpp (run on Macbook)
 
@@ -258,7 +258,7 @@ response['choices'][0]['text']
 
 Here you can see the code running in Jupyter Notebook cells. Please be patient as this will take some time. After a few minutes, the model outputs results based on our input prompt:
 
-<img src="./images/llamacpp.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/llamacpp.png)
 
 
 ## Build a Panel chatbot 
@@ -307,7 +307,7 @@ chat_interface.servable()
 
 
 - Finally, we can run `panel serve app.py` to interact with this app. As you can see in this gif, it's actually quite slow generating each word because we are running on a local Macbook. 
-<img src="./images/llamacpp.gif" width="100%" style="margin-left: auto; margin-right: auto; display: block;"></img>
+![](./images/llamacpp.gif)
 
 
 
