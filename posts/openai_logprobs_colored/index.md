@@ -1,7 +1,7 @@
 ---
 title: "Evaluate and filter LLM output using logprobs & colored text"
 date: "2023-02-03"
-description: ""
+description: "Have you ever wanted to evaluate the confidence of LLM's output? Utilize log probabilities!"
 author:
   - Andrew Huang
 categories: [showcase, panel, ai, llm, chatbot, openai]
