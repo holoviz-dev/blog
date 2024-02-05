@@ -1,6 +1,6 @@
 ---
 title: "Evaluate and filter LLM output using logprobs & colored text"
-date: "2023-02-03"
+date: "2023-02-04"
 description: "Have you ever wanted to evaluate the confidence of LLM's output? Utilize log probabilities!"
 author:
   - Andrew Huang
