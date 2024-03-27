@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>HoloViz Blog</title>
+<link>https://blog.holoviz.org/</link>
+<atom:link href="https://blog.holoviz.org/index.xml" rel="self" type="application/rss+xml"/>
+<description>The HoloViz Blog</description>
+<generator>quarto-1.4.552</generator>
+<lastBuildDate>Wed, 20 Mar 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>HoloViews Streams for Exploring Multidimensional Data</title>
+  <dc:creator>Andrew Huang</dc:creator>
+  <link>https://blog.holoviz.org/posts/holoviews_streams/</link>
+  <description><![CDATA[ Explores a 4D dataset (time, level, lat, lon) dataset using HoloViews and Panel. ]]></description>
+  <category>holoviews</category>
+  <category>streams</category>
+  <guid>https://blog.holoviz.org/posts/holoviews_streams/</guid>
+  <pubDate>Wed, 20 Mar 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/holoviews_streams/images/cross_section.gif" medium="image" type="image/gif"/>
+</item>
+<item>
+  <title>Evaluate and filter LLM output using logprobs &amp; colored text</title>
+  <dc:creator>Andrew Huang</dc:creator>
+  <link>https://blog.holoviz.org/posts/openai_logprobs_colored/</link>
+  <description><![CDATA[ Have you ever wanted to evaluate the confidence of LLM’s output? Utilize log probabilities! ]]></description>
+  <category>showcase</category>
+  <category>panel</category>
+  <category>ai</category>
+  <category>llm</category>
+  <category>chatbot</category>
+  <category>openai</category>
+  <guid>https://blog.holoviz.org/posts/openai_logprobs_colored/</guid>
+  <pubDate>Mon, 05 Feb 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/openai_logprobs_colored/images/demo.gif" medium="image" type="image/gif"/>
+</item>
+<item>
+  <title>Panel AI Chatbot Tips: Memory and Downloadable Conversations</title>
+  <dc:creator>Andrew Huang</dc:creator>
+  <dc:creator>Sophia Yang</dc:creator>
+  <link>https://blog.holoviz.org/posts/ai_chatbot_tips_memory_download/</link>
+  <description><![CDATA[ In this blog post, we’ll explore how to build a simple AI chatbot, enhance it with memory capabilities, and finally, implement a feature to download conversations for further fine-tuning. ]]></description>
+  <category>showcase</category>
+  <category>panel</category>
+  <category>ai</category>
+  <category>llm</category>
+  <category>chatbot</category>
+  <guid>https://blog.holoviz.org/posts/ai_chatbot_tips_memory_download/</guid>
+  <pubDate>Fri, 22 Dec 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/ai_chatbot_tips_memory_download/images/chatbot.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
+<item>
+  <title>Build an AI Chatbot to Run Code and Tweak plots</title>
+  <dc:creator>Andrew Huang</dc:creator>
+  <dc:creator>Sophia Yang</dc:creator>
+  <link>https://blog.holoviz.org/posts/tweak-mpl-chat/</link>
+  <description><![CDATA[ Powered by Panel and Mixtral 8x7B ]]></description>
+  <category>showcase</category>
+  <category>panel</category>
+  <category>ai</category>
+  <category>llm</category>
+  <category>chatbot</category>
+  <guid>https://blog.holoviz.org/posts/tweak-mpl-chat/</guid>
+  <pubDate>Fri, 22 Dec 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/tweak-mpl-chat/images/chatbot.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
+<item>
+  <title>Param 2.0 release</title>
+  <dc:creator>Maxime Liquet</dc:creator>
+  <link>https://blog.holoviz.org/posts/param_release_2.0/</link>
+  <description><![CDATA[ Release announcement for Param 2.0 ]]></description>
+  <category>release</category>
+  <category>param</category>
+  <guid>https://blog.holoviz.org/posts/param_release_2.0/</guid>
+  <pubDate>Fri, 22 Dec 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/param_release_2.0/images/param_logo.png" medium="image" type="image/png" height="155" width="144"/>
+</item>
+<item>
+  <title>Build a Mixtral Chatbot with Panel</title>
+  <dc:creator>Andrew Huang</dc:creator>
+  <dc:creator>Philipp Rudiger</dc:creator>
+  <dc:creator>Sophia Yang</dc:creator>
+  <link>https://blog.holoviz.org/posts/mixtral/</link>
+  <description><![CDATA[ With Mistral API, Transformers, and llama.cpp ]]></description>
+  <category>showcase</category>
+  <category>panel</category>
+  <category>ai</category>
+  <category>llm</category>
+  <category>chatbot</category>
+  <guid>https://blog.holoviz.org/posts/mixtral/</guid>
+  <pubDate>Wed, 13 Dec 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/mixtral/images/chatbot.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
+<item>
+  <title>Build a RAG chatbot to answer questions about Python libraries</title>
+  <dc:creator>Andrew Huang</dc:creator>
+  <dc:creator>Sophia Yang</dc:creator>
+  <link>https://blog.holoviz.org/posts/fleet_ai/</link>
+  <description><![CDATA[ Access the Python universe with Fleet Context and Panel ]]></description>
+  <category>showcase</category>
+  <category>panel</category>
+  <guid>https://blog.holoviz.org/posts/fleet_ai/</guid>
+  <pubDate>Thu, 07 Dec 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/fleet_ai/images/chatbot.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
+<item>
+  <title>Reviving the blog with Quarto</title>
+  <dc:creator>Maxime Liquet</dc:creator>
+  <link>https://blog.holoviz.org/posts/quarto_migration/</link>
+  <description><![CDATA[ Announcing the migration of our blog to Quarto. ]]></description>
+  <category>announcement</category>
+  <guid>https://blog.holoviz.org/posts/quarto_migration/</guid>
+  <pubDate>Sun, 19 Nov 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/quarto_migration/images/new_site.png" medium="image" type="image/png" height="119" width="144"/>
+</item>
+<item>
+  <title>Panel 1.3.0 Release</title>
+  <dc:creator>Philipp Rudiger</dc:creator>
+  <link>https://blog.holoviz.org/posts/panel_release_1.3/</link>
+  <description><![CDATA[ Release announcement for Panel 1.3 ]]></description>
+  <category>release</category>
+  <category>panel</category>
+  <guid>https://blog.holoviz.org/posts/panel_release_1.3/</guid>
+  <pubDate>Tue, 24 Oct 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/panel_release_1.3/images/collage_1.3.png" medium="image" type="image/png" height="48" width="144"/>
+</item>
+<item>
+  <title>Building custom Panel widgets using ReactiveHTML</title>
+  <dc:creator>Andrew Huang</dc:creator>
+  <dc:creator>Sophia Yang</dc:creator>
+  <link>https://blog.holoviz.org/posts/reactivehtml/</link>
+  <description><![CDATA[ Building custom Panel widgets using ReactiveHTML ]]></description>
+  <category>showcase</category>
+  <category>panel</category>
+  <guid>https://blog.holoviz.org/posts/reactivehtml/</guid>
+  <pubDate>Thu, 17 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/reactivehtml/images/ReactiveHTML10.gif" medium="image" type="image/gif"/>
+</item>
+</channel>
+</rss>

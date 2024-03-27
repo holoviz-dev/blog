@@ -1,0 +1,36 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/holoviews_streams/index.html",
+      "/posts/openai_logprobs_colored/index.html",
+      "/posts/ai_chatbot_tips_memory_download/index.html",
+      "/posts/tweak-mpl-chat/index.html",
+      "/posts/param_release_2.0/index.html",
+      "/posts/mixtral/index.html",
+      "/posts/fleet_ai/index.html",
+      "/posts/quarto_migration/index.html",
+      "/posts/panel_release_1.3/index.html",
+      "/posts/reactivehtml/index.html",
+      "/posts/survey_2022/index.html",
+      "/posts/hugging_face_template/index.html",
+      "/posts/panel_1rc/index.html",
+      "/posts/panel_release_0.14/index.html",
+      "/posts/hvplot_release_0.8/index.html",
+      "/posts/panel_release_0.13/index.html",
+      "/posts/panel_release_0.12/index.html",
+      "/posts/ds_release_0.13/index.html",
+      "/posts/panel_release_0.11/index.html",
+      "/posts/panel_release_0.10/index.html",
+      "/posts/hv_release_1.13/index.html",
+      "/posts/panel_release_0.8/index.html",
+      "/posts/panel_release_0.7/index.html",
+      "/posts/pyviz_scipy_bof_2019/index.html",
+      "/posts/pyviz_holoviz/index.html",
+      "/posts/panel_announcement/index.html",
+      "/posts/hvplot_announcement/index.html",
+      "/posts/gv_release_1.5/index.html",
+      "/posts/hv_release_1.10/index.html"
+    ]
+  }
+]
