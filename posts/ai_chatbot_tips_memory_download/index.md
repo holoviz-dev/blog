@@ -1,7 +1,7 @@
 ---
 title: "Panel AI Chatbot Tips: Memory and Downloadable Conversations"
 date: "2023-12-22"
-description: ""
+description: "In this blog post, we'll explore how to build a simple AI chatbot, enhance it with memory capabilities, and finally, implement a feature to download conversations for further fine-tuning."
 author:
   - Andrew Huang
   - Sophia Yang
