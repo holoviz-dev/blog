@@ -3,3 +3,5 @@
 # quarto built docs
 /.quarto/
 /builtdocs
+
+/.venv
