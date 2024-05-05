@@ -167,7 +167,7 @@ parso==0.8.3
 parsy==2.1
 partd==1.4.1
 pexpect==4.9.0
-pillow==10.2.0
+pillow==10.3.0
 platformdirs==4.2.0
 plotly==5.20.0
 pluggy==1.4.0
