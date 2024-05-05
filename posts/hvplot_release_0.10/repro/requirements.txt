@@ -258,7 +258,7 @@ tomli==2.0.1
 tomlkit==0.12.4
 toolz==0.12.1
 tornado==6.4
-tqdm==4.66.2
+tqdm==4.66.3
 traitlets==5.14.2
 triad==0.9.6
 trio==0.25.0
