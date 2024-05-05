@@ -10,6 +10,6 @@ listing:
   # Come back to it when https://github.com/quarto-dev/quarto-cli/issues/7290 is resolved
   feed:
     items: 10
-    type: partial
+    type: metadata
 page-layout: full
 ---
