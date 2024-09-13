@@ -6,18 +6,12 @@ This repository contains the HoloViz blog, which is built using [Quarto](https:/
 
 ### Quarto
 
-Begin by installing [Quarto](https://quarto.org/docs/get-started/).
-
-### Pre-commit
-
-To install pre-commit, run the following commands:
+Begin by installing [Quarto](https://quarto.org/docs/get-started/):
 
 ```bash
-pip install pre-commit
-pre-commit install
+conda create -n holoviz-blog -c conda-forge r-quarto perl
+conda activate holoviz-blog
 ```
-
-This ensures that auto-formatting and checks are applied before merging changes with Git.
 
 ## Authoring
 
