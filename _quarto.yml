@@ -22,24 +22,36 @@ website:
     logo-href: https://holoviz.org
     logo-alt: "HoloViz logo."
     left:
-      - text: "Background"
-        href: https://holoviz.org/background.html
-      - text: "Installation"
-        href: https://holoviz.org/installation.html
+      - text: "Learn"
+        menu:
+          - text: "Presentations"
+            href: https://holoviz.org/learn/presentations/index.html
+          - text: "Background"
+            href: https://holoviz.org/learn/background.html
+          - text: "FAQ"
+            href: https://holoviz.org/learn/FAQ.html
       - text: "Tutorial"
         href: https://holoviz.org/tutorial/index.html
-      - text: "Blog"
-        file: index.qmd
-      - text: "Contributing"
-        href: https://holoviz.org/contributing.html
-      - text: "Roadmap"
-        href: https://holoviz.org/Roadmap.html
-      - text: "FAQ"
-        href: https://holoviz.org/FAQ.html
-      - text: "About"
-        href: https://holoviz.org/about.html
+      - text: "Examples"
+        href: https://examples.holoviz.org/
       - text: "Community"
-        href: https://holoviz.org/FAQ.html
+        href: https://holoviz.org/community.html
+      - text: "Contribute"
+        file: https://holoviz.org/contribute.html
+      - text: "Blog"
+        href: index.qmd
+      - text: "About"
+        menu:
+          - text: "About Us"
+            href: https://holoviz.org/about/index.html
+          - text: "Governance"
+            href: https://holoviz.org/about/governance/index.html
+          - text: "HEPs"
+            href: https://holoviz.org/about/heps/index.html
+          - text: "Roadmap"
+            href: https://holoviz.org/about/roadmap.html
+          - text: "Funding"
+            href: https://holoviz.org/about/funding.html
     tools:
       - icon: github
         href: https://github.com/holoviz
