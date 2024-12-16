@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>HoloViz Blog</title>
+<link>https://blog.holoviz.org/</link>
+<atom:link href="https://blog.holoviz.org/index.xml" rel="self" type="application/rss+xml"/>
+<description>The HoloViz Blog</description>
+<generator>quarto-1.6.39</generator>
+<lastBuildDate>Wed, 11 Dec 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>HoloViz Examples Gallery Modernization</title>
+  <dc:creator>Junshen Tao</dc:creator>
+  <dc:creator>Isaiah Akorita</dc:creator>
+  <dc:creator>Demetris Roumis</dc:creator>
+  <dc:creator>Maxime Liquet</dc:creator>
+  <link>https://blog.holoviz.org/posts/examples-website-modernization/</link>
+  <description><![CDATA[ Announcement of the modernized version of the HoloViz examples gallery, a curated collection of domain-specific narrative examples using various HoloViz projects. ]]></description>
+  <category>announcement</category>
+  <guid>https://blog.holoviz.org/posts/examples-website-modernization/</guid>
+  <pubDate>Wed, 11 Dec 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/examples-website-modernization/images/thumbnail.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Plotting made easy with hvPlot: 0.11 release</title>
+  <dc:creator>Maxime Liquet</dc:creator>
+  <link>https://blog.holoviz.org/posts/hvplot_release_0.11/</link>
+  <description><![CDATA[ Release announcement for hvPlot 0.11, including: DuckDB integration, automatic lat/lon conversion on tiled maps, subcoordinate-y axis support, and more! ]]></description>
+  <category>release</category>
+  <category>hvplot</category>
+  <guid>https://blog.holoviz.org/posts/hvplot_release_0.11/</guid>
+  <pubDate>Fri, 27 Sep 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/hvplot_release_0.11/images/thumbnail.png" medium="image" type="image/png" height="63" width="144"/>
+</item>
+<item>
+  <title>Panel 1.5.0 Release</title>
+  <dc:creator>Philipp Rudiger</dc:creator>
+  <link>https://blog.holoviz.org/posts/panel_release_1.5/</link>
+  <description><![CDATA[ Release announcement for Panel 1.5 ]]></description>
+  <category>release</category>
+  <category>panel</category>
+  <guid>https://blog.holoviz.org/posts/panel_release_1.5/</guid>
+  <pubDate>Fri, 13 Sep 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/panel_release_1.5/images/collage_1.5.png" medium="image" type="image/png" height="48" width="144"/>
+</item>
+<item>
+  <title>Plotting made easy with hvPlot: 0.9 and 0.10 releases</title>
+  <dc:creator>Maxime Liquet</dc:creator>
+  <link>https://blog.holoviz.org/posts/hvplot_release_0.10/</link>
+  <description><![CDATA[ Release announcement for hvPlot 0.9 and 0.10, including: Polars integration, Xarray support added to the Explorer, Large timeseries exploration made easier, and more! ]]></description>
+  <category>release</category>
+  <category>hvplot</category>
+  <guid>https://blog.holoviz.org/posts/hvplot_release_0.10/</guid>
+  <pubDate>Mon, 06 May 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/hvplot_release_0.10/images/thumbnail.png" medium="image" type="image/png" height="65" width="144"/>
+</item>
+<item>
+  <title>Panel 1.4.0 Release</title>
+  <dc:creator>Philipp Rudiger</dc:creator>
+  <link>https://blog.holoviz.org/posts/panel_release_1.4/</link>
+  <description><![CDATA[ Release announcement for Panel 1.4 ]]></description>
+  <category>release</category>
+  <category>panel</category>
+  <guid>https://blog.holoviz.org/posts/panel_release_1.4/</guid>
+  <pubDate>Thu, 28 Mar 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/panel_release_1.4/images/collage_1.4.png" medium="image" type="image/png" height="48" width="144"/>
+</item>
+<item>
+  <title>HoloViews Streams for Exploring Multidimensional Data</title>
+  <dc:creator>Andrew Huang</dc:creator>
+  <link>https://blog.holoviz.org/posts/holoviews_streams/</link>
+  <description><![CDATA[ Explores a 4D dataset (time, level, lat, lon) dataset using HoloViews and Panel. ]]></description>
+  <category>holoviews</category>
+  <category>streams</category>
+  <guid>https://blog.holoviz.org/posts/holoviews_streams/</guid>
+  <pubDate>Wed, 20 Mar 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/holoviews_streams/images/cross_section.gif" medium="image" type="image/gif"/>
+</item>
+<item>
+  <title>Evaluate and filter LLM output using logprobs &amp; colored text</title>
+  <dc:creator>Andrew Huang</dc:creator>
+  <link>https://blog.holoviz.org/posts/openai_logprobs_colored/</link>
+  <description><![CDATA[ Have you ever wanted to evaluate the confidence of LLM’s output? Utilize log probabilities! ]]></description>
+  <category>showcase</category>
+  <category>panel</category>
+  <category>ai</category>
+  <category>llm</category>
+  <category>chatbot</category>
+  <category>openai</category>
+  <guid>https://blog.holoviz.org/posts/openai_logprobs_colored/</guid>
+  <pubDate>Mon, 05 Feb 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/openai_logprobs_colored/images/demo.gif" medium="image" type="image/gif"/>
+</item>
+<item>
+  <title>Panel AI Chatbot Tips: Memory and Downloadable Conversations</title>
+  <dc:creator>Andrew Huang</dc:creator>
+  <dc:creator>Sophia Yang</dc:creator>
+  <link>https://blog.holoviz.org/posts/ai_chatbot_tips_memory_download/</link>
+  <description><![CDATA[ In this blog post, we’ll explore how to build a simple AI chatbot, enhance it with memory capabilities, and finally, implement a feature to download conversations for further fine-tuning. ]]></description>
+  <category>showcase</category>
+  <category>panel</category>
+  <category>ai</category>
+  <category>llm</category>
+  <category>chatbot</category>
+  <guid>https://blog.holoviz.org/posts/ai_chatbot_tips_memory_download/</guid>
+  <pubDate>Fri, 22 Dec 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/ai_chatbot_tips_memory_download/images/chatbot.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
+<item>
+  <title>Build an AI Chatbot to Run Code and Tweak plots</title>
+  <dc:creator>Andrew Huang</dc:creator>
+  <dc:creator>Sophia Yang</dc:creator>
+  <link>https://blog.holoviz.org/posts/tweak-mpl-chat/</link>
+  <description><![CDATA[ Powered by Panel and Mixtral 8x7B ]]></description>
+  <category>showcase</category>
+  <category>panel</category>
+  <category>ai</category>
+  <category>llm</category>
+  <category>chatbot</category>
+  <guid>https://blog.holoviz.org/posts/tweak-mpl-chat/</guid>
+  <pubDate>Fri, 22 Dec 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/tweak-mpl-chat/images/chatbot.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
+<item>
+  <title>Param 2.0 release</title>
+  <dc:creator>Maxime Liquet</dc:creator>
+  <link>https://blog.holoviz.org/posts/param_release_2.0/</link>
+  <description><![CDATA[ Release announcement for Param 2.0 ]]></description>
+  <category>release</category>
+  <category>param</category>
+  <guid>https://blog.holoviz.org/posts/param_release_2.0/</guid>
+  <pubDate>Fri, 22 Dec 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/param_release_2.0/images/param_logo.png" medium="image" type="image/png" height="155" width="144"/>
+</item>
+</channel>
+</rss>
