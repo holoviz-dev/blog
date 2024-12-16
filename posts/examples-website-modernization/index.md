@@ -37,20 +37,20 @@ With the help of a [comprehensive checklist](https://github.com/holoviz-topics/e
 
 ## Modernization: APIs
 
-### [Plotting: prefer hvPlot over HoloViews when possible](https://holoviz.org/learn/background.html){.external target="_blank"}
+### [Plotting API: Prioritize hvPlot over HoloViews](https://holoviz.org/learn/background.html){.external target="_blank"}
 
-Many examples were authored before hvPlot was created or when it wasn't yet mature enough to be used. hvPlot provides a simple plotting interface that is familiar to Pandas and Xarray users, while exposing many of the capabilities offered by the HoloViz tools. In many cases, we found out that it was possible to replace HoloViews code with more approachable hvPlot code. Of course, hvPlot cannot and should not replace all HoloViews code, for example, setting up more complex interactivity (e.g. linked selections, streams) is still only reserved to HoloViews.
+Many examples were created before hvPlot was available or mature enough to use. hvPlot offers a simple, Pandas- and Xarray-friendly interface while exposing many capabilities offered by other HoloViz tools. In many cases, we replaced HoloViews code with hvPlot for its accessibility and ease of use. However, hvPlot isn’t a universal replacement—features like complex interactivity (e.g., linked selections, streams) are still exclusive to HoloViews.
 
-For instance, the [NYC Taxi example](https://examples.holoviz.org/gallery/nyc_taxi/index.html){.external target="_blank"} creates a scatter plot to see the relationship between distance and fare cost.
+For instance, the [NYC Taxi example](https://examples.holoviz.org/gallery/nyc_taxi/index.html){.external target="_blank"} creates a scatter plot to see the relationship between distance and fare cost. The modernized version uses hvPlot for clarity and simplicity.
 
-Original code:
+**Original code:**
 ```python
 scatter = hv.Scatter(samples, 'trip_distance', 'fare_amount')
 labelled = scatter.redim.label(trip_distance="Distance, miles", fare_amount="Fare, $") 
 labelled.redim.range(trip_distance=(0, 20), fare_amount=(0, 40)).opts(size=5)
 ```
 
-Modernized code:
+**Modernized code:**
 ```python
 samples.hvplot.scatter(
     'trip_distance', 'fare_amount', xlabel='Distance, miles',
@@ -61,13 +61,18 @@ samples.hvplot.scatter(
 ![](./images/hvplot_nyc_taxi.png)
 
 
-### Large data: prefer `rasterize` over `datashade` when plotting with Bokeh
+### Large Data Rendering: Prioritize `rasterize` over `datashade` for Bokeh Plots
 
-`rasterize` and `datashade` are HoloViews operations that leverage Datashader to transform an element into an image, each pixel's value being an aggregate of the data it contains. Applying these operations is extremely useful, and is in fact often the only way, to display very large datasets. However, these two operations work pretty differently. `datashade` sends to the front-end (your browser) an RGB image that is displayed by Bokeh as is, and, that's it, there's no more information about the data that can be exposed to you in the plot (e.g. via hover). On the other hand, `rasterize` sends a multidimensional array of the aggregated data, that Bokeh has then to transform (e.g. colormap). This is more work for Bokeh in the front-end, but also means that more information can be exposed in the plot! The machinery required to get `rasterize` to work well for many different cases through the whole stack (Bokeh, Datashader, HoloViews, hvPlot) is still work in progress but has reached a state where `rasterize` has become the recommended practice over `datashade`.
+`rasterize` and `datashade` are HoloViews operations powered by Datashader, designed to handle large datasets by transforming elements into images where each pixel represents an aggregate of the underlying data. While both are essential for visualizing large data, they differ in functionality and use cases.
 
-The animation shows a plot of the [NYC Taxi example](https://examples.holoviz.org/gallery/nyc_taxi/nyc_taxi.html#million-point-datashaded-plots-interactive){.external target="_blank"} that is built using `rasterize` to display 10 million data points. It displays the dropoff location, aggregating the points with the per-pixel sum of passenger count, information that is also made available on hover.
+- `datashade`: Produces an RGB image that is sent directly to the front-end (browser) and displayed as is. This approach offers fast rendering but limits interactivity, such as hover tooltips or color bars, because the raw data is not available to the plotting library.
+- `rasterize`: Generates a multidimensional array of aggregated data, which is sent to the front-end for further processing, such as applying colormaps. Although this requires more work from Bokeh, it allows for richer interactivity, including hover information and client-side color bars.
 
-Modernized code: 
+Due to these advantages, `rasterize` is now the recommended choice for most large dataset visualizations. Ongoing development continues to expand its capabilities and improve its integration across the HoloViz stack when using Bokeh as the plotting backend.
+
+For example, the [NYC Taxi example](https://examples.holoviz.org/gallery/nyc_taxi/nyc_taxi.html#million-point-datashaded-plots-interactive){.external target="_blank"} demonstrates how `rasterize` can render 10 million data points interactively. The plot shows drop-off locations, with passenger counts aggregated per pixel and displayed on hover.
+
+**Modernized code:**
 ```python
 df.hvplot.points(
     'dropoff_x', 'dropoff_y', rasterize=True, dynspread=True,
@@ -79,12 +84,14 @@ df.hvplot.points(
 ![](./images/nyc_taxi_rasterize.gif)
 
 
-### [Interactivity: prefer `pn.bind()`](https://panel.holoviz.org/tutorials/basic/pn_bind.html){.external target="_blank"}
+### [Interactivity API: Prioritize pn.bind()](https://panel.holoviz.org/tutorials/basic/pn_bind.html){.external target="_blank"}
 
-Over the years Panel has gained [a few APIs](https://panel.holoviz.org/explanation/index.html#apis){.external target="_blank"} and picking one is not always easy. For apps implemented using `param.Parameterized` classes, the best choice is usually to decorate methods with `@param.depends()`, and sometimes resort to `.param.watch()` for more fine-grained control. Outside of this scenario, `pn.bind()` is the preferred option over `pn.interact()` (deprecated), `@pn.depends()`, or `.param.watch()` (that can also sometimes be used). The [Portfolio Optimizer example](https://examples.holoviz.org/gallery/portfolio_optimizer/portfolio_optimizer.html#all-optimal-portfolios-efficient-frontier){.external target="_blank"} was updated using the new-ish [reactive expression API (`.rx`)](https://panel.holoviz.org/tutorials/basic/pn_rx.html){.external target="_blank"} that extends `pn.bind()` in many ways. It's a promising interface that is still somewhat experimental, we encourage users to try it out and provide feedback.
+Over the years, Panel has introduced [multiple iteractive APIs](https://panel.holoviz.org/explanation/index.html#apis){.external target="_blank"}, and choosing the right one can be challenging. As the package has matured and user-feedback incorporated, `pn.bind()` has become the preferred option for linking widgets to functions while offering flexibility and a cleaner syntax over `pn.interact()` (deprecated), `@pn.depends()`, or `.param.watch()` for most use cases.
 
+Importantly, exceptions remain, such as the recommendation to use `@param.depends()` to decorate methods for applications built with `param.Parameterized` classes, or using `.param.watch()` for more fine-grained control. Additionally, the [Portfolio Optimizer example](https://examples.holoviz.org/gallery/portfolio_optimizer/portfolio_optimizer.html#all-optimal-portfolios-efficient-frontier){.external target="_blank"} demonstrates the use of the new [reactive expression API (`.rx`)](https://panel.holoviz.org/tutorials/basic/pn_rx.html){.external target="_blank"}, which extends `pn.bind()` and the deprecated `pn.interact()` for reactive programming. This experimental `.rx` API is a promising addition, and we encourage users to explore it and share feedback.
 
-In the [Attractors example](https://examples.holoviz.org/gallery/attractors/clifford_panel.html){.external target="_blank"}, we replaced calling the deprecated (and very limiting) `pn.interact()` with a more explicit call to `pn.bind()`, linking various widgets to a function plotting an attractor with Datashader.
+In the [Attractors example](https://examples.holoviz.org/gallery/attractors/clifford_panel.html){.external target="_blank"}, we updated the code by replacing the deprecated `pn.interact()` with `pn.bind()`. This modernized approach explicitly links widgets to a function that plots an attractor using Datashader.
+
 
 Original code:
 ```python
@@ -110,26 +117,33 @@ pn.Column(*widgets.values(), bound_clifford_plot)
 
 ## Improved contributor guide
 
-The contributor guide was updated to reflect the changes made to the infrastructure and improved to guide new users through the journey of contributing a new example. Isaiah produced a step-by-step video explaining this process.
+To support the modernization efforts and encourage new contributions, the contributor guide was updated to reflect the changes in infrastructure. The guide now provides clearer instructions and step-by-step guidance for new users to create and contribute examples to the gallery.
+
+To make the process even more accessible, Isaiah created a detailed video tutorial that walks through each step of contributing a new example.
 
 {{< video https://www.youtube.com/embed/r-9MF0sx_nA?si=QwXi45VNYDm5kOZR >}}
 
-## New example: FIFA World Cup 2018
+## New Example: FIFA World Cup 2018
 
-Isaiah, motivated by his passion for football (soccer), worked hard to contribute an example analyzing a dataset of the FIFA World Cup 2018 tournament. To learn more about the performances of players like Kylian Mbappe or Lionel Messi during the event, [visit the example's page](https://examples.holoviz.org/gallery/world_cup/world_cup.html){.external target="_blank"}, [run its notebook live](https://world-cup-notebook.holoviz-demo.anaconda.com/notebooks/world_cup.ipynb){.external target="_blank"}, or [visit its Panel app](https://world-cup.holoviz-demo.anaconda.com/world_cup){.external target="_blank"}.
+Driven by his passion for football (soccer), Isaiah contributed an exciting example analyzing data from the FIFA World Cup 2018 tournament. This example delves into the performances of iconic players like Kylian Mbappe and Lionel Messi during the event.
+
+You can explore the example in multiple ways:
+- [View the example's page](https://examples.holoviz.org/gallery/world_cup/world_cup.html){.external target="_blank"}
+- [Run the notebook live](https://world-cup-notebook.holoviz-demo.anaconda.com/notebooks/world_cup.ipynb){.external target="_blank"}
+- [Interact with the Panel app](https://world-cup.holoviz-demo.anaconda.com/world_cup){.external target="_blank"}
 
 [![](./images/fifa.png)](https://examples.holoviz.org/gallery/world_cup/world_cup.html)
 
 
-## Feedback
+## Reflections
 
-### [Jason’s](https://github.com/jtao1){.external target="_blank"} reflections
+### [Jason’s](https://github.com/jtao1){.external target="_blank"} Reflections
 
 Contributing to the revitalization of the examples website was an enlightening experience for me. Beyond learning about HoloViz tools, I gained a deeper understanding of open source contributions, including the workflow intricacies. This includes creating pull requests when making new changes or opening a new issue to document bugs found in the examples. Neither of which I’ve used when developing my own projects. Setting up the environment was also a tricky process as I had to do it in WSL. This exposure to WSL has helped me when working with other projects that are required to be using Linux. 
 
 Overall, I am thankful to have been given this experience as a contributor as I’ve acquired a fundamental understanding of the tools that could be used.
 
-### [Isaiah’s](https://github.com/Azaya89){.external target="_blank"} reflections
+### [Isaiah’s](https://github.com/Azaya89){.external target="_blank"} Reflections
 
 Working on this project has not only been an enjoyable experience but also an incredibly educational one. The journey began with a steep learning curve, but overcoming those initial challenges has made the entire process more rewarding.
 
@@ -159,8 +173,10 @@ This project has been an enriching experience, providing both challenges and opp
 
 ### Demetris and Maxime's reflections
 
-TODO: @droumis adapt as you wish :) !
+We want to thank Jason and Isaiah for the incredible effort they put into this project. As early-career developers, they took on a complex task—working with HoloViz’s expansive ecosystem—and did a great job making meaningful contributions. It’s not easy to navigate so many tools, APIs, and evolving documentation, but they approached the challenge with curiosity and determination.
 
-We want to thank Jason and Isaiah for all the hard work they put into this project. HoloViz, with all its libraries, and spread documentation, isn't an easy ecosystem to grasp in such a short time, but, by proactively asking questions, they have managed to accomplish an excellent job. Besides modernizing a ton of examples, their work has also allowed to highlight various regressions and gaps in the APIs, their fresh perspective has led to many UX discussions, all of which helping us improve the HoloViz tools. Thank you so much 🙂!
+Along the way, they helped us identify gaps in our APIs and brought fresh perspectives to our discussions about user experience. Their insights sparked conversations that led to improvements not just in the examples, but across HoloViz tools. We also appreciated their patience and adaptability as we all worked together to smooth out the edges of our first project funded by a NumFocus grant.
+
+This collaboration wasn’t just about the examples—they’ve made lasting contributions to the ecosystem and the community. We’re excited to see where their journeys take them next. Jason and Isaiah, thank you for your hard work!
 
 [^1]: `anaconda-project` is a project management tool created in 2016 and that predates most (if not all!) of the tools of this type like Poetry, Hatch, PDM,  Pixi, conda-project, etc. It is no longer maintained and we do not recommend adopting it, some day we'll migrate to another tool.
