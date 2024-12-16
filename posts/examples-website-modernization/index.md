@@ -11,29 +11,34 @@ categories: "announcement"
 image: "images/thumbnail.jpg"
 ---
 
-[HoloViz](https://holoviz.org){.external target="_blank"} is an ecosystem of open-source tools designed to make data visualization in Python both simpler and more powerful, featuring projects like [Panel](https://panel.holoviz.org){.external target="_blank"}, [hvPlot](https://hvplot.holoviz.org){.external target="_blank"}, [HoloViews](https://holoviews.org){.external target="_blank"}, and [Datashader](https://datashader.org){.external target="_blank"}. The individual galleries for these tools (such as the [Panel App Gallery](https://panel.holoviz.org/gallery/index.html){.external target="_blank"} or the [HoloViews Gallery](https://holoviews.org/gallery/index.html){.external target="_blank"}) primarily focus on demonstrating the specific capabilities and APIs of each package. In contrast, the [HoloViz Examples Gallery](https://examples.holoviz.org/){.external target="_blank"} takes a broader approach, showcasing over 40 **domain-specific narrative examples** that integrate multiple HoloViz tools. These examples are structured around real-world data stories, providing better context for both the analysis and the tools involved, while highlighting the power of cross-package workflows.
+## [HoloViz](https://holoviz.org){.external target="_blank"}: Simplifying Data Visualization
 
-Beyond being a learning resource, the HoloViz Examples Gallery serves as an ideal onramp for new contributors to the ecosystem. It invites users to bring their domain expertise and create new examples that showcase their unique perspectives and use cases. With the combination of updated examples, contributor guides, and a streamlined process for adding new content, the gallery lowers barriers to entry for those interested in contributing to HoloViz, fostering a more diverse community. 
+[HoloViz](https://holoviz.org){.external target="_blank"} is a collection of open-source tools designed to make Python data visualization easier and more powerful. It includes tools like [Panel](https://panel.holoviz.org){.external target="_blank"}, [hvPlot](https://hvplot.holoviz.org){.external target="_blank"}, [HoloViews](https://holoviews.org){.external target="_blank"}, and [Datashader](https://datashader.org){.external target="_blank"}. Most tools have their own gallery, such as the [Panel App Gallery](https://panel.holoviz.org/gallery/index.html){.external target="_blank"} or the [HoloViews Gallery](https://holoviews.org/gallery/index.html){.external target="_blank"}, which focus on their specific features and APIs.
 
-In this blog post, we’re excited to share significant improvements to the Examples Gallery, made possible by a [NumFocus](https://numfocus.org/){.external target="_blank"} small development grant.
+The [HoloViz Examples Gallery](https://examples.holoviz.org/){.external target="_blank"} is different. It showcases more than 40 **real-world examples** that combine multiple HoloViz tools into domain-specific workflows. These examples go beyond demonstrating individual tools—they tell data stories. This makes it easier to understand how to use the tools together and apply them to practical problems.
+
+The Examples Gallery isn’t just a learning resource. It’s also a great way for users to contribute to HoloViz. By bringing their domain expertise, contributors can add new examples that reflect unique use cases and ideas. Updated examples, better contributor guides, and a clear process for adding content make it easier than ever to join the HoloViz community.
+
+Thanks to a [NumFocus](https://numfocus.org/){.external target="_blank"} small development grant, we’ve made significant improvements to the Examples Gallery, and we’re excited to share the details in this blog post.
 
 [![](./images/holoviz_examples_gallery.jpg)](https://examples.holoviz.org){.external target="_blank"}
 
-This website presents some unique features:
+### What Makes the Examples Gallery Special?
 
-- Each example is available for download as an `anaconda-project`[^1] zip file, enabling users to run any example with the correct dependencies and datasets on any platform. Learn more about the process [here](https://examples.holoviz.org/getting_started.html#run-locally){.external target="_blank"}.
-- Most of the examples have either a read-only Notebook deployment ([try one!](https://world-cup-notebook.holoviz-demo.anaconda.com/notebooks/world_cup.ipynb){.external target="_blank"}) or a fully interactive Panel app deployment ([try one!](https://world-cup.holoviz-demo.anaconda.com/){.external target="_blank"}). These deployments allow users to explore plots and apps interactively, even when full interactivity isn’t available on the static Examples website. Thanks to [Anaconda](https://www.anaconda.com/){.external target="_blank"} for providing us with this platform 🙏.
+- **Run Anywhere:** Each example is available as an `anaconda-project`[^1] zip file, so you can run it with the correct dependencies and datasets on any platform. Learn how [here](https://examples.holoviz.org/getting_started.html#run-locally){.external target="_blank"}.
+- **Interactive Options:** Most examples include a read-only notebook ([try one](https://world-cup-notebook.holoviz-demo.anaconda.com/notebooks/world_cup.ipynb){.external target="_blank"}) or an interactive Panel app ([try one](https://world-cup.holoviz-demo.anaconda.com/){.external target="_blank"}). These let you explore interactively, even when full interactivity isn’t possible on the static site. Thanks to [Anaconda](https://www.anaconda.com/){.external target="_blank"} for hosting these!
 
-Maintaining a large collection of complex data visualization projects is challenging for an open-source team. Over time, the gallery's content, infrastructure, and design became outdated, with many examples depending on tools and APIs no longer aligned with best practices. While infrastructure updates were manageable, refreshing the content proved far more difficult. To address this, we applied for a [NumFocus Small Development Grant](https://numfocus.org/programs/small-development-grants){.external target="_blank"} in late 2022, aiming to modernize the gallery and onboard new contributors.
+Maintaining a large and complex collection of examples is a big challenge for an open-source team. Over time, the gallery became outdated, relying on tools and APIs that no longer reflected best practices. Updating the infrastructure was straightforward, but refreshing the content took much more work. That’s why we applied for a [NumFocus Small Development Grant](https://numfocus.org/programs/small-development-grants){.external target="_blank"} in late 2022, to modernize the gallery and bring in new contributors.
 
-With the $10,000 grant awarded in early 2023, two new contributors, [Isaiah](https://github.com/azaya89){.external target="_blank"} and [Jason](https://github.com/jtao1){.external target="_blank"}, joined the project. Together, they worked toward the following goals:
+With the $10,000 grant awarded in early 2023, two new contributors, [Isaiah](https://github.com/azaya89){.external target="_blank"} and [Jason](https://github.com/jtao1){.external target="_blank"}, joined the project. Together, they tackled these goals:
 
 - Update high-priority examples to reflect current best practices
-- Improve and clarify guidelines for new contributors
-- Organize examples into categories to enhance website navigation
-- Add new examples to address underrepresented domains
+- Improve and simplify contributor guidelines
+- Organize examples into categories for easier navigation
+- Add new examples to highlight underrepresented domains
 
-With the help of a [comprehensive checklist](https://github.com/holoviz-topics/examples/wiki/Example-Modernization-Checklist-(2024)){.external target="_blank"}, Jason and Isaiah, guided primarily by Demetris and Maxime with additional feedback from the HoloViz team, worked on updating the examples and successfully delivered [15 modernized examples](https://github.com/holoviz-topics/examples/pulls?q=is%3Apr+label%3A%22NF+SDG%22+){.external target="_blank"}. Their work spanned many areas, including restructuring examples, enhancing UI, updating dependencies, and adopting modern APIs. While their contributions are too extensive to cover fully in this post, we’ll focus on the improvements to API usage in the next section.
+Using a [detailed checklist](https://github.com/holoviz-topics/examples/wiki/Example-Modernization-Checklist-(2024)){.external target="_blank"}, Jason and Isaiah—mentored by Demetris and Maxime and supported by critical feedback from other members of the HoloViz team (Jim, Philipp, Simon, and Andrew)—updated and modernized [15 examples](https://github.com/holoviz-topics/examples/pulls?q=is%3Apr+label%3A%22NF+SDG%22+){.external target="_blank"}. Their work included restructuring examples, enhancing UIs, updating dependencies, and adopting modern APIs. In the rest of this post, we’ll focus on how they improved the APIs.
+
 
 ## Modernization: APIs
 
