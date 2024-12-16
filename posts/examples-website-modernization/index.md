@@ -11,7 +11,7 @@ categories: "announcement"
 image: "images/thumbnail.jpg"
 ---
 
-## [HoloViz](https://holoviz.org){.external target="_blank"}: Simplifying Data Visualization
+## HoloViz: Simplifying Data Visualization
 
 [HoloViz](https://holoviz.org){.external target="_blank"} is a collection of open-source tools designed to make Python data visualization easier and more powerful. It includes tools like [Panel](https://panel.holoviz.org){.external target="_blank"}, [hvPlot](https://hvplot.holoviz.org){.external target="_blank"}, [HoloViews](https://holoviews.org){.external target="_blank"}, and [Datashader](https://datashader.org){.external target="_blank"}. Most tools have their own gallery, such as the [Panel App Gallery](https://panel.holoviz.org/gallery/index.html){.external target="_blank"} or the [HoloViews Gallery](https://holoviews.org/gallery/index.html){.external target="_blank"}, which focus on their specific features and APIs.
 
