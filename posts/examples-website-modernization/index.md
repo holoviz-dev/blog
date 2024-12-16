@@ -133,6 +133,7 @@ To make the process even more accessible, Isaiah created a detailed video tutori
 Driven by his passion for football (soccer), Isaiah contributed an exciting example analyzing data from the FIFA World Cup 2018 tournament. This example delves into the performances of iconic players like Kylian Mbappe and Lionel Messi during the event.
 
 You can explore the example in multiple ways:
+
 - [View the example's page](https://examples.holoviz.org/gallery/world_cup/world_cup.html){.external target="_blank"}
 - [Run the notebook live](https://world-cup-notebook.holoviz-demo.anaconda.com/notebooks/world_cup.ipynb){.external target="_blank"}
 - [Interact with the Panel app](https://world-cup.holoviz-demo.anaconda.com/world_cup){.external target="_blank"}
