@@ -8,4 +8,4 @@ ddf = dd.read_parquet(path)
 mask = (ddf.x.between(x0, x1)) & (ddf.y.between(y0, y1))
 
 df = ddf[mask].compute().sample(n=100_000)
-df.to_parquet("census_2024_sample.parq")
+df.to_parquet("census_2020_sample.parq")
