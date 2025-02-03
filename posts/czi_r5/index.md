@@ -115,4 +115,4 @@ The features and optimizations developed during this project are now part of the
 
 ## Acknowledgments
 
-This work was supported by the Chan Zuckerberg Initiative's Essential Open Source for Science program (Grant Number: 2022-309815). Special thanks to Bryan Van de Ven and James Bednar for project supervision,the HoloViz and Bokeh developers for their amazing engineering efforts, our scientific collaborators for their feedback and contributions, and the broader research software communities for their suggestions and encouragement throughout this project.
+This work was supported by the Chan Zuckerberg Initiative's Essential Open Source for Science program (Grant Number: 2022-309815). Special thanks to Bryan Van de Ven and James Bednar for project supervision, the HoloViz and Bokeh developers for their amazing engineering efforts, our scientific collaborators for their feedback and contributions, and the broader research software communities for their suggestions and encouragement throughout this project.
