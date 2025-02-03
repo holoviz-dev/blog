@@ -29,7 +29,7 @@ Our project took a two-pronged approach. First, we created example workflows tha
 
 ### [Multichannel Timeseries](https://examples.holoviz.org/gallery/multichannel_timeseries)
 
-Often the first step towards interrogating brain activity requires displaying many time-aligned, amplitude diverse signals simultaneously, each representing the activity of different neurons, brain regions, or other experimental measures. We've developed two complementary workflows to handle these datasets. Both workflow approaches making use of subcoordinate axes embedded on a single plot to maintain the amplitude independence (or different units) of each timeseries, including subcoordinate-compatible scalebar and zoom tools. Additionally, both workflows are now compatible with the HoloNote for annotating time-spans, as well the use of a minimap to provide a stable, global view of the data.
+Often the first step towards interrogating brain activity requires displaying many time-aligned, amplitude diverse signals simultaneously, each representing the activity of different neurons, brain regions, or other experimental measures. We've developed two complementary workflows to handle these datasets. Both workflow approaches making use of subcoordinate axes embedded on a single plot to maintain the amplitude independence (or different units) of each timeseries, including subcoordinate-compatible scalebar and zoom tools. Additionally, both workflows are now compatible with HoloNote for annotating time-spans, as well the use of a minimap to provide a stable, global view of the data.
 
 {{< video https://www.youtube.com/embed/8oeuPptWPt8?si=yh-4iJYDfYpJZ7MQ >}}
 
