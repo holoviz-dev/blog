@@ -51,7 +51,7 @@ Neuroscientists often use specialized microscopes to watch neural activity unfol
 
 {{< video https://www.youtube.com/embed/WztLvP5rj7U?si=BwcQexPzy7EYsfzv >}}
 
-Modern electron microscopes can create incredibly detailed 3D reconstructions of brain tissue, revealing the intricate connections between neurons. Our new [panel-neuroglancer](https://github.com/panel-extensions/panel-neuroglancer) extension brings the power of Google's Neuroglancer viewer directly into the scientific notebook context. Researchers can now seamlessly combine 3D volumetric visualization with analysis and narrative context in Jupyter notebooks, making it easier to explore massive datasets, share specific views with collaborators, integrate visualization into their computational workflows, or embed the neurglancer viewer in a custom dashboard. This integration bridges the gap between visual exploration and quantitative analysis.
+Modern electron microscopes can create incredibly detailed 3D reconstructions of brain tissue, revealing the intricate connections between neurons. Our new [panel-neuroglancer](https://github.com/panel-extensions/panel-neuroglancer) extension brings the power of Google's Neuroglancer viewer directly into the scientific notebook context. Researchers can now seamlessly combine 3D volumetric visualization with analysis and narrative context in Jupyter notebooks, making it easier to explore massive datasets, share specific views with collaborators, integrate visualization into their computational workflows, or embed the neuroglancer viewer in a custom dashboard. This integration bridges the gap between visual exploration and quantitative analysis.
 
 :::
 :::
