@@ -1,6 +1,6 @@
 ---
 title: HoloViz and Bokeh for Neuroscience
-date: 2025-01-28
+date: 2025-02-04
 description: Foundational enhancements and biomedical workflows for interactive visualization of large timeseries and microscopy data, made possible by the CZI EOSS initiative.
 authors:
   - name: Demetris Roumis
