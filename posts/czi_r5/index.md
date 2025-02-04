@@ -15,21 +15,21 @@ We're excited to announce the completion of our two-year [grant](https://chanzuc
 
 ## The Bokeh and HoloViz Ecosystem
 
-[Bokeh](https://bokeh.org) provides the foundational architecture for creating interactive visualizations in web browsers, handling everything from rendering graphics to managing user interactions. The HoloViz ecosystem builds upon this foundation, providing higher-level ([HoloViews](https://holoviews.org)) and familiar ([hvPlot](https://hvplot.holoviz.org)) interfaces with additional capabilities for large datasets ([Datashader](https://datashader.org)) and building dashboards ([Panel](https://panel.holoviz.org)). Improvements to Bokeh's core capabilities enhance all of these tools, while advances in the HoloViz ecosystem extend the functionality and make these powerful features more accessible to data scientists and researchers.
+[Bokeh](https://bokeh.org) provides the foundational open-source architecture for creating interactive visualizations in web browsers, handling everything from rendering graphics to managing user interactions. The HoloViz ecosystem builds upon this foundation, providing higher-level ([HoloViews](https://holoviews.org)) and familiar ([hvPlot](https://hvplot.holoviz.org)) interfaces with additional capabilities for large datasets ([Datashader](https://datashader.org)) and building dashboards ([Panel](https://panel.holoviz.org)). Improvements to Bokeh's core capabilities enhance all of these tools, while advances in the HoloViz ecosystem extend the functionality and make these powerful features more accessible to data scientists and researchers.
 
 ## Why This Matters
 
-Neuroscience generates an incredible variety of data types that present unique visualization challenges. This includes, 1D electrical recordings from an array of sensors that must be analyzed simultaneously or even in real-time while streaming, 2D frames from time-lapse microscopy of neural activity in behaving animals, and large-scale 3D reconstructions of brain tissue. Scientists across biomedical research need tools that can handle diverse data types while enabling collaboration and reproducibility, without having to rely on expensive proprietary software that cannot easily be customized.
+Neuroscience generates an incredible variety of data types that present unique visualization challenges. This includes 1D electrical recordings from an array of sensors that must be analyzed simultaneously or even in real-time while streaming, 2D frames from time-lapse microscopy of neural activity in behaving animals, and large-scale 3D reconstructions of brain tissue. Scientists across biomedical research need tools that can handle diverse data types while enabling collaboration and reproducibility, without having to rely on expensive proprietary software that cannot easily be customized or shared between researchers.
 
 ## Two Complementary Approaches
 
-Our project took a two-pronged approach. First, we created example workflows that demonstrate how to tackle common visualization challenges in neuroscience. These workflows helped identify needed improvements in our libraries. Second, we made substantial enhancements to the underlying tools, which in turn enabled more powerful workflows. This cyclical process ensured our technical improvements directly addressed real scientific needs.
+Our project took a two-pronged approach. We first created example workflows that demonstrate how to tackle common visualization challenges in neuroscience. These workflows helped identify needed improvements in our libraries. We then made substantial enhancements to the underlying tools, which in turn enabled more powerful workflows. This iterative process ensured our technical improvements directly addressed the most pressing scientific needs.
 
 ## Example Workflows
 
 ### [Multichannel Timeseries](https://examples.holoviz.org/gallery/multichannel_timeseries)
 
-Often the first step towards interrogating brain activity requires displaying many time-aligned, amplitude diverse signals simultaneously, each representing the activity of different neurons, brain regions, or other experimental measures. We've developed two complementary workflows to handle these datasets. Both workflow approaches making use of subcoordinate axes embedded on a single plot to maintain the amplitude independence (or different units) of each timeseries, including subcoordinate-compatible scalebar and zoom tools. Additionally, both workflows are now compatible with HoloNote for annotating time-spans, as well the use of a minimap to provide a stable, global view of the data.
+Often the first step towards understanding brain activity is to display many time-aligned signals simultaneously, each representing the activity of different neurons, brain regions, or other experimental measures. We've developed two complementary workflows to handle these datasets. Both workflow approaches make use of new support for embedding multiple subcoordinate axes into a single plot, allowing users to compare timeseries with different units or of very different amplitudes. Additionally, both workflows are now compatible with [HoloNote](https://github.com/holoviz/holonote) for annotating time-spans, as well the use of a minimap to provide a stable, global view of the data along with subcoordinate-compatible scalebar and zoom tools.
 
 {{< video https://www.youtube.com/embed/8oeuPptWPt8?si=yh-4iJYDfYpJZ7MQ >}}
 
@@ -45,7 +45,7 @@ This versatility ensures that whether working with a few dozen signals or tens o
 
 {{< video https://www.youtube.com/embed/Qa-wrIdMYH0?si=KDzApOEt2e4ROu-l >}}
 
-Neuroscientists often use specialized microscopes to watch neural activity unfold frame-by-frame in living tissue, generating long sequences of images that capture cellular dynamics. Researchers working with these recordings can now use our tools to navigate through time while maintaining their spatiotemporal context through synchronized side views and dynamic scale bars. By marking regions of interest, they can extract and analyze signals from specific cellular structures, combining qualitative observations with quantitative measurements. The additional use of overlaid projections helps identify active spatial regions regardless when they appear in time.
+Neuroscientists often use specialized microscopes to watch neural activity unfold frame-by-frame in living tissue, generating long sequences of images that capture cellular dynamics. Researchers working with these recordings can now use our tools to navigate through time while maintaining their spatiotemporal context through synchronized side views and dynamic scale bars. By marking regions of interest, they can extract and analyze signals from specific cellular structures, combining qualitative observations with quantitative measurements. New support for overlaid projections helps identify active spatial regions regardless of when they appear in time.
 
 ### [Volumetric Imaging](https://examples.holoviz.org/gallery/volumetric_imaging)
 
@@ -63,7 +63,7 @@ Neuroscience experiments often generate continuous streams of data that need to 
 ## Foundational Improvements
 
 
-These workflows above build upon substantial improvements we've made to our underlying libraries. Looking under the hood reveals a range of enhancements that strengthen not just these specific applications but the entire ecosystem of tools built on Bokeh and HoloViz. Here are just a few of the changes we've made:
+These workflows above build upon substantial improvements we've made to the underlying libraries. Looking under the hood reveals a range of enhancements that strengthen not just these specific applications but the entire ecosystem of tools built on Bokeh and HoloViz. Here are just a few of the changes we've made:
 
 In Bokeh:
 
@@ -86,7 +86,7 @@ In HoloViz:
 
 ## Impact Beyond Neuroscience
 
-While developed for neuroscience applications, these improvements benefit researchers across biomedicine. Geneticists looking at an array of 1D trackplots on subcoordinates, cell biologists tracking protein movements, and physiologists monitoring patient data all face similar visualization challenges. The enhancements we've made - from handling large datasets to creating interactive and interoperable visual components - provide powerful tools for these diverse fields.
+While developed for neuroscience applications, these improvements benefit researchers across biomedicine. Geneticists looking at an array of 1D trackplots on subcoordinates, cell biologists tracking protein movements, and physiologists monitoring patient data all face similar visualization challenges. The enhancements we've made - from handling large datasets to creating interactive and interoperable visual components - provide powerful tools solving problems across these diverse fields.
 
 More broadly, any field dealing with time series, image data, or streaming measurements can benefit from these improvements. The foundational work in Bokeh benefits not just HoloViz users but the entire Python visualization ecosystem, as many other tools build upon Bokeh's capabilities.
 
@@ -113,4 +113,4 @@ The features and optimizations developed during this project are now part of the
 
 ## Acknowledgments
 
-This work was supported by the Chan Zuckerberg Initiative's Essential Open Source for Science program (Grant Number: 2022-309815). Special thanks to Bryan Van de Ven and James Bednar for project supervision, the HoloViz and Bokeh developers for their amazing engineering efforts, our scientific collaborators for their feedback and contributions, and the broader research software communities for their suggestions and encouragement throughout this project.
+This work was supported by the Chan Zuckerberg Initiative's Essential Open Source for Science program (Grant Number: 2022-309815). Special thanks to Bryan Van de Ven and James A. Bednar for project supervision, the HoloViz and Bokeh developers for their amazing engineering efforts, our scientific collaborators for their feedback and contributions, and the broader research software communities for their suggestions and encouragement throughout this project.
