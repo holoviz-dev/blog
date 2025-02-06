@@ -86,7 +86,7 @@ In HoloViz:
 
 ## Impact Beyond Neuroscience
 
-While developed for neuroscience applications, these improvements benefit researchers across biomedicine. Geneticists looking at an array of 1D trackplots on subcoordinates, cell biologists tracking protein movements, and physiologists monitoring patient data all face similar visualization challenges. The enhancements we've made - from handling large datasets to creating interactive and interoperable visual components - provide powerful tools solving problems across these diverse fields.
+While developed for neuroscience applications, these improvements benefit researchers across biomedicine. Geneticists looking at an array of 1D trackplots on subcoordinates, cell biologists tracking protein movements, and physiologists monitoring patient data all face similar visualization challenges. The enhancements we've made - from handling large datasets to creating interactive and interoperable visual components - provide powerful tools for solving problems across these diverse fields.
 
 More broadly, any field dealing with time series, image data, or streaming measurements can benefit from these improvements. The foundational work in Bokeh benefits not just HoloViz users but the entire Python visualization ecosystem, as many other tools build upon Bokeh's capabilities.
 
