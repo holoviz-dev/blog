@@ -15,7 +15,7 @@ We're excited to announce the completion of our two-year [grant](https://chanzuc
 
 ## The Bokeh and HoloViz Ecosystem
 
-[Bokeh](https://bokeh.org) provides the foundational open-source architecture for creating interactive visualizations in web browsers, handling everything from rendering graphics to managing user interactions. The HoloViz ecosystem builds upon this foundation, providing higher-level ([HoloViews](https://holoviews.org)) and familiar ([hvPlot](https://hvplot.holoviz.org)) interfaces with additional capabilities for large datasets ([Datashader](https://datashader.org)) and building dashboards ([Panel](https://panel.holoviz.org)). Improvements to Bokeh's core capabilities enhance all of these tools, while advances in the HoloViz ecosystem extend the functionality and make these powerful features more accessible to data scientists and researchers.
+[Bokeh](https://bokeh.org) provides the foundational open-source architecture for creating interactive visualizations in web browsers, handling everything from rendering graphics to managing user interactions. The HoloViz ecosystem builds upon this foundation, providing higher-level ([HoloViews](https://holoviews.org)) and familiar ([hvPlot](https://hvplot.holoviz.org)) interfaces with additional capabilities for large datasets ([Datashader](https://datashader.org)) and building dashboards ([Panel](https://panel.holoviz.org)). Improvements to Bokeh's core capabilities enhance all of these tools, while advances in the HoloViz ecosystem extend the functionality and make these powerful features more accessible to data scientists and researchers. Check out our companion [Bokeh blog post](https://blog.bokeh.org/bokeh-for-bioscience-1e8ec629dd5a) for more details on the work completed in Bokeh.
 
 ## Why This Matters
 
@@ -110,6 +110,7 @@ The features and optimizations developed during this project are now part of the
 ## Learn More
 
 - Join the discussion on our [HoloViz Discord channel](https://discord.gg/QdAw9R5RDV)
+- Companion [Bokeh blog post](https://blog.bokeh.org/bokeh-for-bioscience-1e8ec629dd5a)
 
 ## Acknowledgments
 
