@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Philipp Rudiger">
+<meta name="dcterms.date" content="2019-05-28">
+<meta name="description" content="Public Announcement of the Panel library">
+
+<title>Panel Announcement – HoloViz Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fe5109ec0aa56e05eeb38907d446501d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+    window.goatcounter = {
+        path: function(p) { return location.host + p }
+    }
+</script>
+<script data-goatcounter="https://holoviz.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+
+
+<link rel="stylesheet" href="../../custom.css">
+<meta property="og:title" content="Panel Announcement – HoloViz Blog">
+<meta property="og:description" content="Public Announcement of the Panel library">
+<meta property="og:image" content="https://blog.holoviz.org/posts/panel_announcement/images/panel_diagram.png">
+<meta property="og:site_name" content="HoloViz Blog">
+<meta property="og:image:height" content="383">
+<meta property="og:image:width" content="974">
+<meta name="twitter:title" content="Panel Announcement – HoloViz Blog">
+<meta name="twitter:description" content="Public Announcement of the Panel library">
+<meta name="twitter:image" content="https://blog.holoviz.org/posts/panel_announcement/images/panel_diagram.png">
+<meta name="twitter:site" content="@HoloViz_org">
+<meta name="twitter:image-height" content="383">
+<meta name="twitter:image-width" content="974">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="https://holoviz.org" class="navbar-brand navbar-brand-logo">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-learn" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Learn</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-learn">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/presentations/index.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/background.html">
+ <span class="dropdown-text">Background</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/FAQ.html">
+ <span class="dropdown-text">FAQ</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/tutorial/index.html"> 
+<span class="menu-text">Tutorial</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://examples.holoviz.org/"> 
+<span class="menu-text">Examples</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/community.html"> 
+<span class="menu-text">Community</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/contribute.html"> 
+<span class="menu-text">Contribute</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-about">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/index.html">
+ <span class="dropdown-text">About Us</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/governance/index.html">
+ <span class="dropdown-text">Governance</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/heps/index.html">
+ <span class="dropdown-text">HEPs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/roadmap.html">
+ <span class="dropdown-text">Roadmap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/funding.html">
+ <span class="dropdown-text">Funding</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/holoviz" title="HoloViz Github" class="quarto-navigation-tool px-1" aria-label="HoloViz Github"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/holoviz_org" title="HoloViz Twitter" class="quarto-navigation-tool px-1" aria-label="HoloViz Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://discourse.holoviz.org" title="HoloViz Forum" class="quarto-navigation-tool px-1" aria-label="HoloViz Forum"><i class="bi bi-chat-text"></i></a>
+    <a href="https://discord.gg/UXdtYyGVQX" title="HoloViz Discord" class="quarto-navigation-tool px-1" aria-label="HoloViz Discord"><i class="bi bi-discord"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#deployment" id="toc-deployment" class="nav-link active" data-scroll-target="#deployment">Deployment</a></li>
+  <li><a href="#architecture" id="toc-architecture" class="nav-link" data-scroll-target="#architecture">Architecture</a></li>
+  <li><a href="#comparison-to-other-dashboarding-and-widget-libraries" id="toc-comparison-to-other-dashboarding-and-widget-libraries" class="nav-link" data-scroll-target="#comparison-to-other-dashboarding-and-widget-libraries">Comparison to other dashboarding and widget libraries</a>
+  <ul class="collapse">
+  <li><a href="#shiny" id="toc-shiny" class="nav-link" data-scroll-target="#shiny">Shiny</a></li>
+  <li><a href="#jupyteripywidgets" id="toc-jupyteripywidgets" class="nav-link" data-scroll-target="#jupyteripywidgets">Jupyter/ipywidgets</a></li>
+  <li><a href="#dash" id="toc-dash" class="nav-link" data-scroll-target="#dash">Dash</a></li>
+  </ul></li>
+  <li><a href="#open-source-license-community" id="toc-open-source-license-community" class="nav-link" data-scroll-target="#open-source-license-community">Open source license &amp; Community</a></li>
+  <li><a href="#further-resources" id="toc-further-resources" class="nav-link" data-scroll-target="#further-resources">Further resources</a>
+  <ul class="collapse">
+  <li><a href="#talks" id="toc-talks" class="nav-link" data-scroll-target="#talks">Talks</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.dev/holoviz-dev/blog/blob/main/posts/panel_announcement/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Panel Announcement</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">announcement</div>
+    <div class="quarto-category">panel</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Public Announcement of the Panel library
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Philipp Rudiger </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 28, 2019</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><img src="./images/panel-wm.png" width="180px"></p>
+<p><strong>A high-level app and dashboarding solution for the PyData ecosystem.</strong></p>
+<p><strong>Author</strong>: Philipp Rudiger</p>
+<p>Panel is a new open-source Python library that lets you create custom interactive web apps and dashboards by connecting user-defined widgets to plots, images, tables, or text. It is the culmination of our multi-year effort to connect data scientists with tools for deploying the output of their analysis and models with internal or external consumers of the analysis without having to learn completely different technology stacks or getting into the weeds of web development. Panel can already be installed using either <code>conda install -c pyviz panel</code> or <code>pip install panel</code>, and like all other PyViz projects it is entirely open-source and BSD-3 licensed. To get started visit the <a href="https://panel.pyviz.org">website</a> and find the Panel code on <a href="https://github.com/pyviz/panel">GitHub</a>.</p>
+<p>The main aim behind Panel was to make it as easy as possible to wrap the outputs of existing tools in the PyData ecosystem as a control panel, app, or dashboard, ensuring that users can seamlessly work with the analysis and visualization tools they are already familiar with. Secondly, Panel aims to make it trivial to go from prototyping a little app to deploying it internally within an organization or sharing it publicly with the entire internet.</p>
+<section id="fast-iteration" class="level4">
+<h4 class="anchored" data-anchor-id="fast-iteration">Fast iteration</h4>
+<p><img src="./images/panel_diagram.png" width="85%" style="margin-left: auto; margin-right: auto; display: block;"></p>
+<p>In our consulting work at Anaconda Inc.&nbsp;we have repeatedly seen the pain involved in turning initial analysis code into insights that can easily be shared with decision makers within an organization or the general public. Because the technologies involved in exploration and deployment are often very different, there are often separate teams working on the prototyping and development phases compared to those involved in building and deploying an app that can be shared with users not comfortable with Python programming. This separation between teams introduces a huge amount of friction, with even minor changes that have to be communicated between teams becoming very complex to explain and track, increasing the length of the iteration cycle exponentially. Panel aims to address this gap by providing simple Python APIs to connect the outputs of a Python analysis with web-based widgets and other interactive components, immediately making insights accessible to a wider audience.</p>
+<p>Most importantly, Panel apps can easily be built entirely within a Jupyter notebook, where a lot of modern data science happens. After an iterative process to slowly polish and improve the app or dashboard, it can be deployed in a scalable way on a Bokeh-based server simply by annotating the objects to be deployed with a call to <code>.servable()</code>. The process of developing an app with Panel can therefore be broken down into a small number of steps:</p>
+<ul>
+<li>Perform some analysis in a notebook, using whatever tools are convenient and effective for you</li>
+<li>Wrap the output of your analysis as a Panel “pane”, allowing it to be used together with other Panel componentsothers</li>
+<li>Connect the individual analysis outputs with widgets and other interactive components to form a full “panel”</li>
+<li>Display these components in the notebook and iterate until you are happy with the result</li>
+<li>Apply styling using CSS or inbuilt Bokeh styling options, if you wish</li>
+<li>Test how the app or dashboard looks as a standalone web server by adding <code>.show()</code></li>
+<li>Make the app or dashboard deployable by annotating the components to be deployed with <code>.servable()</code></li>
+<li>Deploy the app locally or on a public server using <code>panel serve nb.ipynb</code></li>
+</ul>
+<p>This quick back-and-forth iteration between prototyping in a notebook and deploying the final product is an incredibly convenient and powerful way to create a compelling and useful application, easily alternating between exploration and delivery of your insights to your audience. Thanks to the power of the underlying Bokeh layout engine and server, all the complex layout and styling options translate seamlessly between the different environments so that you can focus on your data and your audience.</p>
+</section>
+<section id="flexible-apis" class="level4">
+<h4 class="anchored" data-anchor-id="flexible-apis">Flexible APIs</h4>
+<p>To demonstrate the power of Panel, let us look at one of the simplest possible apps, a stock explorer implemented in just a few lines of code (<a href="https://holoviz-dev.github.io/panel/gallery/apis/stocks_hvplot.html">view the source notebook here</a>):</p>
+<div style="font-color: lightgray; font-size: 1em;">
+<img src="./images/stock_explorer_opt.gif" width="70%" style="margin-left: auto; margin-right: auto; display: block;">
+<center>
+A simple Panel app implemented in <a href="https://holoviz-dev.github.io/panel/gallery/apis/stocks_hvplot.html">just a few lines of Python code</a>.
+</center>
+</div>
+<p><br></p>
+<p>As you can observe in the code, Panel provides a number of different abstraction layers to write this kind of app. To get a quick overview, let us look at the three most common APIs for building apps outlined in the Panel <a href="https://holoviz-dev.github.io/panel/user_guide/APIs.html">user guide</a>.</p>
+<section id="interact" class="level5">
+<h5 class="anchored" data-anchor-id="interact">Interact</h5>
+<p>The simplest approach to building an app is the <code>interact</code> function familiar to users of <a href="https://ipywidgets.readthedocs.io/en/stable/">ipywidgets</a>, which automatically creates a set of widgets and some visual output from a supplied function. As a simple example, the following pattern will generate a dropdown menu and display it next to a plot:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot(ticker):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> plot_object</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pn.interact(plot, ticker<span class="op">=</span>[<span class="st">'AAPL'</span>, ...])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Because Panel is compositional, we can index into the layout returned by the function, making it easy to write basic apps and lay them out precisely how you want.</p>
+</section>
+<section id="reactive" class="level5">
+<h5 class="anchored" data-anchor-id="reactive">Reactive</h5>
+<p>The <code>interact</code> approach builds on the idea of reactive programming, but has additional magic that automatically creates widgets for you. The more explicit approach provided by Panel is to create each widget yourself, use the <code>pn.depends</code> decorator to declare how those widgets map to function inputs, and then manually compose the widgets and outputs:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ticker <span class="op">=</span> pn.widgets.Select(options<span class="op">=</span>[<span class="st">'AAPL'</span>, ...])</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">@pn.depends</span>(ticker.param.value)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot(ticker):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> plot_obj</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>pn.Row(ticker, plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Thanks to the reactive programming model that underlies Panel, the plot will update whenever any of the declared dependencies of the function change.</p>
+</section>
+<section id="callbacks" class="level5">
+<h5 class="anchored" data-anchor-id="callbacks">Callbacks</h5>
+<p>To achieve full control over updates to different components, it is also possible to define specific callbacks when a parameter on a Panel component changes. These callbacks can in turn modify other components, such as the Panel <code>Row</code>, <code>Column</code>, and <code>Tabs</code> layouts that act like ordinary lists that are already familiar to Python programmers:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>row <span class="op">=</span> pn.Row(<span class="st">'Empty'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>select <span class="op">=</span> pn.widgets.Select(options<span class="op">=</span>[<span class="st">'AAPL'</span>, ...])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cb(event):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    row[<span class="dv">0</span>] <span class="op">=</span> bokeh_fig <span class="co"># Replace a component</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>select.param.watch(cb, <span class="st">'value'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Users can choose between these three different approaches to ensure they have just the right level of control needed for a particular use case while being able to build dashboards of any complexity.</p>
+</section>
+</section>
+<section id="compatibility-with-the-python-ecosystem" class="level4">
+<h4 class="anchored" data-anchor-id="compatibility-with-the-python-ecosystem">Compatibility with the Python ecosystem</h4>
+<p>Compared to other Python dashboarding frameworks, Panel is novel in that it supports nearly all common Python plotting libraries and automatically chooses the appropriate representation for basic Python types and other objects in the Python ecosystem. A straightforward example is a Pandas dataframe, which will automatically be given the rich HTML representation users will be familiar with when working inside a notebook environment.</p>
+<p>In the previous example we rendered the plot using hvPlot (and Bokeh), but the same example works just as well with <a href="https://holoviz-dev.github.io/panel/gallery/apis/stocks_matplotlib.html">matplotlib</a>, <a href="https://holoviz-dev.github.io/panel/gallery/apis/stocks_altair.html">altair</a> or <a href="https://holoviz-dev.github.io/panel/gallery/apis/stocks_plotly.html">Plotly</a>. To demonstrate this, let us look at an example showing four plots of the <a href="https://www.gapminder.org/">Gapminder data</a> implemented using each of these libraries, displayed in a single dashboard:</p>
+<div style="font-color: lightgray; font-size: 1em;">
+<a href="https://gapminder.pyviz.demo.anaconda.com/"><img src="./images/gapminder_opt.gif" width="70%" style="margin-left: auto; margin-right: auto; display: block;"></a>
+<center>
+Gapminder data visualized using hvPlot (Bokeh), altair (Vega), Matplotlib and Plotly in one dashboard (Click the image to try out the deployed app).
+</center>
+</div>
+<p><br></p>
+</section>
+<section id="dynamic-dashboards" class="level4">
+<h4 class="anchored" data-anchor-id="dynamic-dashboards">Dynamic dashboards</h4>
+<p>Another important design goal for Panel was the ability to build dynamic dashboards where components can easily be added, removed, or updated. This makes it possible to build even the most complex dashboards, including multi-stage processing pipelines. In the example below, we build an object recognition and classification tool from a number of independent stages, which are connected into a single pipeline:</p>
+<video width="640" height="480" style="margin-left: auto; margin-right: auto; display: block;" controls="">
+<source src="images/classifier.mp4" type="video/mp4">
+<p>Your browser does not appear to support the video tag. </p>
+<p><br></p>
+<p>The ability to dynamically update and replace individual components or the entire content of the app opens up the flexibility to build everything from dynamic UIs to entire multi-stage, data processing pipelines, as demonstrated above.</p>
+</video></section>
+<section id="broad-and-expanding-library-of-components" class="level4">
+<h4 class="anchored" data-anchor-id="broad-and-expanding-library-of-components">Broad and expanding library of components</h4>
+<p>Panel ships with a wide array of components providing a large set of widgets, a number of powerful layout components, and most importantly a collection of “pane” types that provide a visible representation of some underlying object, e.g.&nbsp;a plot, image or dataframe.</p>
+<p><img src="./images/panel_components.png" width="80%" style="margin-left: auto; margin-right: auto; display: block;"></p>
+<p>Because Panel is built on the technology underlying Bokeh, it is straightforward to extend it with arbitrary custom models implemented in JavaScript. It is even simpler to implement a new Pane class that provides a visual representation for any Python object not currently handled by Panel. In this way, Panel can easily be extended to visualize objects of almost any type and provide useful representations for objects anyone uses in their day-to-day work.</p>
+</section>
+<section id="layouts-and-styling" class="level4">
+<h4 class="anchored" data-anchor-id="layouts-and-styling">Layouts and styling</h4>
+<p>Panel exposes the incredibly powerful layout engine built into the Bokeh library and also provides the ability to style different components directly, using Bokeh themes or, when more control is required, using CSS. This makes it possible to build dashboards that resize reactively to the current size of the browser window, or to extensively customize the visual appearance. As an example, take a look at the Datashader dashboard below with a responsively resizing plot and custom dark-theme styling:</p>
+<p><img src="./images/datashader_dashboard_resize_small_opt.gif" width="70%" style="margin-left: auto; margin-right: auto; display: block;"></p>
+</section>
+<section id="deployment" class="level3">
+<h3 class="anchored" data-anchor-id="deployment">Deployment</h3>
+<p>The final piece that was very important to us when designing Panel was that the deployment story should be straightforward. Thanks to Bokeh Server, large parts of this problem were already solved, providing us with Websocket communication with support for binary transfer, as well as streaming and patching data. On top of this mechanism, we focused on making it quick to iterate between Jupyter notebook and deployed server contexts by allowing users to denote any Panel object in a notebook with <code>.servable()</code>, which indicates that it can be deployed separately as an app while still letting it display itself in the notebook, without any code changes.</p>
+<p>Over the coming weeks we will also add detailed guides to explain the Python-server deployment procedure on different platforms, including AWS, Google Cloud, Heroku, and Anaconda Enterprise. In many cases Panel objects can also be exported to static, standalone HTML/JavaScript files that no longer need a Python server, either by linking widgets to display properties using JS or by sampling the output of the state space of a set of widgets, capturing the possible results in the file so that it can be distributed on websites or in emails without a running Python process.</p>
+</section>
+<section id="architecture" class="level2">
+<h2 class="anchored" data-anchor-id="architecture">Architecture</h2>
+<p>Panel is built on top of two main libraries:</p>
+<ul>
+<li><a href="https://bokeh.pydata.org/en/latest/">Bokeh</a> provides the model-view-controller framework on which Panel is built, along with many of the core components such as the widgets and layout engine</li>
+<li><a href="https://github.com/pyviz/param">Param</a> provides a framework for reactive parameters which are used to define all Panel components.</li>
+</ul>
+<p>The choice to build an API on top of Bokeh instead of simply extending it was driven by a number of core requirements. One of the most important was the ability to transition seamlessly between notebook and deployed server contexts, and doing so efficiently and in a scalable way. Another was the flexibility afforded by being able to dynamically generate a Bokeh representation for each view of a Panel object, encouraging reuse and composability of components. A third reason was to make it clear that Panel supports any viewable Python object, including plots from dozens of different libraries, not just Bokeh plots (Panel uses Bokeh internals and technology, but in no way assumes that you will use it with Bokeh plots).</p>
+<p>Most importantly, however, we wanted to design an API that provides a high degree of both flexibility and simplicity. Many of the most common operations for displaying, saving, and serving a dashboard are exposed directly on Panel objects and uniformly across them, making it simpler to work with them. Additionally, updating and even dynamically adding/removing/replacing the indvidual components of a dashboard are as easy as manipulating a list or dictionary in Python. Of course, Panel should not be seen to be in competition with Bokeh; it simply provides higher-level abstractions on top of Bokeh. If needed, Bokeh components can easily be used from within Panel, and Panel components can easily be converted into Bokeh models which can be embedded in a larger Bokeh application.</p>
+</section>
+<section id="comparison-to-other-dashboarding-and-widget-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-to-other-dashboarding-and-widget-libraries">Comparison to other dashboarding and widget libraries</h2>
+<p>Panel is a new library in this space but it is heavily inspired by existing concepts and technologies that have in many cases been around for decades. The three main inspirations for Panel were R’s <a href="http://shiny.rstudio.com/">Shiny</a> library, Jupyter’s <a href="https://ipywidgets.readthedocs.io/en/stable/">ipywidgets</a> library, and Plotly’s <a href="https://plot.ly/products/dash/">Dash</a> and we owe all three libraries/ecosystems much gratitude for pioneering.</p>
+<section id="shiny" class="level3">
+<h3 class="anchored" data-anchor-id="shiny">Shiny</h3>
+<p>For anyone who performs analysis in the R programming language, Shiny provides an incredibly powerful and well polished framework for building web applications. It sets an incredibly high bar, from which Panel has taken large amounts of inspiration. In particular, the reactive patterns in Panel are closely modeled on Shiny, and Panel hopes to provide a similarly easy entrypoint for developing web applications in the Python ecosystem. Despite the similarities, Panel is not merely a Shiny clone for Python. In addition to the different constraints imposed by a different language, Panel takes a much more explicit approach toward the UI layout, which is usually separated into a separate file from the business logic in Shiny.</p>
+</section>
+<section id="jupyteripywidgets" class="level3">
+<h3 class="anchored" data-anchor-id="jupyteripywidgets">Jupyter/ipywidgets</h3>
+<p>The Jupyter ecosystem has led to an explosion in the ability to share and disseminate the results of analysis and been a major driver in pushing Python as the most important programming language in scientific analysis, data science, and machine learning. Within the Jupyter ecosystem, the ipywidgets library has provided the foundation for building interactive components and embedding them in a notebook. The community that has developed around this ecosystem has been a major inspiration and many core ideas in Panel are built on concepts popularized by these libraries, including the ability of objects to display themselves with rich representations, easily defining links between components in JS code, and Panel’s <code>interact</code> API. The main difference between Panel and ipywidgets is that the Panel architecture is not closely coupled to the IPython kernel that runs interactive computations in Jupyter. Although Panel fully supports operation in Jupyter notebooks, it is based on a generalized Python/JS communication method that is also fully supported on standalone non-Jupyter servers, making Panel apps work equally well inside and outside of Jupyter contexts.</p>
+</section>
+<section id="dash" class="level3">
+<h3 class="anchored" data-anchor-id="dash">Dash</h3>
+<p>Like Panel, Plotly’s 2017 Dash library allows building very complex and highly polished applications straight from Python. Dash is also built on a reactive programming model that (along with Shiny) was a big inspiration for some of the features in Panel. Panel and Dash are quite different in other ways, though. Dash is (by design) focused specifically on support for Plotly plots, while Panel is agnostic about what objects are being displayed, and is designed to support whatever visualization or analysis tools are most appropriate for your workflows. Dash also typically requires much more detailed knowledge of low-level web development, while Panel allows users to simply drop in their components, building a usable dashboard in just a few lines of Pythonic code.</p>
+</section>
+</section>
+<section id="open-source-license-community" class="level2">
+<h2 class="anchored" data-anchor-id="open-source-license-community">Open source license &amp; Community</h2>
+<p>Panel is BSD licensed and therefore free to use and modify by anyone and everyone. We built Panel to make our consulting work easier and give the individuals in those organization more power, but developing something among a small group of developers only goes so far. We believe everyone benefits when communities join their efforts to build tools together. So if you are interested in contributing to Panel or even just have suggestions for features, fixes, and improvements, join us on <a href="https://github.com/pyviz/panel">GitHub</a> or <a href="https://gitter.im/pyviz/pyviz">Gitter</a>.</p>
+<p>Thanks for checking out Panel! We will be giving a talk and tutorial about it at <a href="https://www.scipy2019.scipy.org/">SciPy 2019</a> in July and are actively working on building further materials, including more demos, tutorials, and examples in the coming weeks and months!</p>
+</section>
+<section id="further-resources" class="level2">
+<h2 class="anchored" data-anchor-id="further-resources">Further resources</h2>
+<ul>
+<li>Our documentation is hosted at https://panel.pyviz.org</li>
+<li>The main development repository for Panel is on <a href="https://github.com/pyviz/panel">GitHub</a></li>
+<li>Join us on Twitter <a href="https://twitter.com/PyViz_org"><span class="citation" data-cites="PyViz_org">@PyViz_org</span></a></li>
+<li>Find a collection of demos and examples on <a href="https://github.com/pyviz-topics/examples">GitHub</a></li>
+</ul>
+<section id="talks" class="level3">
+<h3 class="anchored" data-anchor-id="talks">Talks</h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=DZREg1quQ_k">Easy Dashboards for Any Visualization in AE5, with Panel</a></li>
+<li><a href="https://www.youtube.com/watch?v=zUOoVKgLLGY">Rapid Prototyping and Deployment Using the PyViz Stack and Anaconda Enterprise</a></li>
+<li><a href="https://www.youtube.com/watch?v=-XMXNmGRk5c">Visualizing &amp; Analyzing Earth Science Data Using PyViz &amp; PyData</a></li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/blog\.holoviz\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Copyright 2023 Holoviz contributors</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.dev/holoviz-dev/blog/blob/main/posts/panel_announcement/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

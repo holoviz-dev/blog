@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>HoloViz Blog</title>
+<link>https://blog.holoviz.org/</link>
+<atom:link href="https://blog.holoviz.org/index.xml" rel="self" type="application/rss+xml"/>
+<description>The HoloViz Blog</description>
+<generator>quarto-1.7.32</generator>
+<lastBuildDate>Fri, 01 Aug 2025 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Plotting made easy with hvPlot: 0.12 release</title>
+  <dc:creator>Maxime Liquet</dc:creator>
+  <link>https://blog.holoviz.org/posts/hvplot_release_0.12/</link>
+  <description><![CDATA[ Release announcement for hvPlot 0.12, including major expansion and improvement of the reference documentation, more hover information on rasterized plots, new toolbar and legend options, and more! ]]></description>
+  <category>release</category>
+  <category>hvplot</category>
+  <guid>https://blog.holoviz.org/posts/hvplot_release_0.12/</guid>
+  <pubDate>Fri, 01 Aug 2025 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/hvplot_release_0.12/images/thumbnail.png" medium="image" type="image/png" height="123" width="144"/>
+</item>
+<item>
+  <title>Panel Material UI Announcement</title>
+  <dc:creator>Philipp Rudiger</dc:creator>
+  <link>https://blog.holoviz.org/posts/panel_material_ui_announcement/</link>
+  <description><![CDATA[ Announcing the release of panel-material-ui, a new extension that wraps Material UI components in Panel. ]]></description>
+  <category>announcement</category>
+  <category>panel</category>
+  <guid>https://blog.holoviz.org/posts/panel_material_ui_announcement/</guid>
+  <pubDate>Fri, 11 Jul 2025 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/panel_material_ui_announcement/images/panel-material-ui-components.png" medium="image" type="image/png" height="110" width="144"/>
+</item>
+<item>
+  <title>Lumen AI Announcement</title>
+  <dc:creator>Philipp Rudiger &amp; Andrew Huang</dc:creator>
+  <link>https://blog.holoviz.org/posts/lumen_ai_announcement/</link>
+  <description><![CDATA[ Announcing the release of Lumen AI ]]></description>
+  <category>announcement</category>
+  <category>lumen</category>
+  <guid>https://blog.holoviz.org/posts/lumen_ai_announcement/</guid>
+  <pubDate>Wed, 19 Feb 2025 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/lumen_ai_announcement/images/ai-diagram.png" medium="image" type="image/png" height="38" width="144"/>
+</item>
+<item>
+  <title>HoloViz and Bokeh for Neuroscience</title>
+  <link>https://blog.holoviz.org/posts/czi_r5/</link>
+  <description><![CDATA[ Foundational enhancements and biomedical workflows for interactive visualization of large timeseries and microscopy data, made possible by the CZI EOSS initiative. ]]></description>
+  <category>holoviz</category>
+  <category>bokeh</category>
+  <category>neuroscience</category>
+  <category>holoviews</category>
+  <category>panel</category>
+  <category>hvPlot</category>
+  <category>HoloNote</category>
+  <guid>https://blog.holoviz.org/posts/czi_r5/</guid>
+  <pubDate>Tue, 04 Feb 2025 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/czi_r5/images/timelapse_microscopy.png" medium="image" type="image/png" height="108" width="144"/>
+</item>
+<item>
+  <title>HoloViews 1.20 - A year in review</title>
+  <dc:creator>Simon Hansen</dc:creator>
+  <link>https://blog.holoviz.org/posts/hv_release_1.20/</link>
+  <description><![CDATA[ Release announcement for HoloViews 1.20 ]]></description>
+  <category>holoviews</category>
+  <category>release</category>
+  <guid>https://blog.holoviz.org/posts/hv_release_1.20/</guid>
+  <pubDate>Mon, 30 Dec 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/hv_release_1.20/images/collage.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
+<item>
+  <title>HoloViz Examples Gallery Modernization</title>
+  <dc:creator>Junshen Tao</dc:creator>
+  <dc:creator>Isaiah Akorita</dc:creator>
+  <dc:creator>Demetris Roumis</dc:creator>
+  <dc:creator>Maxime Liquet</dc:creator>
+  <link>https://blog.holoviz.org/posts/examples-website-modernization/</link>
+  <description><![CDATA[ Announcement of the modernized version of the HoloViz examples gallery, a curated collection of domain-specific narrative examples using various HoloViz projects. ]]></description>
+  <category>announcement</category>
+  <guid>https://blog.holoviz.org/posts/examples-website-modernization/</guid>
+  <pubDate>Wed, 11 Dec 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/examples-website-modernization/images/thumbnail.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Plotting made easy with hvPlot: 0.11 release</title>
+  <dc:creator>Maxime Liquet</dc:creator>
+  <link>https://blog.holoviz.org/posts/hvplot_release_0.11/</link>
+  <description><![CDATA[ Release announcement for hvPlot 0.11, including: DuckDB integration, automatic lat/lon conversion on tiled maps, subcoordinate-y axis support, and more! ]]></description>
+  <category>release</category>
+  <category>hvplot</category>
+  <guid>https://blog.holoviz.org/posts/hvplot_release_0.11/</guid>
+  <pubDate>Fri, 27 Sep 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/hvplot_release_0.11/images/thumbnail.png" medium="image" type="image/png" height="63" width="144"/>
+</item>
+<item>
+  <title>Panel 1.5.0 Release</title>
+  <dc:creator>Philipp Rudiger</dc:creator>
+  <link>https://blog.holoviz.org/posts/panel_release_1.5/</link>
+  <description><![CDATA[ Release announcement for Panel 1.5 ]]></description>
+  <category>release</category>
+  <category>panel</category>
+  <guid>https://blog.holoviz.org/posts/panel_release_1.5/</guid>
+  <pubDate>Fri, 13 Sep 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/panel_release_1.5/images/collage_1.5.png" medium="image" type="image/png" height="48" width="144"/>
+</item>
+<item>
+  <title>Plotting made easy with hvPlot: 0.9 and 0.10 releases</title>
+  <dc:creator>Maxime Liquet</dc:creator>
+  <link>https://blog.holoviz.org/posts/hvplot_release_0.10/</link>
+  <description><![CDATA[ Release announcement for hvPlot 0.9 and 0.10, including: Polars integration, Xarray support added to the Explorer, Large timeseries exploration made easier, and more! ]]></description>
+  <category>release</category>
+  <category>hvplot</category>
+  <guid>https://blog.holoviz.org/posts/hvplot_release_0.10/</guid>
+  <pubDate>Mon, 06 May 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/hvplot_release_0.10/images/thumbnail.png" medium="image" type="image/png" height="65" width="144"/>
+</item>
+<item>
+  <title>Panel 1.4.0 Release</title>
+  <dc:creator>Philipp Rudiger</dc:creator>
+  <link>https://blog.holoviz.org/posts/panel_release_1.4/</link>
+  <description><![CDATA[ Release announcement for Panel 1.4 ]]></description>
+  <category>release</category>
+  <category>panel</category>
+  <guid>https://blog.holoviz.org/posts/panel_release_1.4/</guid>
+  <pubDate>Thu, 28 Mar 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://blog.holoviz.org/posts/panel_release_1.4/images/collage_1.4.png" medium="image" type="image/png" height="48" width="144"/>
+</item>
+</channel>
+</rss>

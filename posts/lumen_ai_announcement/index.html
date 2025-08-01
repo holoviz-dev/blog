@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Philipp Rudiger &amp; Andrew Huang">
+<meta name="dcterms.date" content="2025-02-19">
+<meta name="description" content="Announcing the release of Lumen AI">
+
+<title>Lumen AI Announcement – HoloViz Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fe5109ec0aa56e05eeb38907d446501d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+    window.goatcounter = {
+        path: function(p) { return location.host + p }
+    }
+</script>
+<script data-goatcounter="https://holoviz.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+
+
+<link rel="stylesheet" href="../../custom.css">
+<meta property="og:title" content="Lumen AI Announcement – HoloViz Blog">
+<meta property="og:description" content="Announcing the release of Lumen AI">
+<meta property="og:image" content="https://blog.holoviz.org/posts/lumen_ai_announcement/images/ai-diagram.png">
+<meta property="og:site_name" content="HoloViz Blog">
+<meta property="og:image:height" content="1475">
+<meta property="og:image:width" content="5608">
+<meta name="twitter:title" content="Lumen AI Announcement – HoloViz Blog">
+<meta name="twitter:description" content="Announcing the release of Lumen AI">
+<meta name="twitter:image" content="https://blog.holoviz.org/posts/lumen_ai_announcement/images/ai-diagram.png">
+<meta name="twitter:site" content="@HoloViz_org">
+<meta name="twitter:image-height" content="1475">
+<meta name="twitter:image-width" content="5608">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="https://holoviz.org" class="navbar-brand navbar-brand-logo">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-learn" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Learn</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-learn">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/presentations/index.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/background.html">
+ <span class="dropdown-text">Background</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/FAQ.html">
+ <span class="dropdown-text">FAQ</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/tutorial/index.html"> 
+<span class="menu-text">Tutorial</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://examples.holoviz.org/"> 
+<span class="menu-text">Examples</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/community.html"> 
+<span class="menu-text">Community</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/contribute.html"> 
+<span class="menu-text">Contribute</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-about">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/index.html">
+ <span class="dropdown-text">About Us</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/governance/index.html">
+ <span class="dropdown-text">Governance</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/heps/index.html">
+ <span class="dropdown-text">HEPs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/roadmap.html">
+ <span class="dropdown-text">Roadmap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/funding.html">
+ <span class="dropdown-text">Funding</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/holoviz" title="HoloViz Github" class="quarto-navigation-tool px-1" aria-label="HoloViz Github"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/holoviz_org" title="HoloViz Twitter" class="quarto-navigation-tool px-1" aria-label="HoloViz Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://discourse.holoviz.org" title="HoloViz Forum" class="quarto-navigation-tool px-1" aria-label="HoloViz Forum"><i class="bi bi-chat-text"></i></a>
+    <a href="https://discord.gg/UXdtYyGVQX" title="HoloViz Discord" class="quarto-navigation-tool px-1" aria-label="HoloViz Discord"><i class="bi bi-discord"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-it" id="toc-what-is-it" class="nav-link active" data-scroll-target="#what-is-it">What is it?</a></li>
+  <li><a href="#why-did-we-build-it" id="toc-why-did-we-build-it" class="nav-link" data-scroll-target="#why-did-we-build-it">Why did we build it?</a></li>
+  <li><a href="#use-cases" id="toc-use-cases" class="nav-link" data-scroll-target="#use-cases">Use Cases</a>
+  <ul class="collapse">
+  <li><a href="#local-data-exploration" id="toc-local-data-exploration" class="nav-link" data-scroll-target="#local-data-exploration">Local Data Exploration</a></li>
+  <li><a href="#enterprise" id="toc-enterprise" class="nav-link" data-scroll-target="#enterprise">Enterprise</a></li>
+  </ul></li>
+  <li><a href="#comparisons" id="toc-comparisons" class="nav-link" data-scroll-target="#comparisons">Comparisons</a></li>
+  <li><a href="#how-does-it-work" id="toc-how-does-it-work" class="nav-link" data-scroll-target="#how-does-it-work">How does it work?</a>
+  <ul class="collapse">
+  <li><a href="#actors" id="toc-actors" class="nav-link" data-scroll-target="#actors">Actors</a></li>
+  <li><a href="#llms" id="toc-llms" class="nav-link" data-scroll-target="#llms">LLMs</a></li>
+  <li><a href="#prompting-context" id="toc-prompting-context" class="nav-link" data-scroll-target="#prompting-context">Prompting &amp; Context</a></li>
+  <li><a href="#ui" id="toc-ui" class="nav-link" data-scroll-target="#ui">UI</a></li>
+  </ul></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s next?</a></li>
+  <li><a href="#try-it-out" id="toc-try-it-out" class="nav-link" data-scroll-target="#try-it-out">Try it out!</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.dev/holoviz-dev/blog/blob/main/posts/lumen_ai_announcement/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lumen AI Announcement</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">announcement</div>
+    <div class="quarto-category">lumen</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Announcing the release of Lumen AI
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Philipp Rudiger &amp; Andrew Huang </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 19, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<video controls="" style="width: 100%;">
+<source src="./images/explorer.webm" type="video/webm">
+</video>
+<section id="what-is-it" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-it">What is it?</h2>
+<p>Today we are extremely excited to announce the public availability of Lumen AI. Lumen is a <strong>fully open-source</strong> and extensible <strong>agent based framework</strong> for <strong>chatting with data and for retrieval augmented generation (RAG)</strong>. The declarative nature of Lumen’s data model makes it possible for LLMs to easily <strong>generate entire data transformation pipelines, visualizations,</strong> and other many other types of output. Once generated, the data pipelines and visual output can be easily serialized, making it possible to share them, to continue the analysis in a notebook, and/or build entire dashboards.</p>
+<ul>
+<li><strong>Generate SQL</strong>: Generate data pipelines on top of local or remote files, SQL databases or your data lake.</li>
+<li><strong>Provide context and embeddings</strong>: Give Lumen access to your documents to give the LLM the context it needs.</li>
+<li><strong>Visualize your data</strong>: Generate everything from charts to powerful data tables or entire <strong>dashboards</strong> using natural language.</li>
+<li><strong>Inspect, validate and edit results</strong>: All LLM outputs can easily be inspected for mistakes, refined, and manually edited if needed.</li>
+<li><strong>Summarize results and key insights</strong>: Have the LLM summarize key results and extract important insights.</li>
+<li><strong>Custom analyses, agents and tools</strong>: Extend Lumen custom agents, tools, and analyses to generate deep insights tailored to your domain.</li>
+</ul>
+<p>Lumen sets itself apart from other agent-based frameworks in that it focuses on being fully open and extensible. With powerful internal primitives for expressing complex data transformations, the LLM can gain insights into your datasets right out of the box, and <strong>can be further tailored with custom agents, analyses and tools</strong> to empower even non-programmers to perform complex analyses without having to code. The customization makes it possible to generate any type of output, allow the user and the LLM to perform analyses tailored to your domain, and look up additional information and context easily. Since Lumen is built on <a href="https://panel.holoviz.org">Panel</a> it can render almost any type of output with little to no effort, ensuring that even the most esoteric usecase is easily possible.</p>
+<p>The declarative Lumen data model further sets it apart from other tools, making it easy for LLMs to populate custom components and making it easy for the user to share the results. Entire multi-step data transformation pipelines, whether in SQL or Python, can easily be captured and used to drive custom visualizations, interactive tables and more. Once generated, the declarative nature of the Lumen specification allows them to be shared, reproducing them in a notebook or composing them through a drag-and-drop interface into a dashboard.</p>
+<p><a href="images/ai-diagram.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/ai-diagram.png" class="img-fluid"></a></p>
+<p>Lumen is a young project and we have a lot of plans to build out the framework further (see the What’s next? section for more details). For now we are just excited to share it with the world and let you try it!</p>
+</section>
+<section id="why-did-we-build-it" class="level2">
+<h2 class="anchored" data-anchor-id="why-did-we-build-it">Why did we build it?</h2>
+<p>It isn’t news that many <strong>organizations struggle to derive real insights from their data</strong>. This is either because finding and retaining talent is difficult or because there are so many tools out there. When we first created Lumen a few years ago the vision was to build a declarative specification for data transformation pipelines and visualizations specifically tailored to build data applications. The motivation was to make it possible to build templatable dashboards and have a specification that we could target to generate dashboards using a no-code UI, i.e.&nbsp;the user would click through a wizard, connect to pre-defined data sources, specify the visualization they wanted, lay them out on a grid and then deploy them.</p>
+<p>The main selling point that would set this solution apart from other similar solutions was that it should be easy to implement custom data sources, transforms and views (i.e.&nbsp;visualizations, BI indicators, tables etc.). While this approach worked, we found it was actually very, very difficult to build a no-code solution that would be intuitive enough for beginners to use while still allowing for the flexibility that is required in real world scenarios - turns out there’s actually a reason why Tableau and PowerBI are as successful as they are despite them being cumbersome to use. So for about a year we put Lumen on the back burner.</p>
+<p>In late 2023 the first inkling of the AI/LLM “revolution” (or hype cycle if you prefer) started and we immediately thought of Lumen: “can we teach an LLM to generate a Lumen specification?” Initial attempts at one-shot generation were promising but not particularly convincing. Similarly, early open-source models struggled to provide consistent and high-quality results. Over time as more powerful models were released and an ecosystem of Python libraries for structured output generation emerged, we settled on a basic architecture, which would leverage the existing HoloViz ecosystem for declaring interactive components, the Lumen specification as the structured output format to target, and <a href="https://python.useinstructor.com/">Instructor</a> for generating that structured output. Since then we have been working on ensuring robustness, extensibility and building an intuitive and powerful UI for performing analyses.</p>
+</section>
+<section id="use-cases" class="level2">
+<h2 class="anchored" data-anchor-id="use-cases">Use Cases</h2>
+<p>Lumen AI is a generally useful tool that can be adapted and customized for specific use cases by adding custom agents, analyses and tools. However, even without such customization it can be useful for data exploration, writing SQL and generating plots and charts.</p>
+<section id="local-data-exploration" class="level3">
+<h3 class="anchored" data-anchor-id="local-data-exploration">Local Data Exploration</h3>
+<p>In the simple case Lumen AI is an excellent companion for performing some quick data analysis without writing code. E.g. if you want to perform a quick aggregation on some local (or remote) file, just launch Lumen with <code>lumen-ai serve &lt;my-file&gt;.&lt;csv|parquet|xlsx&gt;</code> and generate some SQL queries, download the data, or export the analysis to a notebook to pick it up from there.</p>
+</section>
+<section id="enterprise" class="level3">
+<h3 class="anchored" data-anchor-id="enterprise">Enterprise</h3>
+<p>The enterprise use case is what we designed Lumen for. We discovered early on that while LLMs are relatively good at writing SQL and generating simple plots, in most enterprise settings you have a ton of documentation and context about different datasets, you are frequently performing very similar analyses, and generating similar reports and charts. Therefore we envision the real value of Lumen AI to be custom deployments which are specifically tailored to a particular domain. To make this a bit more concrete let’s envision a set up where we configure custom data sources, analyses and tools.</p>
+<section id="data-sources" class="level4">
+<h4 class="anchored" data-anchor-id="data-sources">Data Sources</h4>
+<p>Let’s say the company you are working for has a Snowflake database containing all business operation data. Here at <a href="https://anaconda.com/">Anaconda</a> Snowflake might hold datasets of conda downloads by package, a list of our customers and their subscriptions, results of marketing campaigns and much more. To make this data available to Lumen AI we might configure a <code>SnowflakeSource</code>, <a href="https://panel.holoviz.org/how_to/authentication/configuration.html">set up OAuth</a> using the existing Panel integrations and configure the OAuth provider with the Snowflake authorization server. This allows us to use the access token to authorize with the Snowflake as the user accessing the app, ensuring that Lumen AI only receives the permissions that are granted to the user accessing the app.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> SnowflakeSource(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    account<span class="op">=</span>...,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    authenticator<span class="op">=</span><span class="st">'token'</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    token<span class="op">=</span>pn.state.access_token</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>lmai.ExplorerUI(source).servable()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="analyses" class="level4">
+<h4 class="anchored" data-anchor-id="analyses">Analyses</h4>
+<p>Another avenue for customization is the ability to define custom <code>Analysis</code> classes that the LLM can invoke and that can be automatically suggested to the user based on the current context (i.e.&nbsp;depending on the dataset that is currently loaded). As an example, let’s say the user has asked to see the table of conda downloads with detailed breakdowns per package. We can easily implement a custom <code>Analysis</code> that detects the presence of certain column(s) and suggests to the user that they can generate a report of conda downloads over the past month or year. This way we can automatically empower users to generate custom reports and analysis given the current context and also allow the agents to invoke these directly.</p>
+<p>A simplified implementation of an <code>Analysis</code> might look like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CondaReport(Analysis):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">async</span> <span class="kw">def</span> applies(cls, pipeline):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'pkg_name'</span> <span class="kw">in</span> pipeline.data <span class="kw">and</span> <span class="st">'counts'</span> <span class="kw">in</span> pipeline.data</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, pipeline):</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> pipeline.data</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        total <span class="op">=</span> df[df.pkg_name <span class="op">==</span> <span class="st">'lumen'</span>].counts.<span class="bu">sum</span>()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> Column(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">'# Lumen Package Report'</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            Markdown(<span class="ss">f"Downloads: </span><span class="sc">{</span>total<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="tools-rag" class="level4">
+<h4 class="anchored" data-anchor-id="tools-rag">Tools &amp; RAG</h4>
+<p>All companies have vast stores of documentation and metadata but often these are difficult to access and link. Lumen AI makes it easy to integrate custom tools that look up information in different places, e.g.&nbsp;let’s say we want Lumen to be able to link to relevant Jira issues. We can write a simple function:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jira_lookup(topic: <span class="bu">str</span>):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> jira.search_issues(<span class="ss">f'summary ~ "</span><span class="ch">\\</span><span class="ss">[topic</span><span class="ch">\\</span><span class="ss">]"'</span>, maxResults<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    summary <span class="op">=</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(<span class="ss">f'</span><span class="sc">{</span>issue<span class="sc">.</span>fields<span class="sc">.</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>result<span class="sc">.</span>field<span class="sc">.</span>summary<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> result <span class="kw">in</span> results)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="comparisons" class="level2">
+<h2 class="anchored" data-anchor-id="comparisons">Comparisons</h2>
+<p>Agentic AI frameworks are being developed rapidly and standards are only slowly evolving, so building on top of an existing framework would have severely constrained development of Lumen AI. Libraries such as LangGraph, AutoGen, Phi, and CrewAI were just emerging as we were building Lumen AI and to ensure maximum flexibility we decided to begin by building our own architecture and adopt emerging standards as they were widely adopted. There is however another reason that we did not simply build on existing frameworks, and that is because the scope of Lumen AI differs from those other projects, in that the focus of Lumen AI isn’t building a web service but to directly interact with the user, generating rich outputs, having the ability to use forms and other input modalities to interact with the user.</p>
+<p>Specifically there were a few requirements we had for our <code>Agent</code> (or rather <code>Actor</code>) architecture:</p>
+<ul>
+<li>We wanted to make the actions of our <code>Actor</code>s as transparent as possible, i.e.&nbsp;the user should be able to inspect, revise and refine the generated outputs and follow along with the reasoning the LLMs used to arrive at those outputs.</li>
+<li>An <code>Actor</code> should be able to render rich outputs and interact with the user in a richer format that merely chatting back and forth, e.g.&nbsp;ask the user to fill out a form.</li>
+<li>Our <code>Actor</code>s are solving complex challenges and we wanted to be able to encapsulate complex pipelines that combine user inputs, data transformations, and LLM calls into a single unit.</li>
+</ul>
+<p>These core differences meant that we needed an architecture that would allow us to specify complex prompts, multiple chained prompts, mixed-type outputs, e.g.&nbsp;text and plots, and our agents should be interact with the users using the rich UI features that building on Panel allows. So don’t think of Lumen as yet another agent framework but as a more holistic approach that allows writing agents with rich UI interactions to deliver any kind of output to the user.</p>
+<p>As we move forward we will adopt more of the standards that have recently emerged, e.g.&nbsp;the <a href="https://www.anthropic.com/news/model-context-protocol">model context protocol</a>, and integrate with popular agent frameworks.</p>
+</section>
+<section id="how-does-it-work" class="level2">
+<h2 class="anchored" data-anchor-id="how-does-it-work">How does it work?</h2>
+<p>As anyone even vaguely familiar with LLM trends will know, everything now centers around so called AI <strong>agents</strong>. We strongly recommend reading Anthropic’s recent blog post on <a href="https://www.anthropic.com/research/building-effective-agents">“building effective agents”</a> to unpack what defines an agent and how to build an effective one. What is clear is that the exact definition of “agents” is somewhat up in the air, so let’s take it from the horse’s mouth and ask ChatGPT to define AI agents:</p>
+<blockquote class="blockquote">
+<p>An AI agent is an autonomous system that perceives its environment, makes decisions using some form of intelligence or reasoning, and takes actions to achieve specified goals.</p>
+</blockquote>
+<p>So clearly an autonomous system that builds data pipelines, visualizations and dashboards falls under the definition of an agent. In other words our goal in building Lumen AI was to build a so-called agentic system, and since the process of building a data pipeline differs from defining a visualization we would want a set of specialized agents that would co-operate to solve the user’s query. Instead of calling everything an <code>Agent</code> we refer to any component that can perform an action on the user’s (or an LLM’s) behalf an <code>Actor</code>.</p>
+<section id="actors" class="level3">
+<h3 class="anchored" data-anchor-id="actors">Actors</h3>
+<p>In our design <code>Actor</code>s are given a task and then do one of five things:</p>
+<ol type="1">
+<li>They <strong>make a plan</strong> of action.</li>
+<li>They <strong>provide context</strong> for other Actors.</li>
+<li>They <strong>generate text</strong> to either summarize results or provide an indication of progress to the user.</li>
+<li>They <strong>generate visual components</strong> rendering a rich representation of some data (e.g.&nbsp;a table, plot or visual indicator).</li>
+<li>They <strong>perform some action</strong>, e.g.&nbsp;sending an email, deploying an app, etc.</li>
+</ol>
+<p>We further made distinctions between different kinds of Actors:</p>
+<ul>
+<li><code>Coordinator</code>: As the name indicates this kind of <code>Actor</code> coordinates the actions of other Actors, i.e.&nbsp;given a user query it makes a plan and then executes that plan by invoking other agents and tools.</li>
+<li><code>Agent</code>: The <code>Agent</code> is then responsible for solving a particular task and responding to a user, e.g.&nbsp;by generating SQL, executing it and rendering the result as a table.</li>
+<li><code>Tool</code>: A <code>Tool</code> can be invoked by other <code>Actor</code>s to perform some task, e.g.&nbsp;to provide additional context using a Google query or to email out a report.</li>
+</ul>
+<p><a href="./images/planner_diagram.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="./images/planner_diagram.png" class="img-fluid"></a></p>
+</section>
+<section id="llms" class="level3">
+<h3 class="anchored" data-anchor-id="llms">LLMs</h3>
+<p>Without some smarts behind it the <code>Actor</code>s are, of course, nothing. In order to allow our <code>Actor</code>s to call almost any kind of LLM we added light-weight wrappers around the most common LLM providers and support for local models. During development and evaluation we primarily used OpenAI’s <code>gpt-4o-mini</code> model due to its ideal mix of speed, performance, and cost–it is also the default. While Lumen AI supports Mistral and Anthropic models, and plans to eventually include others from Google, Deepseek, etc., these additional options haven’t yet undergone extensive testing.</p>
+<p>In addition to cloud-based solutions, we’ve included llama-cpp-python support. This enables you to run any GGUF model available on Hugging Face—such as Mistral 7B, Qwen 32B, Gemma 7B, or even Llama 70B—depending on your machine’s memory and GPU. A significant advantage of this setup is that these models run locally, ensuring that your input data never leaves your device. Based on our experience, the <code>Qwen2.5-Coder-7B-Instruct</code> model strikes a good balance between local performance and the quality of output and is therefore set as the default when not using cloud providers.</p>
+</section>
+<section id="prompting-context" class="level3">
+<h3 class="anchored" data-anchor-id="prompting-context">Prompting &amp; Context</h3>
+<p>In order to provide the context needed for each <code>Actor</code> to perform its task well they define a set of <code>prompts</code>. The <code>prompts</code> consist of <code>jinja2.Template</code>s and <code>pydantic</code> <code>Model</code>s, which can reference values in the shared <code>memory</code>, e.g.&nbsp;a summary of the current dataset being accessed. Each <code>Actor</code> can also write to the shared <code>memory</code> to make other <code>Actor</code>s aware of the current context. In this way the various <code>Actor</code>s can collaboratively fill in details required to answer the user’s query and generate the desired <code>outputs</code>.</p>
+</section>
+<section id="ui" class="level3">
+<h3 class="anchored" data-anchor-id="ui">UI</h3>
+<p>All components in Lumen are extensible, including the default <code>ExplorerUI</code>. The <code>ExplorerUI</code> is an entrypoint for Lumen that focuses on the ability to quickly preview some data and then initiate so-called explorations. The goal of the explorations is to either load a table directly or transform it and then optionally generate one or more views to visualize the data in some form. We also wanted a quick way for the user to get an overview of the data, so the default <code>ExplorerUI</code> embeds a GraphicWalker component, building on the newly released <a href="https://github.com/panel-extensions/panel-graphic-walker"><code>panel-graphic-walker</code></a> extension.</p>
+<p><img src="./images/explorer-ui_diagram.png" style="display: block; margin: 0 auto; max-width: 800px; width: 75%;"></p>
+</section>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s next?</h2>
+<p>All open-source projects are a work in progress and Lumen AI is no exception. We’re releasing it today because we believe it is already useful as a data exploration tool and to quickly explore large datasets. We also know there’s some way to go in a few respects so we want to be fully transparent in what we expect our next steps to be:</p>
+<ul>
+<li><strong>Rewrite of the UI</strong>: Today the Lumen AI UI is built using core Panel. Over the coming weeks we will release panel-material-ui and then rebuild the application on top of it.</li>
+<li><strong>Better Integration with other frameworks</strong>: Lumen was developed over a year with rapid progress, iteration and competing standards. As standards are settled upon, e.g.&nbsp;the Model Context Protocol, we want to make sure we support these existing standards and can also leverage tools and agents built using other frameworks.</li>
+<li><strong>Improving the documentation</strong>: We know the documentation is currently a little bare-bones. Our main focus over the coming weeks will be to fill the gaps, work up a range of case studies where we create opinionated and highly customized deployments of Lumen AI for specific use cases.</li>
+<li><strong>Validation and Prompt Optimization</strong>: We have some internal validation tests for Lumen but they are nowhere close to complete. We will build out the validation suite and then work on a framework for automated prompt optimization with the help of LLMs.</li>
+<li><strong>More Agents &amp; Tools</strong>: So far we have primarily focused on the core functions which includes SQL generation and basic plotting using Vega and hvPlot. As we continue building Lumen AI we want to provide a richer set of agents to perform more complex analyses.</li>
+<li><strong>Smarter Planning</strong>: The current <code>Coordinator</code> actors perform one-shot planning, which works well for simple cases, but complex multi-step analyses will require some more refinement, introspection and more.</li>
+<li><strong>End-to-End Dashboard Creation</strong>: Since Lumen is built on Panel it is relatively easy to take Lumen generated outputs, arrange them on a grid and deploy the resulting dashboard. Currently this requires a multi-step process involving exporting the analysis as a notebook, launching the drag-and-drop interface on a Jupyter server and then deploying the resulting application. We want this capability to be built directly into Lumen so you can build an end-to-end dashboard or report entirely in the Lumen UI.</li>
+</ul>
+</section>
+<section id="try-it-out" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-out">Try it out!</h2>
+<p>We’d love for you to try Lumen out. At its simplest you should be able to run:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="st">"lumen[ai]"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assuming you have configured an <code>OPENAI_API_KEY</code>, <code>MISTRAL_API_KEY</code> or <code>ANTHROPIC_API_KEY</code> you can launch the explorer UI from the commandline with:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lumen-ai</span> serve https://datasets.holoviz.org/windturbines/v1/windturbines.parquet <span class="at">--show</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>which will open the UI! Check out <a href="https://lumen.holoviz.org/lumen_ai/getting_started/index.html">Getting Started</a> for more info!</p>
+<p>We are really excited to hear your feedback, feature requests and more. So:</p>
+<ul>
+<li>⭐ Give us a star on <a href="https://github.com/holoviz/lumen">GitHub</a></li>
+<li>📚 Visit our <a href="https://lumen.holoviz.org/">docs</a></li>
+<li>👩‍💻 File a <a href="https://github.com/holoviz/lumen/issues">feature request on GitHub</a></li>
+<li>💬 Chat with us on <a href="https://discord.gg/VUCR6Yzq">Discord</a></li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/blog\.holoviz\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Copyright 2023 Holoviz contributors</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.dev/holoviz-dev/blog/blob/main/posts/lumen_ai_announcement/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

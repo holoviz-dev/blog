@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="James A. Bednar">
+<meta name="dcterms.date" content="2021-06-23">
+<meta name="description" content="Release announcement for Datashader 0.13">
+
+<title>Datashader 0.13 Release – HoloViz Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fe5109ec0aa56e05eeb38907d446501d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+    window.goatcounter = {
+        path: function(p) { return location.host + p }
+    }
+</script>
+<script data-goatcounter="https://holoviz.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+
+
+<link rel="stylesheet" href="../../custom.css">
+<meta property="og:title" content="Datashader 0.13 Release – HoloViz Blog">
+<meta property="og:description" content="Release announcement for Datashader 0.13">
+<meta property="og:image" content="https://blog.holoviz.org/posts/ds_release_0.13/images/collage_ds0.13.png">
+<meta property="og:site_name" content="HoloViz Blog">
+<meta property="og:image:height" content="896">
+<meta property="og:image:width" content="1694">
+<meta name="twitter:title" content="Datashader 0.13 Release – HoloViz Blog">
+<meta name="twitter:description" content="Release announcement for Datashader 0.13">
+<meta name="twitter:image" content="https://blog.holoviz.org/posts/ds_release_0.13/images/collage_ds0.13.png">
+<meta name="twitter:site" content="@HoloViz_org">
+<meta name="twitter:image-height" content="896">
+<meta name="twitter:image-width" content="1694">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="https://holoviz.org" class="navbar-brand navbar-brand-logo">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-learn" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Learn</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-learn">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/presentations/index.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/background.html">
+ <span class="dropdown-text">Background</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/FAQ.html">
+ <span class="dropdown-text">FAQ</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/tutorial/index.html"> 
+<span class="menu-text">Tutorial</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://examples.holoviz.org/"> 
+<span class="menu-text">Examples</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/community.html"> 
+<span class="menu-text">Community</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/contribute.html"> 
+<span class="menu-text">Contribute</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-about">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/index.html">
+ <span class="dropdown-text">About Us</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/governance/index.html">
+ <span class="dropdown-text">Governance</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/heps/index.html">
+ <span class="dropdown-text">HEPs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/roadmap.html">
+ <span class="dropdown-text">Roadmap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/funding.html">
+ <span class="dropdown-text">Funding</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/holoviz" title="HoloViz Github" class="quarto-navigation-tool px-1" aria-label="HoloViz Github"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/holoviz_org" title="HoloViz Twitter" class="quarto-navigation-tool px-1" aria-label="HoloViz Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://discourse.holoviz.org" title="HoloViz Forum" class="quarto-navigation-tool px-1" aria-label="HoloViz Forum"><i class="bi bi-chat-text"></i></a>
+    <a href="https://discord.gg/UXdtYyGVQX" title="HoloViz Discord" class="quarto-navigation-tool px-1" aria-label="HoloViz Discord"><i class="bi bi-discord"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-datashader" id="toc-what-is-datashader" class="nav-link active" data-scroll-target="#what-is-datashader">What is Datashader?</a></li>
+  <li><a href="#announcing-datashader-0.13" id="toc-announcing-datashader-0.13" class="nav-link" data-scroll-target="#announcing-datashader-0.13">Announcing Datashader 0.13!</a></li>
+  <li><a href="#matplotlib-artist-for-datashader" id="toc-matplotlib-artist-for-datashader" class="nav-link" data-scroll-target="#matplotlib-artist-for-datashader">Matplotlib Artist for Datashader</a></li>
+  <li><a href="#much-more-powerful-categorical-plotting" id="toc-much-more-powerful-categorical-plotting" class="nav-link" data-scroll-target="#much-more-powerful-categorical-plotting">Much more powerful categorical plotting</a></li>
+  <li><a href="#dynspread-that-actually-works" id="toc-dynspread-that-actually-works" class="nav-link" data-scroll-target="#dynspread-that-actually-works">dynspread that actually works!</a></li>
+  <li><a href="#aggregate-spreading" id="toc-aggregate-spreading" class="nav-link" data-scroll-target="#aggregate-spreading">Aggregate spreading</a></li>
+  <li><a href="#anti-aliasing-experimental" id="toc-anti-aliasing-experimental" class="nav-link" data-scroll-target="#anti-aliasing-experimental">Anti-aliasing (experimental)</a></li>
+  <li><a href="#datashader-support-in-dash" id="toc-datashader-support-in-dash" class="nav-link" data-scroll-target="#datashader-support-in-dash">Datashader support in Dash</a></li>
+  <li><a href="#inspect-function-for-interactive-exploration-in-holoviews" id="toc-inspect-function-for-interactive-exploration-in-holoviews" class="nav-link" data-scroll-target="#inspect-function-for-interactive-exploration-in-holoviews"><code>inspect</code> function for interactive exploration in HoloViews</a></li>
+  <li><a href="#help-us" id="toc-help-us" class="nav-link" data-scroll-target="#help-us">Help us!</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.dev/holoviz-dev/blog/blob/main/posts/ds_release_0.13/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Datashader 0.13 Release</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">release</div>
+    <div class="quarto-category">panel</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Release announcement for Datashader 0.13
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>James A. Bednar </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 23, 2021</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><img src="./images/collage_ds0.13.png" width="90%"></p>
+<section id="what-is-datashader" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-datashader">What is Datashader?</h2>
+<p><a href="https://datashader.org">Datashader</a> is an open-source Python library for rendering large datasets quickly and accurately. Datashader provides highly optimized, scalable support for rasterizing your data into a fixed-size array for pixel-based displays, while avoiding overplotting and other issues that make it difficult to work with large datasets. Datashader works well on its own, but it is even more powerful when embedded into an interactive plotting library like Bokeh, Plotly, or (now!) Matplotlib.</p>
+</section>
+<section id="announcing-datashader-0.13" class="level2">
+<h2 class="anchored" data-anchor-id="announcing-datashader-0.13">Announcing Datashader 0.13!</h2>
+<p>We are very pleased to announce the 0.12.1 and 0.13 releases of Datashader! These releases include new features from a slew of different contributors, plus maintenance and bug fixes from Jim Bednar, Philipp Rudiger, Peter Roelants, Thuy Do Thi Minh, Chris Ball, and Jean-Luc Stevens.</p>
+<p>What’s new: - <a href="#Matplotlib-Artist-for-Datashader">Matplotlib Artist for Datashader</a> - <a href="#Much-more-powerful-categorical-plotting">Much more powerful categorical plotting</a> - <a href="#dynspread-that-actually-works!">dynspread that actually works!</a> - <a href="#Aggregate-spreading">Aggregate spreading</a> - <a href="#Anti-aliasing-(experimental)">Anti aliasing (experimental)</a> - <a href="#Datashader-support-in-Dash">Datashader support in Dash</a> - <a href="#Inspect_points-for-interactive-exploration-in-HoloViews">Inspect_points for interactive exploration in HoloViews</a></p>
+</section>
+<section id="matplotlib-artist-for-datashader" class="level2">
+<h2 class="anchored" data-anchor-id="matplotlib-artist-for-datashader">Matplotlib Artist for Datashader</h2>
+<p><em>Thanks to Nezar Abdennur (nvictus), Trevor Manz, Thomas Caswell, and Philipp Rudiger.</em></p>
+<p>Datashader works best when embedded in an interactive plotting library so that data can be revealed at every spatial scale by zooming and panning. Thomas Caswell made a <a href="https://github.com/holoviz/datashader/pull/200">draft of Datashader support for Matplotlib</a> during SciPy 2016 when Datashader was first announced, but there was still a lot of work needed to make it general. Various people made suggestions, but largely the sketch sat patiently waiting for someone to finish it. In the meantime, Thomas Robitaille made a simpler points-only renderer https://github.com/astrofrog/mpl-scatter-density, which is useful if that’s all that’s needed. During sprints at SciPy 2020, Nezar Abdennur and Trevor Manz rescuscitated Tom’s work, and it’s now been released at last! You can now use all the power of Datashader with any of Matplotlib’s many backends, e.g.&nbsp;here for the <code>osx</code> backend:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt, dask.dataframe <span class="im">as</span> dd </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datashader <span class="im">as</span> ds, colorcet <span class="im">as</span> cc </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datashader.transfer_functions <span class="im">as</span> tf </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datashader.mpl_ext <span class="im">import</span> dsshow </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib osx </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> dd.read_parquet(<span class="st">'data/nyc_taxi_wide.parq'</span>).compute() </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>dsshow(df, ds.Point(<span class="st">'dropoff_x'</span>, <span class="st">'dropoff_y'</span>), norm<span class="op">=</span><span class="st">'eq_hist'</span>, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>       cmap<span class="op">=</span>cc.gray[::<span class="op">-</span><span class="dv">1</span>], shade_hook<span class="op">=</span>tf.dynspread)<span class="op">;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div style="margin: 0 auto; width: 800px">
+<video src="./images/dsshow.mp4" controls="" width="800">
+</video>
+</div>
+<p>See <a href="https://datashader.org/getting_started/Interactivity.html#native-support-for-matplotlib">getting_started/Interactivity</a> to see how to use it.</p>
+</section>
+<section id="much-more-powerful-categorical-plotting" class="level2">
+<h2 class="anchored" data-anchor-id="much-more-powerful-categorical-plotting">Much more powerful categorical plotting</h2>
+<p><em>Thanks to Michael Ihde (<span class="citation" data-cites="maihde">@maihde</span>), Oleg Smirnov, Philipp Rudiger, and Jim Bednar.</em></p>
+<p>One of Datashader’s most powerful features is its categorical binning and categorical colormapping, which allow detailed understanding of how the distribution of data differs by some other variable, such as this plot of how population is segregated by race in New York City:</p>
+<p><img src="https://datashader.org/assets/images/nyc_races.jpg" width="60%"></p>
+<p>To build such a plot, Datashader calculates a stack of aggregate arrays simulaneously, one per category, instead of a single aggregate array as in the non-categorical case.</p>
+<p>Previously, categorical binning and plotting was limited to a <code>count()</code> reduction, i.e., counting how many datapoints fell into each pixel, by category, implemented using a special <code>cat_count()</code> reduction. Categorical plotting has now been fully generalized into a new <code>ds.by()</code> reduction, which accepts a categorical column along with <code>count()</code> or any other reduction (<code>max()</code>, <code>min()</code>, <code>mean()</code>, <code>sum()</code>, etc.). Thus it’s now possible to plot the mean value of any column, per pixel, per category. See the <a href="https://datashader.org/getting_started/Pipeline.html">Pipeline docs</a> for details.</p>
+<p>You can also now use categorical binning and plotting with numerical columns using new functions <code>category_modulo</code> and <code>category_binning</code>, which opens up entirely new applications for Datashader. <code>category_binning</code> effectively gives Datashader the power to do 3D aggregations of numeric axes, not just the usual 2D. For instance, <code>by(category_binning('z', 0, 10, 16))</code> will bin by the floating-point column <code>z</code>, counting datapoints in each of 16 categories (0: 0&lt;=z&lt;10, 1: 10&lt;=x&lt;20, etc.). Combining <code>category_binning</code> with <code>by</code>, you can now do complex 3D binning like computing the maximum age in each (x, y, weight) range:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cat <span class="op">=</span> ds.category_binning(<span class="st">'weight'</span>, lower<span class="op">=</span><span class="dv">0</span>, higher<span class="op">=</span><span class="dv">200</span>, nbins<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>agg <span class="op">=</span> canvas.points(df,<span class="st">'x'</span>,<span class="st">'y'</span>, agg<span class="op">=</span>ds.by(cat, ds.<span class="bu">max</span>(<span class="st">'age'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>category_modulo</code> is useful when working with very large numbers of unsorted integers, using a <code>modulo</code> operator on an integer column to reduce a large number of columns down to something more tractable for plotting.</p>
+<p>See <a href="https://github.com/holoviz/datashader/pull/875">#875</a> and <a href="https://github.com/holoviz/datashader/pull/927">#927</a> for details on <code>by</code>, <code>category_modulo</code>, and <code>category_binning</code> (currently documented only at https://github.com/holoviz/datashader/pull/927#issuecomment-725991064).</p>
+</section>
+<section id="dynspread-that-actually-works" class="level2">
+<h2 class="anchored" data-anchor-id="dynspread-that-actually-works">dynspread that actually works!</h2>
+<p><em>Thanks to Jim Bednar</em>.</p>
+<p>Datashader’s points plotting is designed to aggregate datapoints by pixel, accurately counting how many datapoints fell into each pixel. For large datasets, such a plot will accuratelyl reveal the spatial distribution of the data over the axes plotted. However, a consequence is that an individual data point not surrounded by others will show up as a single pixel, which can be difficult to see on a high-resolution monitor, and it is almost impossible to see its color. To alleviate this issue and make it easier to go back and forth between the big picture and individual datapoints, Datashader has long offered the <code>dynspread</code> output-transformation function, which takes each pixel and dilates it (increases it in size) until the density of such points reaches a specified metric value. However, dynspread never worked very well in practice, always either doing no spreading or one step of spreading (a 3x3 kernel). After a fresh look at the code, it became clear that the first step of spreading was artificially increasing the amount of estimated pixel density, making it very unlikely that a second or third step would ever be done.</p>
+<p>dynspread now spreads each pixel by an integer radius <code>px</code> up to the maximum radius <code>max_px</code>, stopping earlier if a specified fraction of data points have non-empty neighbors within the radius. This new definition provides predictable, well-behave dynspread behavior even for large values of max_px, making isolated datapoints easily visible. <a href="https://github.com/holoviz/datashader/pull/1001">(#1001)</a></p>
+<div style="margin: 0 auto; width: 600px">
+<video src="https://user-images.githubusercontent.com/1695496/114293108-0ca77500-9a59-11eb-86ed-9679603e7fd1.mp4" controls="" width="800">
+</video>
+</div>
+<p>Note that this definition is only compatible with points, as they are spatially isolated; any usage of dynspread with datatypes other than points should be replaced with spread(), which will do what was probably intended by the original dynspread call anyway (i.e., to make a line or polygon edge thicker).</p>
+</section>
+<section id="aggregate-spreading" class="level2">
+<h2 class="anchored" data-anchor-id="aggregate-spreading">Aggregate spreading</h2>
+<p><em>Thanks to Jean-Luc Stevens</em>.</p>
+<p>Spreading previously worked only on RGB arrays, not numerical aggregate arrays, which meant that Datashader users had to choose between seeing isolated datapoints and having interactive features like Bokeh’s hover tool and colorbars that require access to the numerical aggregate values. <code>spread</code> and <code>dynspread</code> now work equally well with either RGB aggregates or numerical aggregates, and we now recommend that users spread at the numerical aggregate level in all supported cases. E.g. in holoviews, use <code>spread(rasterize(obj)).opts(cnorm='eq_hist', cmap='fire')</code> (or <code>cnorm='log'</code>) instead of <code>datashade(obj, cmap='fire')</code>, and you’ll now have colorbar and hover support using Bokeh 2.3.3 or later. (<a href="](https://github.com/holoviz/datashader/pull/771), [#954](](https://github.com/holoviz/datashader/pull/954))">#771</a></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dask.dataframe <span class="im">as</span> dd, holoviews <span class="im">as</span> hv</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> holoviews.operation.datashader <span class="im">import</span> rasterize, dynspread</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> bokeh, datashader <span class="im">as</span> ds</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>hv.extension(<span class="st">"bokeh"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> dd.read_parquet(<span class="st">'data/nyc_taxi_wide.parq'</span>).compute()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>pts <span class="op">=</span> hv.Points(df, [<span class="st">'dropoff_x'</span>, <span class="st">'dropoff_y'</span>])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>opts <span class="op">=</span> hv.opts.Image(cnorm<span class="op">=</span><span class="st">'log'</span>, colorbar<span class="op">=</span><span class="va">True</span>, width<span class="op">=</span><span class="dv">700</span>, tools<span class="op">=</span>[<span class="st">'hover'</span>])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>dynspread(rasterize(pts)).opts(opts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="./images/ds_agg_dynspread.png" width="90%"></p>
+</section>
+<section id="anti-aliasing-experimental" class="level2">
+<h2 class="anchored" data-anchor-id="anti-aliasing-experimental">Anti-aliasing (experimental)</h2>
+<p><em>Thanks to Valentin Haenel.</em></p>
+<p>Datashader’s line aggregations (also used in trimesh and network plotting) count how many times a line crosses a given pixel. The resulting line plots are very blocky, because of binary transitions between rows and columns depending on where the underlying line lands in the aggregate array grid. To improve appearance of such lines (at a cost of making them less easy to interpret as counts of crossings), Datashader now supports antialiased lines. This support is only partial and is still experimental; it’s enabled by adding <code>antialias=True</code> to the Canvas.line() method call and is currently restricted to <code>sum</code> and <code>max</code> reductions only, and to a single-pixel line width. (<a href="](https://github.com/holoviz/datashader/pull/916)">#916</a>)</p>
+<p><img src="./images/antialias.png" width="60%"></p>
+<hr>
+<p>The remaining updates listed below are shipped in other packages, not Datashader itself, but provide additional power for Datashader users.</p>
+</section>
+<section id="datashader-support-in-dash" class="level2">
+<h2 class="anchored" data-anchor-id="datashader-support-in-dash">Datashader support in Dash</h2>
+<p><em>Thanks to Jon Mease.</em></p>
+<p>The Dash package for deploying data-science dashboards now supports Datashader using the high-level <a href="https://dash.plotly.com/holoviews">HoloViews Plotly backend</a>. HoloViews Plotly, Matplotlib, and Bokeh plots can now be deployed using either a Bokeh-based server, which supports user-specific state that makes programmimg simpler, or a Dash-based server, which has a stateless model that can support larger numbers of concurrent users on a given set of server hardware.</p>
+<p><img src="./images/dash_ds_hv.gif" width="60%"></p>
+</section>
+<section id="inspect-function-for-interactive-exploration-in-holoviews" class="level2">
+<h2 class="anchored" data-anchor-id="inspect-function-for-interactive-exploration-in-holoviews"><code>inspect</code> function for interactive exploration in HoloViews</h2>
+<p><em>Thanks to Jean-Luc Stevens and Philipp Rudiger.</em></p>
+<p>HoloViews has always been an easy way to work with interactive Datashader plots by handling user events, requesting an updated Datashader plot, and rendering the results. However, the resulting plots always showed only an aggregated view of the data, no matter how much the user zoomed in. HoloViews 1.14.4 now ships with <code>inspect_points()</code> and <code>inspect_polygons</code> wrapped in a general <code>inspect</code> function that uses Datashader’s aggregate to determine if there is data in a local region, then queries the original dataset to return those specific points and all their metadata. The result is that you can now view <em>all</em> of your data using Datashader, while still being able to see individual data points using hover or selection.</p>
+<p>See the new <a href="https://examples.pyviz.org/ship_traffic">ship_traffic example</a> for how to use <code>inspect_points</code> and the <a href="https://examples.pyviz.org/nyc_buildings">NYC Buildings example</a> for how to use <code>inspect_polygons</code>. Also see HoloViews <a href="http://holoviews.org/user_guide/Linked_Brushing.html">linked brushing</a> for related functionality that supports linked selections on Datashader and other plots.</p>
+<p><img src="./images/ship_traffic.png" width="80%"></p>
+</section>
+<section id="help-us" class="level2">
+<h2 class="anchored" data-anchor-id="help-us">Help us!</h2>
+<p>Datashader is an open-source project and we are always looking for new contributors. Join us the discussion on the <a href="https://discourse.holoviz.org/">Discourse</a> and we would be very excited to get you started contributing! Also please <a href="mailto:jbednar@anaconda.com">get in touch with us</a> if you work at an organization that would like to support future Datashader development, fund new Datashader features, or set up a support contract.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/blog\.holoviz\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Copyright 2023 Holoviz contributors</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.dev/holoviz-dev/blog/blob/main/posts/ds_release_0.13/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

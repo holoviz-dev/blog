@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Philipp Rudiger">
+<meta name="dcterms.date" content="2024-03-28">
+<meta name="description" content="Release announcement for Panel 1.4">
+
+<title>Panel 1.4.0 Release – HoloViz Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fe5109ec0aa56e05eeb38907d446501d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script>
+    window.goatcounter = {
+        path: function(p) { return location.host + p }
+    }
+</script>
+<script data-goatcounter="https://holoviz.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+
+
+<link rel="stylesheet" href="../../custom.css">
+<meta property="og:title" content="Panel 1.4.0 Release – HoloViz Blog">
+<meta property="og:description" content="Release announcement for Panel 1.4">
+<meta property="og:image" content="https://blog.holoviz.org/posts/panel_release_1.4/images/collage_1.4.png">
+<meta property="og:site_name" content="HoloViz Blog">
+<meta property="og:image:height" content="1333">
+<meta property="og:image:width" content="4000">
+<meta name="twitter:title" content="Panel 1.4.0 Release – HoloViz Blog">
+<meta name="twitter:description" content="Release announcement for Panel 1.4">
+<meta name="twitter:image" content="https://blog.holoviz.org/posts/panel_release_1.4/images/collage_1.4.png">
+<meta name="twitter:site" content="@HoloViz_org">
+<meta name="twitter:image-height" content="1333">
+<meta name="twitter:image-width" content="4000">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="https://holoviz.org" class="navbar-brand navbar-brand-logo">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-learn" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Learn</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-learn">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/presentations/index.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/background.html">
+ <span class="dropdown-text">Background</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/FAQ.html">
+ <span class="dropdown-text">FAQ</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/tutorial/index.html"> 
+<span class="menu-text">Tutorial</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://examples.holoviz.org/"> 
+<span class="menu-text">Examples</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/community.html"> 
+<span class="menu-text">Community</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/contribute.html"> 
+<span class="menu-text">Contribute</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-about">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/index.html">
+ <span class="dropdown-text">About Us</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/governance/index.html">
+ <span class="dropdown-text">Governance</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/heps/index.html">
+ <span class="dropdown-text">HEPs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/roadmap.html">
+ <span class="dropdown-text">Roadmap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/funding.html">
+ <span class="dropdown-text">Funding</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/holoviz" title="HoloViz Github" class="quarto-navigation-tool px-1" aria-label="HoloViz Github"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/holoviz_org" title="HoloViz Twitter" class="quarto-navigation-tool px-1" aria-label="HoloViz Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://discourse.holoviz.org" title="HoloViz Forum" class="quarto-navigation-tool px-1" aria-label="HoloViz Forum"><i class="bi bi-chat-text"></i></a>
+    <a href="https://discord.gg/UXdtYyGVQX" title="HoloViz Discord" class="quarto-navigation-tool px-1" aria-label="HoloViz Discord"><i class="bi bi-discord"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-panel" id="toc-what-is-panel" class="nav-link active" data-scroll-target="#what-is-panel">What is Panel?</a></li>
+  <li><a href="#new-release" id="toc-new-release" class="nav-link" data-scroll-target="#new-release">New release!</a></li>
+  <li><a href="#tutorials" id="toc-tutorials" class="nav-link" data-scroll-target="#tutorials">Tutorials</a></li>
+  <li><a href="#dashboard-builder-ui" id="toc-dashboard-builder-ui" class="nav-link" data-scroll-target="#dashboard-builder-ui">Dashboard Builder UI</a></li>
+  <li><a href="#autoreload" id="toc-autoreload" class="nav-link" data-scroll-target="#autoreload">Autoreload</a></li>
+  <li><a href="#chat-improvements" id="toc-chat-improvements" class="nav-link" data-scroll-target="#chat-improvements">Chat Improvements</a>
+  <ul class="collapse">
+  <li><a href="#feed" id="toc-feed" class="nav-link" data-scroll-target="#feed">Feed</a></li>
+  <li><a href="#chatareainput" id="toc-chatareainput" class="nav-link" data-scroll-target="#chatareainput">ChatAreaInput</a></li>
+  <li><a href="#other-enhancements" id="toc-other-enhancements" class="nav-link" data-scroll-target="#other-enhancements">Other enhancements</a></li>
+  </ul></li>
+  <li><a href="#reactive-expressions-references" id="toc-reactive-expressions-references" class="nav-link" data-scroll-target="#reactive-expressions-references">Reactive Expressions &amp; References</a>
+  <ul class="collapse">
+  <li><a href="#asynchronous-generator-expressions" id="toc-asynchronous-generator-expressions" class="nav-link" data-scroll-target="#asynchronous-generator-expressions">(Asynchronous) Generator Expressions</a></li>
+  <li><a href="#skipping-updates" id="toc-skipping-updates" class="nav-link" data-scroll-target="#skipping-updates">Skipping updates</a></li>
+  </ul></li>
+  <li><a href="#new-components" id="toc-new-components" class="nav-link" data-scroll-target="#new-components">New Components</a>
+  <ul class="collapse">
+  <li><a href="#textual" id="toc-textual" class="nav-link" data-scroll-target="#textual">Textual</a></li>
+  <li><a href="#new-widgets" id="toc-new-widgets" class="nav-link" data-scroll-target="#new-widgets">New widgets</a></li>
+  <li><a href="#nestedselect" id="toc-nestedselect" class="nav-link" data-scroll-target="#nestedselect">NestedSelect</a></li>
+  <li><a href="#daterangepicker" id="toc-daterangepicker" class="nav-link" data-scroll-target="#daterangepicker">DateRangePicker</a></li>
+  <li><a href="#buttonicon" id="toc-buttonicon" class="nav-link" data-scroll-target="#buttonicon">ButtonIcon</a></li>
+  </ul></li>
+  <li><a href="#roadmap" id="toc-roadmap" class="nav-link" data-scroll-target="#roadmap">Roadmap</a>
+  <ul class="collapse">
+  <li><a href="#esm-components" id="toc-esm-components" class="nav-link" data-scroll-target="#esm-components">ESM Components</a></li>
+  <li><a href="#session-handling-scaling" id="toc-session-handling-scaling" class="nav-link" data-scroll-target="#session-handling-scaling">Session Handling &amp; Scaling</a></li>
+  </ul></li>
+  <li><a href="#changelog" id="toc-changelog" class="nav-link" data-scroll-target="#changelog">Changelog</a>
+  <ul class="collapse">
+  <li><a href="#features" id="toc-features" class="nav-link" data-scroll-target="#features">Features</a></li>
+  <li><a href="#enhancements" id="toc-enhancements" class="nav-link" data-scroll-target="#enhancements">Enhancements</a></li>
+  <li><a href="#styling" id="toc-styling" class="nav-link" data-scroll-target="#styling">Styling</a></li>
+  <li><a href="#compatibility-version-updates" id="toc-compatibility-version-updates" class="nav-link" data-scroll-target="#compatibility-version-updates">Compatibility &amp; Version Updates</a></li>
+  <li><a href="#bug-fixes" id="toc-bug-fixes" class="nav-link" data-scroll-target="#bug-fixes">Bug fixes</a></li>
+  <li><a href="#chat-components" id="toc-chat-components" class="nav-link" data-scroll-target="#chat-components">Chat Components</a></li>
+  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
+  <li><a href="#deprecations-removals" id="toc-deprecations-removals" class="nav-link" data-scroll-target="#deprecations-removals">Deprecations &amp; Removals</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.dev/holoviz-dev/blog/blob/main/posts/panel_release_1.4/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Panel 1.4.0 Release</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">release</div>
+    <div class="quarto-category">panel</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Release announcement for Panel 1.4
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Philipp Rudiger </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 28, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="cell-1" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<script type="application/javascript">
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  var force = true;
+  var py_version = '3.4.0'.replace('rc', '-rc.').replace('.dev', '-dev.');
+  var reloading = false;
+  var Bokeh = root.Bokeh;
+
+  if (typeof (root._bokeh_timeout) === "undefined" || force) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks;
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, js_modules, js_exports, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+    if (js_modules == null) js_modules = [];
+    if (js_exports == null) js_exports = {};
+
+    root._bokeh_onload_callbacks.push(callback);
+
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls.length === 0 && js_modules.length === 0 && Object.keys(js_exports).length === 0) {
+      run_callbacks();
+      return null;
+    }
+    if (!reloading) {
+      console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    }
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+    window._bokeh_on_load = on_load
+
+    function on_error() {
+      console.error("failed to load " + url);
+    }
+
+    var skip = [];
+    if (window.requirejs) {
+      window.requirejs.config({'packages': {}, 'paths': {}, 'shim': {}});
+      root._bokeh_is_loading = css_urls.length + 0;
+    } else {
+      root._bokeh_is_loading = css_urls.length + js_urls.length + js_modules.length + Object.keys(js_exports).length;
+    }
+
+    var existing_stylesheets = []
+    var links = document.getElementsByTagName('link')
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i]
+      if (link.href != null) {
+    existing_stylesheets.push(link.href)
+      }
+    }
+    for (var i = 0; i < css_urls.length; i++) {
+      var url = css_urls[i];
+      if (existing_stylesheets.indexOf(url) !== -1) {
+    on_load()
+    continue;
+      }
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }    var existing_scripts = []
+    var scripts = document.getElementsByTagName('script')
+    for (var i = 0; i < scripts.length; i++) {
+      var script = scripts[i]
+      if (script.src != null) {
+    existing_scripts.push(script.src)
+      }
+    }
+    for (var i = 0; i < js_urls.length; i++) {
+      var url = js_urls[i];
+      if (skip.indexOf(url) !== -1 || existing_scripts.indexOf(url) !== -1) {
+    if (!window.requirejs) {
+      on_load();
+    }
+    continue;
+      }
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+    for (var i = 0; i < js_modules.length; i++) {
+      var url = js_modules[i];
+      if (skip.indexOf(url) !== -1 || existing_scripts.indexOf(url) !== -1) {
+    if (!window.requirejs) {
+      on_load();
+    }
+    continue;
+      }
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      element.type = "module";
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+    for (const name in js_exports) {
+      var url = js_exports[name];
+      if (skip.indexOf(url) >= 0 || root[name] != null) {
+    if (!window.requirejs) {
+      on_load();
+    }
+    continue;
+      }
+      var element = document.createElement('script');
+      element.onerror = on_error;
+      element.async = false;
+      element.type = "module";
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      element.textContent = `
+      import ${name} from "${url}"
+      window.${name} = ${name}
+      window._bokeh_on_load()
+      `
+      document.head.appendChild(element);
+    }
+    if (!js_urls.length && !js_modules.length) {
+      on_load()
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  var js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-3.4.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.4.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.4.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.4.0.min.js", "https://cdn.holoviz.org/panel/1.4.0/dist/bundled/material-components-web@7.0.0/dist/material-components-web.min.js", "https://cdn.holoviz.org/panel/1.4.0/dist/panel.min.js"];
+  var js_modules = [];
+  var js_exports = {};
+  var css_urls = ["https://fonts.googleapis.com/css?family=Roboto:300,400,500", "https://fonts.googleapis.com/css?family=Material+Icons&display=block"];
+  var inline_js = [    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+function(Bokeh) {} // ensure no trailing comma for IE
+  ];
+
+  function run_inline_js() {
+    if ((root.Bokeh !== undefined) || (force === true)) {
+      for (var i = 0; i < inline_js.length; i++) {
+    try {
+          inline_js[i].call(root, root.Bokeh);
+    } catch(e) {
+      if (!reloading) {
+        throw e;
+      }
+    }
+      }
+      // Cache old bokeh versions
+      if (Bokeh != undefined && !reloading) {
+    var NewBokeh = root.Bokeh;
+    if (Bokeh.versions === undefined) {
+      Bokeh.versions = new Map();
+    }
+    if (NewBokeh.version !== Bokeh.version) {
+      Bokeh.versions.set(NewBokeh.version, NewBokeh)
+    }
+    root.Bokeh = Bokeh;
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    }
+    root._bokeh_is_initializing = false
+  }
+
+  function load_or_wait() {
+    // Implement a backoff loop that tries to ensure we do not load multiple
+    // versions of Bokeh and its dependencies at the same time.
+    // In recent versions we use the root._bokeh_is_initializing flag
+    // to determine whether there is an ongoing attempt to initialize
+    // bokeh, however for backward compatibility we also try to ensure
+    // that we do not start loading a newer (Panel>=1.0 and Bokeh>3) version
+    // before older versions are fully initialized.
+    if (root._bokeh_is_initializing && Date.now() > root._bokeh_timeout) {
+      root._bokeh_is_initializing = false;
+      root._bokeh_onload_callbacks = undefined;
+      console.log("Bokeh: BokehJS was loaded multiple times but one version failed to initialize.");
+      load_or_wait();
+    } else if (root._bokeh_is_initializing || (typeof root._bokeh_is_initializing === "undefined" && root._bokeh_onload_callbacks !== undefined)) {
+      setTimeout(load_or_wait, 100);
+    } else {
+      root._bokeh_is_initializing = true
+      root._bokeh_onload_callbacks = []
+      var bokeh_loaded = Bokeh != null && (Bokeh.version === py_version || (Bokeh.versions !== undefined && Bokeh.versions.has(py_version)));
+      if (!reloading && !bokeh_loaded) {
+    root.Bokeh = undefined;
+      }
+      load_libs(css_urls, js_urls, js_modules, js_exports, function() {
+    console.debug("Bokeh: BokehJS plotting callback run at", now());
+    run_inline_js();
+      });
+    }
+  }
+  // Give older versions of the autoload script a head-start to ensure
+  // they initialize before we start loading newer version.
+  setTimeout(load_or_wait, 100)
+}(window));
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/javascript">
+
+if ((window.PyViz === undefined) || (window.PyViz instanceof HTMLElement)) {
+  window.PyViz = {comms: {}, comm_status:{}, kernels:{}, receivers: {}, plot_index: []}
+}
+
+
+    function JupyterCommManager() {
+    }
+
+    JupyterCommManager.prototype.register_target = function(plot_id, comm_id, msg_handler) {
+      if (window.comm_manager || ((window.Jupyter !== undefined) && (Jupyter.notebook.kernel != null))) {
+        var comm_manager = window.comm_manager || Jupyter.notebook.kernel.comm_manager;
+        comm_manager.register_target(comm_id, function(comm) {
+          comm.on_msg(msg_handler);
+        });
+      } else if ((plot_id in window.PyViz.kernels) && (window.PyViz.kernels[plot_id])) {
+        window.PyViz.kernels[plot_id].registerCommTarget(comm_id, function(comm) {
+          comm.onMsg = msg_handler;
+        });
+      } else if (typeof google != 'undefined' && google.colab.kernel != null) {
+        google.colab.kernel.comms.registerTarget(comm_id, (comm) => {
+          var messages = comm.messages[Symbol.asyncIterator]();
+          function processIteratorResult(result) {
+            var message = result.value;
+            console.log(message)
+            var content = {data: message.data, comm_id};
+            var buffers = []
+            for (var buffer of message.buffers || []) {
+              buffers.push(new DataView(buffer))
+            }
+            var metadata = message.metadata || {};
+            var msg = {content, buffers, metadata}
+            msg_handler(msg);
+            return messages.next().then(processIteratorResult);
+          }
+          return messages.next().then(processIteratorResult);
+        })
+      }
+    }
+
+    JupyterCommManager.prototype.get_client_comm = function(plot_id, comm_id, msg_handler) {
+      if (comm_id in window.PyViz.comms) {
+        return window.PyViz.comms[comm_id];
+      } else if (window.comm_manager || ((window.Jupyter !== undefined) && (Jupyter.notebook.kernel != null))) {
+        var comm_manager = window.comm_manager || Jupyter.notebook.kernel.comm_manager;
+        var comm = comm_manager.new_comm(comm_id, {}, {}, {}, comm_id);
+        if (msg_handler) {
+          comm.on_msg(msg_handler);
+        }
+      } else if ((plot_id in window.PyViz.kernels) && (window.PyViz.kernels[plot_id])) {
+        var comm = window.PyViz.kernels[plot_id].connectToComm(comm_id);
+        comm.open();
+        if (msg_handler) {
+          comm.onMsg = msg_handler;
+        }
+      } else if (typeof google != 'undefined' && google.colab.kernel != null) {
+        var comm_promise = google.colab.kernel.comms.open(comm_id)
+        comm_promise.then((comm) => {
+          window.PyViz.comms[comm_id] = comm;
+          if (msg_handler) {
+            var messages = comm.messages[Symbol.asyncIterator]();
+            function processIteratorResult(result) {
+              var message = result.value;
+              var content = {data: message.data};
+              var metadata = message.metadata || {comm_id};
+              var msg = {content, metadata}
+              msg_handler(msg);
+              return messages.next().then(processIteratorResult);
+            }
+            return messages.next().then(processIteratorResult);
+          }
+        }) 
+        var sendClosure = (data, metadata, buffers, disposeOnDone) => {
+          return comm_promise.then((comm) => {
+            comm.send(data, metadata, buffers, disposeOnDone);
+          });
+        };
+        var comm = {
+          send: sendClosure
+        };
+      }
+      window.PyViz.comms[comm_id] = comm;
+      return comm;
+    }
+    window.PyViz.comm_manager = new JupyterCommManager();
+    
+
+
+var JS_MIME_TYPE = 'application/javascript';
+var HTML_MIME_TYPE = 'text/html';
+var EXEC_MIME_TYPE = 'application/vnd.holoviews_exec.v0+json';
+var CLASS_NAME = 'output';
+
+/**
+ * Render data to the DOM node
+ */
+function render(props, node) {
+  var div = document.createElement("div");
+  var script = document.createElement("script");
+  node.appendChild(div);
+  node.appendChild(script);
+}
+
+/**
+ * Handle when a new output is added
+ */
+function handle_add_output(event, handle) {
+  var output_area = handle.output_area;
+  var output = handle.output;
+  if ((output.data == undefined) || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) {
+    return
+  }
+  var id = output.metadata[EXEC_MIME_TYPE]["id"];
+  var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+  if (id !== undefined) {
+    var nchildren = toinsert.length;
+    var html_node = toinsert[nchildren-1].children[0];
+    html_node.innerHTML = output.data[HTML_MIME_TYPE];
+    var scripts = [];
+    var nodelist = html_node.querySelectorAll("script");
+    for (var i in nodelist) {
+      if (nodelist.hasOwnProperty(i)) {
+        scripts.push(nodelist[i])
+      }
+    }
+
+    scripts.forEach( function (oldScript) {
+      var newScript = document.createElement("script");
+      var attrs = [];
+      var nodemap = oldScript.attributes;
+      for (var j in nodemap) {
+        if (nodemap.hasOwnProperty(j)) {
+          attrs.push(nodemap[j])
+        }
+      }
+      attrs.forEach(function(attr) { newScript.setAttribute(attr.name, attr.value) });
+      newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+      oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
+    if (JS_MIME_TYPE in output.data) {
+      toinsert[nchildren-1].children[1].textContent = output.data[JS_MIME_TYPE];
+    }
+    output_area._hv_plot_id = id;
+    if ((window.Bokeh !== undefined) && (id in Bokeh.index)) {
+      window.PyViz.plot_index[id] = Bokeh.index[id];
+    } else {
+      window.PyViz.plot_index[id] = null;
+    }
+  } else if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+    var bk_div = document.createElement("div");
+    bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+    var script_attrs = bk_div.children[0].attributes;
+    for (var i = 0; i < script_attrs.length; i++) {
+      toinsert[toinsert.length - 1].childNodes[1].setAttribute(script_attrs[i].name, script_attrs[i].value);
+    }
+    // store reference to server id on output_area
+    output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+  }
+}
+
+/**
+ * Handle when an output is cleared or removed
+ */
+function handle_clear_output(event, handle) {
+  var id = handle.cell.output_area._hv_plot_id;
+  var server_id = handle.cell.output_area._bokeh_server_id;
+  if (((id === undefined) || !(id in PyViz.plot_index)) && (server_id !== undefined)) { return; }
+  var comm = window.PyViz.comm_manager.get_client_comm("hv-extension-comm", "hv-extension-comm", function () {});
+  if (server_id !== null) {
+    comm.send({event_type: 'server_delete', 'id': server_id});
+    return;
+  } else if (comm !== null) {
+    comm.send({event_type: 'delete', 'id': id});
+  }
+  delete PyViz.plot_index[id];
+  if ((window.Bokeh !== undefined) & (id in window.Bokeh.index)) {
+    var doc = window.Bokeh.index[id].model.document
+    doc.clear();
+    const i = window.Bokeh.documents.indexOf(doc);
+    if (i > -1) {
+      window.Bokeh.documents.splice(i, 1);
+    }
+  }
+}
+
+/**
+ * Handle kernel restart event
+ */
+function handle_kernel_cleanup(event, handle) {
+  delete PyViz.comms["hv-extension-comm"];
+  window.PyViz.plot_index = {}
+}
+
+/**
+ * Handle update_display_data messages
+ */
+function handle_update_output(event, handle) {
+  handle_clear_output(event, {cell: {output_area: handle.output_area}})
+  handle_add_output(event, handle)
+}
+
+function register_renderer(events, OutputArea) {
+  function append_mime(data, metadata, element) {
+    // create a DOM node to render to
+    var toinsert = this.create_output_subarea(
+    metadata,
+    CLASS_NAME,
+    EXEC_MIME_TYPE
+    );
+    this.keyboard_manager.register_events(toinsert);
+    // Render to node
+    var props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+    render(props, toinsert[0]);
+    element.append(toinsert);
+    return toinsert
+  }
+
+  events.on('output_added.OutputArea', handle_add_output);
+  events.on('output_updated.OutputArea', handle_update_output);
+  events.on('clear_output.CodeCell', handle_clear_output);
+  events.on('delete.Cell', handle_clear_output);
+  events.on('kernel_ready.Kernel', handle_kernel_cleanup);
+
+  OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+    safe: true,
+    index: 0
+  });
+}
+
+if (window.Jupyter !== undefined) {
+  try {
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  } catch(err) {
+  }
+}
+
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<style>*[data-root-id],
+*[data-root-id] > * {
+  box-sizing: border-box;
+  font-family: var(--jp-ui-font-family);
+  font-size: var(--jp-ui-font-size1);
+  color: var(--vscode-editor-foreground, var(--jp-ui-font-color1));
+}
+
+/* Override VSCode background color */
+.cell-output-ipywidget-background:has(
+    > .cell-output-ipywidget-background > .lm-Widget > *[data-root-id]
+  ),
+.cell-output-ipywidget-background:has(> .lm-Widget > *[data-root-id]) {
+  background-color: transparent !important;
+}
+</style>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/javascript">
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  var force = true;
+  var py_version = '3.4.0'.replace('rc', '-rc.').replace('.dev', '-dev.');
+  var reloading = true;
+  var Bokeh = root.Bokeh;
+
+  if (typeof (root._bokeh_timeout) === "undefined" || force) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks;
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, js_modules, js_exports, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+    if (js_modules == null) js_modules = [];
+    if (js_exports == null) js_exports = {};
+
+    root._bokeh_onload_callbacks.push(callback);
+
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls.length === 0 && js_modules.length === 0 && Object.keys(js_exports).length === 0) {
+      run_callbacks();
+      return null;
+    }
+    if (!reloading) {
+      console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    }
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+    window._bokeh_on_load = on_load
+
+    function on_error() {
+      console.error("failed to load " + url);
+    }
+
+    var skip = [];
+    if (window.requirejs) {
+      window.requirejs.config({'packages': {}, 'paths': {}, 'shim': {}});
+      root._bokeh_is_loading = css_urls.length + 0;
+    } else {
+      root._bokeh_is_loading = css_urls.length + js_urls.length + js_modules.length + Object.keys(js_exports).length;
+    }
+
+    var existing_stylesheets = []
+    var links = document.getElementsByTagName('link')
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i]
+      if (link.href != null) {
+    existing_stylesheets.push(link.href)
+      }
+    }
+    for (var i = 0; i < css_urls.length; i++) {
+      var url = css_urls[i];
+      if (existing_stylesheets.indexOf(url) !== -1) {
+    on_load()
+    continue;
+      }
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }    var existing_scripts = []
+    var scripts = document.getElementsByTagName('script')
+    for (var i = 0; i < scripts.length; i++) {
+      var script = scripts[i]
+      if (script.src != null) {
+    existing_scripts.push(script.src)
+      }
+    }
+    for (var i = 0; i < js_urls.length; i++) {
+      var url = js_urls[i];
+      if (skip.indexOf(url) !== -1 || existing_scripts.indexOf(url) !== -1) {
+    if (!window.requirejs) {
+      on_load();
+    }
+    continue;
+      }
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+    for (var i = 0; i < js_modules.length; i++) {
+      var url = js_modules[i];
+      if (skip.indexOf(url) !== -1 || existing_scripts.indexOf(url) !== -1) {
+    if (!window.requirejs) {
+      on_load();
+    }
+    continue;
+      }
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      element.type = "module";
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+    for (const name in js_exports) {
+      var url = js_exports[name];
+      if (skip.indexOf(url) >= 0 || root[name] != null) {
+    if (!window.requirejs) {
+      on_load();
+    }
+    continue;
+      }
+      var element = document.createElement('script');
+      element.onerror = on_error;
+      element.async = false;
+      element.type = "module";
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      element.textContent = `
+      import ${name} from "${url}"
+      window.${name} = ${name}
+      window._bokeh_on_load()
+      `
+      document.head.appendChild(element);
+    }
+    if (!js_urls.length && !js_modules.length) {
+      on_load()
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  var js_urls = ["https://cdn.holoviz.org/panel/1.4.0/dist/bundled/material-components-web@7.0.0/dist/material-components-web.min.js"];
+  var js_modules = [];
+  var js_exports = {};
+  var css_urls = ["https://fonts.googleapis.com/css?family=Roboto:300,400,500", "https://fonts.googleapis.com/css?family=Material+Icons&display=block"];
+  var inline_js = [    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+function(Bokeh) {} // ensure no trailing comma for IE
+  ];
+
+  function run_inline_js() {
+    if ((root.Bokeh !== undefined) || (force === true)) {
+      for (var i = 0; i < inline_js.length; i++) {
+    try {
+          inline_js[i].call(root, root.Bokeh);
+    } catch(e) {
+      if (!reloading) {
+        throw e;
+      }
+    }
+      }
+      // Cache old bokeh versions
+      if (Bokeh != undefined && !reloading) {
+    var NewBokeh = root.Bokeh;
+    if (Bokeh.versions === undefined) {
+      Bokeh.versions = new Map();
+    }
+    if (NewBokeh.version !== Bokeh.version) {
+      Bokeh.versions.set(NewBokeh.version, NewBokeh)
+    }
+    root.Bokeh = Bokeh;
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    }
+    root._bokeh_is_initializing = false
+  }
+
+  function load_or_wait() {
+    // Implement a backoff loop that tries to ensure we do not load multiple
+    // versions of Bokeh and its dependencies at the same time.
+    // In recent versions we use the root._bokeh_is_initializing flag
+    // to determine whether there is an ongoing attempt to initialize
+    // bokeh, however for backward compatibility we also try to ensure
+    // that we do not start loading a newer (Panel>=1.0 and Bokeh>3) version
+    // before older versions are fully initialized.
+    if (root._bokeh_is_initializing && Date.now() > root._bokeh_timeout) {
+      root._bokeh_is_initializing = false;
+      root._bokeh_onload_callbacks = undefined;
+      console.log("Bokeh: BokehJS was loaded multiple times but one version failed to initialize.");
+      load_or_wait();
+    } else if (root._bokeh_is_initializing || (typeof root._bokeh_is_initializing === "undefined" && root._bokeh_onload_callbacks !== undefined)) {
+      setTimeout(load_or_wait, 100);
+    } else {
+      root._bokeh_is_initializing = true
+      root._bokeh_onload_callbacks = []
+      var bokeh_loaded = Bokeh != null && (Bokeh.version === py_version || (Bokeh.versions !== undefined && Bokeh.versions.has(py_version)));
+      if (!reloading && !bokeh_loaded) {
+    root.Bokeh = undefined;
+      }
+      load_libs(css_urls, js_urls, js_modules, js_exports, function() {
+    console.debug("Bokeh: BokehJS plotting callback run at", now());
+    run_inline_js();
+      });
+    }
+  }
+  // Give older versions of the autoload script a head-start to ensure
+  // they initialize before we start loading newer version.
+  setTimeout(load_or_wait, 100)
+}(window));
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/javascript">
+
+if ((window.PyViz === undefined) || (window.PyViz instanceof HTMLElement)) {
+  window.PyViz = {comms: {}, comm_status:{}, kernels:{}, receivers: {}, plot_index: []}
+}
+
+
+    function JupyterCommManager() {
+    }
+
+    JupyterCommManager.prototype.register_target = function(plot_id, comm_id, msg_handler) {
+      if (window.comm_manager || ((window.Jupyter !== undefined) && (Jupyter.notebook.kernel != null))) {
+        var comm_manager = window.comm_manager || Jupyter.notebook.kernel.comm_manager;
+        comm_manager.register_target(comm_id, function(comm) {
+          comm.on_msg(msg_handler);
+        });
+      } else if ((plot_id in window.PyViz.kernels) && (window.PyViz.kernels[plot_id])) {
+        window.PyViz.kernels[plot_id].registerCommTarget(comm_id, function(comm) {
+          comm.onMsg = msg_handler;
+        });
+      } else if (typeof google != 'undefined' && google.colab.kernel != null) {
+        google.colab.kernel.comms.registerTarget(comm_id, (comm) => {
+          var messages = comm.messages[Symbol.asyncIterator]();
+          function processIteratorResult(result) {
+            var message = result.value;
+            console.log(message)
+            var content = {data: message.data, comm_id};
+            var buffers = []
+            for (var buffer of message.buffers || []) {
+              buffers.push(new DataView(buffer))
+            }
+            var metadata = message.metadata || {};
+            var msg = {content, buffers, metadata}
+            msg_handler(msg);
+            return messages.next().then(processIteratorResult);
+          }
+          return messages.next().then(processIteratorResult);
+        })
+      }
+    }
+
+    JupyterCommManager.prototype.get_client_comm = function(plot_id, comm_id, msg_handler) {
+      if (comm_id in window.PyViz.comms) {
+        return window.PyViz.comms[comm_id];
+      } else if (window.comm_manager || ((window.Jupyter !== undefined) && (Jupyter.notebook.kernel != null))) {
+        var comm_manager = window.comm_manager || Jupyter.notebook.kernel.comm_manager;
+        var comm = comm_manager.new_comm(comm_id, {}, {}, {}, comm_id);
+        if (msg_handler) {
+          comm.on_msg(msg_handler);
+        }
+      } else if ((plot_id in window.PyViz.kernels) && (window.PyViz.kernels[plot_id])) {
+        var comm = window.PyViz.kernels[plot_id].connectToComm(comm_id);
+        comm.open();
+        if (msg_handler) {
+          comm.onMsg = msg_handler;
+        }
+      } else if (typeof google != 'undefined' && google.colab.kernel != null) {
+        var comm_promise = google.colab.kernel.comms.open(comm_id)
+        comm_promise.then((comm) => {
+          window.PyViz.comms[comm_id] = comm;
+          if (msg_handler) {
+            var messages = comm.messages[Symbol.asyncIterator]();
+            function processIteratorResult(result) {
+              var message = result.value;
+              var content = {data: message.data};
+              var metadata = message.metadata || {comm_id};
+              var msg = {content, metadata}
+              msg_handler(msg);
+              return messages.next().then(processIteratorResult);
+            }
+            return messages.next().then(processIteratorResult);
+          }
+        }) 
+        var sendClosure = (data, metadata, buffers, disposeOnDone) => {
+          return comm_promise.then((comm) => {
+            comm.send(data, metadata, buffers, disposeOnDone);
+          });
+        };
+        var comm = {
+          send: sendClosure
+        };
+      }
+      window.PyViz.comms[comm_id] = comm;
+      return comm;
+    }
+    window.PyViz.comm_manager = new JupyterCommManager();
+    
+
+
+var JS_MIME_TYPE = 'application/javascript';
+var HTML_MIME_TYPE = 'text/html';
+var EXEC_MIME_TYPE = 'application/vnd.holoviews_exec.v0+json';
+var CLASS_NAME = 'output';
+
+/**
+ * Render data to the DOM node
+ */
+function render(props, node) {
+  var div = document.createElement("div");
+  var script = document.createElement("script");
+  node.appendChild(div);
+  node.appendChild(script);
+}
+
+/**
+ * Handle when a new output is added
+ */
+function handle_add_output(event, handle) {
+  var output_area = handle.output_area;
+  var output = handle.output;
+  if ((output.data == undefined) || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) {
+    return
+  }
+  var id = output.metadata[EXEC_MIME_TYPE]["id"];
+  var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+  if (id !== undefined) {
+    var nchildren = toinsert.length;
+    var html_node = toinsert[nchildren-1].children[0];
+    html_node.innerHTML = output.data[HTML_MIME_TYPE];
+    var scripts = [];
+    var nodelist = html_node.querySelectorAll("script");
+    for (var i in nodelist) {
+      if (nodelist.hasOwnProperty(i)) {
+        scripts.push(nodelist[i])
+      }
+    }
+
+    scripts.forEach( function (oldScript) {
+      var newScript = document.createElement("script");
+      var attrs = [];
+      var nodemap = oldScript.attributes;
+      for (var j in nodemap) {
+        if (nodemap.hasOwnProperty(j)) {
+          attrs.push(nodemap[j])
+        }
+      }
+      attrs.forEach(function(attr) { newScript.setAttribute(attr.name, attr.value) });
+      newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+      oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
+    if (JS_MIME_TYPE in output.data) {
+      toinsert[nchildren-1].children[1].textContent = output.data[JS_MIME_TYPE];
+    }
+    output_area._hv_plot_id = id;
+    if ((window.Bokeh !== undefined) && (id in Bokeh.index)) {
+      window.PyViz.plot_index[id] = Bokeh.index[id];
+    } else {
+      window.PyViz.plot_index[id] = null;
+    }
+  } else if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+    var bk_div = document.createElement("div");
+    bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+    var script_attrs = bk_div.children[0].attributes;
+    for (var i = 0; i < script_attrs.length; i++) {
+      toinsert[toinsert.length - 1].childNodes[1].setAttribute(script_attrs[i].name, script_attrs[i].value);
+    }
+    // store reference to server id on output_area
+    output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+  }
+}
+
+/**
+ * Handle when an output is cleared or removed
+ */
+function handle_clear_output(event, handle) {
+  var id = handle.cell.output_area._hv_plot_id;
+  var server_id = handle.cell.output_area._bokeh_server_id;
+  if (((id === undefined) || !(id in PyViz.plot_index)) && (server_id !== undefined)) { return; }
+  var comm = window.PyViz.comm_manager.get_client_comm("hv-extension-comm", "hv-extension-comm", function () {});
+  if (server_id !== null) {
+    comm.send({event_type: 'server_delete', 'id': server_id});
+    return;
+  } else if (comm !== null) {
+    comm.send({event_type: 'delete', 'id': id});
+  }
+  delete PyViz.plot_index[id];
+  if ((window.Bokeh !== undefined) & (id in window.Bokeh.index)) {
+    var doc = window.Bokeh.index[id].model.document
+    doc.clear();
+    const i = window.Bokeh.documents.indexOf(doc);
+    if (i > -1) {
+      window.Bokeh.documents.splice(i, 1);
+    }
+  }
+}
+
+/**
+ * Handle kernel restart event
+ */
+function handle_kernel_cleanup(event, handle) {
+  delete PyViz.comms["hv-extension-comm"];
+  window.PyViz.plot_index = {}
+}
+
+/**
+ * Handle update_display_data messages
+ */
+function handle_update_output(event, handle) {
+  handle_clear_output(event, {cell: {output_area: handle.output_area}})
+  handle_add_output(event, handle)
+}
+
+function register_renderer(events, OutputArea) {
+  function append_mime(data, metadata, element) {
+    // create a DOM node to render to
+    var toinsert = this.create_output_subarea(
+    metadata,
+    CLASS_NAME,
+    EXEC_MIME_TYPE
+    );
+    this.keyboard_manager.register_events(toinsert);
+    // Render to node
+    var props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+    render(props, toinsert[0]);
+    element.append(toinsert);
+    return toinsert
+  }
+
+  events.on('output_added.OutputArea', handle_add_output);
+  events.on('output_updated.OutputArea', handle_update_output);
+  events.on('clear_output.CodeCell', handle_clear_output);
+  events.on('delete.Cell', handle_clear_output);
+  events.on('kernel_ready.Kernel', handle_kernel_cleanup);
+
+  OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+    safe: true,
+    index: 0
+  });
+}
+
+if (window.Jupyter !== undefined) {
+  try {
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  } catch(err) {
+  }
+}
+
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<style>*[data-root-id],
+*[data-root-id] > * {
+  box-sizing: border-box;
+  font-family: var(--jp-ui-font-family);
+  font-size: var(--jp-ui-font-size1);
+  color: var(--vscode-editor-foreground, var(--jp-ui-font-color1));
+}
+
+/* Override VSCode background color */
+.cell-output-ipywidget-background:has(
+    > .cell-output-ipywidget-background > .lm-Widget > *[data-root-id]
+  ),
+.cell-output-ipywidget-background:has(> .lm-Widget > *[data-root-id]) {
+  background-color: transparent !important;
+}
+</style>
+</div>
+<div class="cell-output cell-output-display">
+<div id="d4bfe8f7-b392-4368-84ab-1a190d3095a9">
+  <div id="e5db9439-c21b-4593-8e54-0f47a8417a41" data-root-id="d4bfe8f7-b392-4368-84ab-1a190d3095a9" style="display: contents;"></div>
+</div>
+<script type="application/javascript">(function(root) {
+  var docs_json = {"088ee546-2b9c-4ae0-9b45-2fd0efafe433":{"version":"3.4.0","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"d4bfe8f7-b392-4368-84ab-1a190d3095a9"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"c4c87cbc-c712-4f16-b5e9-15324d30e801","attributes":{"plot_id":"d4bfe8f7-b392-4368-84ab-1a190d3095a9","comm_id":"c14ee22afbeb40acb9755a3ae3e988ba","client_comm_id":"3cdfaed08ae24fdd9043f3f63312305d"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"justify_content","kind":"Any","default":"flex-start"},{"name":"gap","kind":"Any","default":""}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"088ee546-2b9c-4ae0-9b45-2fd0efafe433","roots":{"d4bfe8f7-b392-4368-84ab-1a190d3095a9":"e5db9439-c21b-4593-8e54-0f47a8417a41"},"root_ids":["d4bfe8f7-b392-4368-84ab-1a190d3095a9"]}];
+  var docs = Object.values(docs_json)
+  if (!docs) {
+    return
+  }
+  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
+  function embed_document(root) {
+    var Bokeh = get_bokeh(root)
+    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    for (const render_item of render_items) {
+      for (const root_id of render_item.root_ids) {
+    const id_el = document.getElementById(root_id)
+    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+      const root_el = id_el.children[0]
+      root_el.id = root_el.id + '-rendered'
+    }
+      }
+    }
+  }
+  function get_bokeh(root) {
+    if (root.Bokeh === undefined) {
+      return null
+    } else if (root.Bokeh.version !== py_version) {
+      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
+    return null
+      }
+      return root.Bokeh.versions.get(py_version);
+    } else if (root.Bokeh.version === py_version) {
+      return root.Bokeh
+    }
+    return null
+  }
+  function is_loaded(root) {
+    var Bokeh = get_bokeh(root)
+    return (Bokeh != null && Bokeh.Panel !== undefined)
+  }
+  if (is_loaded(root)) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (is_loaded(root)) {
+        clearInterval(timer);
+        embed_document(root);
+      } else if (document.readyState == "complete") {
+        attempts++;
+        if (attempts > 200) {
+          clearInterval(timer);
+      var Bokeh = get_bokeh(root)
+      if (Bokeh == null || Bokeh.Panel == null) {
+            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
+      } else {
+        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
+        embed_document(root)
+      }
+        }
+      }
+    }, 25, root)
+  }
+})(window);</script>
+</div>
+</div>
+<p><img src="./images/collage_1.4.png" width="100%"></p>
+<section id="what-is-panel" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-panel">What is Panel?</h2>
+<p>Panel is an open-source Python library that lets you <strong>easily build powerful tools, dashboards and complex applications entirely in Python</strong>. It has a batteries-included philosophy, putting the PyData ecosystem, powerful data tables and much more at your fingertips. High-level reactive APIs and lower-level callback based APIs ensure you can quickly build exploratory applications, but you aren’t limited if you build complex, multi-page apps with rich interactivity. Panel is a member of the <a href="https://holoviz.org">HoloViz</a> ecosystem, your gateway into a connected ecosystem of data exploration tools.</p>
+</section>
+<section id="new-release" class="level2">
+<h2 class="anchored" data-anchor-id="new-release">New release!</h2>
+<p>We are very pleased to announce the 1.4.0 release of Panel! This release packs many exciting new features, specifically:</p>
+<ol type="1">
+<li>Add <code>EditableTemplate</code> to support dashboard builder UI in Jupyter (<a href="https://github.com/holoviz/panel/pull/5802">#5802</a>)</li>
+<li>Add <code>ChatAreaInput</code> as default text input widget for <code>ChatInterface</code> (<a href="https://github.com/holoviz/panel/pull/6379">#6379</a>)</li>
+<li>Add <code>NestedSelect</code> widget (<a href="https://github.com/holoviz/panel/pull/5791">#5791</a>, <a href="https://github.com/holoviz/panel/pull/6011">#6011</a>)</li>
+<li>Improve <code>--autoreload</code> by using watchfiles and selectively reloading packages (<a href="https://github.com/holoviz/panel/pull/5894">#5894</a>, <a href="https://github.com/holoviz/panel/pull/6459">#6459</a>)</li>
+<li>Add Panel tutorials (<a href="https://github.com/holoviz/panel/pull/5525">#5525</a>, <a href="https://github.com/holoviz/panel/pull/6208">#6208</a>, <a href="https://github.com/holoviz/panel/pull/6212">#6212</a>, <a href="https://github.com/holoviz/panel/pull/6388">#6388</a>, <a href="https://github.com/holoviz/panel/pull/6425">#6425</a>, <a href="https://github.com/holoviz/panel/pull/6466">#6466</a>, <a href="https://github.com/holoviz/panel/pull/6491">#6491</a>)</li>
+<li>Add <code>DateRangePicker</code> widget (<a href="https://github.com/holoviz/panel/pull/6027">#6027</a>)</li>
+<li>Add <code>Feed</code> layout and use it as a layout for <code>ChatFeed</code> (<a href="https://github.com/holoviz/panel/pull/6031">#6031</a>, <a href="https://github.com/holoviz/panel/pull/6296">#6296</a>)</li>
+<li>Add <code>WebP</code> pane (<a href="https://github.com/holoviz/panel/pull/6035">#6035</a>)</li>
+<li>Add <code>ButtonIcon</code> (<a href="https://github.com/holoviz/panel/pull/6138">#6138</a>)</li>
+<li>Add <code>Textual</code> pane (<a href="https://github.com/holoviz/panel/pull/6181">#6181</a>)</li>
+</ol>
+<p>We really appreciate all the work that went into this release and especially want to call out <span class="citation" data-cites="MarcSkovMadsen">@MarcSkovMadsen</span>’s effort in putting together the new tutorial materials. There’s more work to do but it’s a huge step forward and we’re excited to hear your feedback. We want to extend a special thanks to our amazing new crop of new contributors including <span class="citation" data-cites="atisor73">@atisor73</span>, <span class="citation" data-cites="OSuwaidi">@OSuwaidi</span>, <span class="citation" data-cites="suryako">@suryako</span>, <span class="citation" data-cites="Davide-sd">@Davide-sd</span>, <span class="citation" data-cites="doraaki">@doraaki</span>, <span class="citation" data-cites="mayonnaisecolouredbenz7">@mayonnaisecolouredbenz7</span>, <span class="citation" data-cites="CTPassion">@CTPassion</span>, <span class="citation" data-cites="j01024">@j01024</span>, <span class="citation" data-cites="l3ender">@l3ender</span> and <span class="citation" data-cites="Coderambling">@Coderambling</span>. Next we want to recognize our returning contributors <span class="citation" data-cites="vaniisgh">@vaniisgh</span>, <span class="citation" data-cites="cdeil">@cdeil</span>, <span class="citation" data-cites="limx0m">@limx0m</span>, and <span class="citation" data-cites="TheoMaturin">@TheoMaturin</span>, and finally the dedicated crew of core contributors which include <span class="citation" data-cites="maximlt">@maximlt</span>, <span class="citation" data-cites="Hoxbro">@Hoxbro</span>, <span class="citation" data-cites="MarcSkovMadsen">@MarcSkovMadsen</span>, <span class="citation" data-cites="ahuang11">@ahuang11</span>, <span class="citation" data-cites="mattpap">@mattpap</span> and <span class="citation" data-cites="philippjfr">@philippjfr</span>.</p>
+<hr>
+<p>If you are using <a href="https://www.anaconda.com/downloads">Anaconda</a>, you can get latest Panel with <code>conda install panel</code> , and using pip you can install it with <code>pip install panel</code>.</p>
+<hr>
+</section>
+<section id="tutorials" class="level2">
+<h2 class="anchored" data-anchor-id="tutorials">Tutorials</h2>
+<p>Last year we decided to embark on a project to completely re-architect our documentation leaning heavily on the <a href="https://diataxis.fr/">Diataxis framework</a>. In doing so we got rid of the long form user guides and migrated most of the material into How-to guides. Overall the feedback about this change was very positive as it became easier to find what you were looking for, but it also made it more difficult for new users to learn about Panel.</p>
+<p>The <a href="https://panel.holoviz.org/tutorials/index.html"><strong>new tutorials</strong></a> aim to address this gap by providing a guided set of lessons that aim to get you from a complete novice to an advanced user. The tutorial is split into <a href="https://panel.holoviz.org/tutorials/basic/index.html"><strong>Basic</strong></a>, <a href="https://panel.holoviz.org/tutorials/intermediate/index.html"><strong>Intermediate</strong></a> and <a href="https://panel.holoviz.org/tutorials/advanced/index.html"><strong>Advanced</strong></a> sections and is structured as a series of lessons culminating in topic focused guides on building specific applications, e.g.&nbsp;a chat app, monitoring dashboard or a to-do app.</p>
+<p><img src="./images/tutorial.png" style="max-width: min(50%, 600px); margin-left: auto; margin-right: auto; display: block;"></p>
+<p>Designing meaningful and engaging lessons is a huge undertaking so we hope to gather your feedback to continue refining the material. We want to especially thank Marc Skov Madsen for putting such a tremendous amount of effort into these materials.</p>
+</section>
+<section id="dashboard-builder-ui" class="level2">
+<h2 class="anchored" data-anchor-id="dashboard-builder-ui">Dashboard Builder UI</h2>
+<p>The biggest new feature in this release is the addition of a dashboard builder UI that allows building a dashboard layout entirely using a drag and drop interface. Our aim has always been to empower users to quickly share their analyses and results with others and the dashboard builder UI allows building applications without even importing Panel at all. The UI is built on top of a new template component - the <code>EditableTemplate</code>. This template leverages <a href="https://interactjs.io/">interact.js</a> and <a href="https://muuri.dev/">Muuri</a> to provide a smooth user experience when laying out components on the page. Let us see it in action:</p>
+<video src="./images/dashboard_builder.mp4" style="max-width: min(80%, 1024px); margin-left: auto; margin-right: auto; display: block;" controls="">
+<source src="./images/dashboard_builder.mp4" type="video/mp4">
+</video>
+<p>As the video demonstrates the dashboard builder allows us to take a notebook with or without Panel components re-arrange, delete and move around cell outputs and markdown cells to build a dashboard.</p>
+</section>
+<section id="autoreload" class="level2">
+<h2 class="anchored" data-anchor-id="autoreload">Autoreload</h2>
+<p>In previous versions, Panel’s autoreload feature was a handy tool for developers, allowing them to see changes in their applications in real time without the need for manual refreshes. In this release we have outsourced the detection of changes to the <a href="https://watchfiles.helpmanual.io/">watchfiles</a>, not only have we improved the speed of file detection changes, but we have also enhanced the reliability and responsiveness of the autoreload process. To get the benefits of this improved autoreload experience install watchfiles with <code>pip</code> or <code>conda</code>.</p>
+<p>As part of the improvements we have already improved the handling around of reloading of local modules and entire packages. The improved autoreload mechanism now offers more robust support for detecting changes within your project’s modules and packages, ensuring that any update, no matter how small or where it occurs, will trigger a reload.</p>
+</section>
+<section id="chat-improvements" class="level2">
+<h2 class="anchored" data-anchor-id="chat-improvements">Chat Improvements</h2>
+<p>As the world of LLMs and chat bots built around them continues to advance we are working hard on building the simplest and most feature rich Chat interface with out-of-the-box support for multi-modal outputs and much more.</p>
+<p>The two main enhancements of the <code>ChatInterface</code> in this release were the addition of two new base components:</p>
+<section id="feed" class="level3">
+<h3 class="anchored" data-anchor-id="feed">Feed</h3>
+<p>The <code>Feed</code> layout added to Panel makes it possible to build a (near) infinitely scrollable layout making it possible for us to support chats with huge message histories containing 100s or 1000s of messages without having to render it all at once.</p>
+<p><img src="./images/chatfeed.gif" style="max-width: 50%; margin-left: auto; margin-right: auto; display: block;"></p>
+</section>
+<section id="chatareainput" class="level3">
+<h3 class="anchored" data-anchor-id="chatareainput">ChatAreaInput</h3>
+<p>The old <code>TextInput</code> and <code>TextArea</code> used as the text entry widget for the <code>ChatInterface</code> were providing a sub-optimal user experience. Therefore we introduced the <code>ChatAreaInput</code> with behavior closer to what you’re used to from familar chat interfaces like OpenAI including send on <code>&lt;Enter&gt;</code> and multi-line input using <code>&lt;Shift&gt;+&lt;Enter&gt;</code> key combinations. We aim to continue refining this component over time:</p>
+<div id="cell-9" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pn.chat.ChatAreaInput(placeholder<span class="op">=</span><span class="st">'Start a chat...'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div id="cd5b52d2-e871-451f-8076-c7b5c8754ba5">
+  <div id="e38ae3c2-251f-4258-830c-c0496ee6d635" data-root-id="cd5b52d2-e871-451f-8076-c7b5c8754ba5" style="display: contents;"></div>
+</div>
+<script type="application/javascript">(function(root) {
+  var docs_json = {"3c6de709-125f-4d9c-82c4-37a946f1b771":{"version":"3.4.0","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.chatarea_input.ChatAreaInput","id":"cd5b52d2-e871-451f-8076-c7b5c8754ba5","attributes":{"subscribed_events":{"type":"set","entries":["chat_message_event"]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"326bc8ce-45a9-4cfc-b220-e9a236a94f52","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"1236900b-9923-4936-8f32-ad7ad020fe8a","attributes":{"url":"https://cdn.jsdelivr.net/npm/material-components-web@7.0.0/dist/material-components-web.min.css"}},{"type":"object","name":"ImportedStyleSheet","id":"57392b3a-aee2-47df-b5e3-0b10475c14a1","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"b60c118a-a20f-4418-a2ef-703f99230745","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/bundled/theme/material_variables.css"}},{"type":"object","name":"ImportedStyleSheet","id":"78811c3b-cf3f-45c6-b98d-f7a5ad32cf96","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/bundled/theme/material.css"}}],"width":300,"min_width":300,"margin":[5,10],"align":"start","resizable":"height","placeholder":"Start a chat...","max_length":5000,"rows":1,"auto_grow":true,"max_rows":10}},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"303be0af-d31e-4723-a27f-ed44303d7f8a","attributes":{"plot_id":"cd5b52d2-e871-451f-8076-c7b5c8754ba5","comm_id":"d2d16f854c7a490f8f6a2f56c7054693","client_comm_id":"952bc8d2cea440ab9b43d0ee7aa5fc50"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"justify_content","kind":"Any","default":"flex-start"},{"name":"gap","kind":"Any","default":""}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"3c6de709-125f-4d9c-82c4-37a946f1b771","roots":{"cd5b52d2-e871-451f-8076-c7b5c8754ba5":"e38ae3c2-251f-4258-830c-c0496ee6d635"},"root_ids":["cd5b52d2-e871-451f-8076-c7b5c8754ba5"]}];
+  var docs = Object.values(docs_json)
+  if (!docs) {
+    return
+  }
+  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
+  function embed_document(root) {
+    var Bokeh = get_bokeh(root)
+    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    for (const render_item of render_items) {
+      for (const root_id of render_item.root_ids) {
+    const id_el = document.getElementById(root_id)
+    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+      const root_el = id_el.children[0]
+      root_el.id = root_el.id + '-rendered'
+    }
+      }
+    }
+  }
+  function get_bokeh(root) {
+    if (root.Bokeh === undefined) {
+      return null
+    } else if (root.Bokeh.version !== py_version) {
+      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
+    return null
+      }
+      return root.Bokeh.versions.get(py_version);
+    } else if (root.Bokeh.version === py_version) {
+      return root.Bokeh
+    }
+    return null
+  }
+  function is_loaded(root) {
+    var Bokeh = get_bokeh(root)
+    return (Bokeh != null && Bokeh.Panel !== undefined)
+  }
+  if (is_loaded(root)) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (is_loaded(root)) {
+        clearInterval(timer);
+        embed_document(root);
+      } else if (document.readyState == "complete") {
+        attempts++;
+        if (attempts > 200) {
+          clearInterval(timer);
+      var Bokeh = get_bokeh(root)
+      if (Bokeh == null || Bokeh.Panel == null) {
+            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
+      } else {
+        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
+        embed_document(root)
+      }
+        }
+      }
+    }, 25, root)
+  }
+})(window);</script>
+</div>
+</div>
+</section>
+<section id="other-enhancements" class="level3">
+<h3 class="anchored" data-anchor-id="other-enhancements">Other enhancements</h3>
+<p>There are a whole host of other improvements for the chat components in this release:</p>
+<ul>
+<li>Every part of a <code>ChatMessage</code> can now be styled</li>
+<li>Addition of more default avatars</li>
+<li>The ability to add custom objects to the header and footer of a <code>ChatMessage</code></li>
+</ul>
+<div id="cell-12" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pn.Row(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    pn.pane.Markdown(<span class="ss">f'```css</span><span class="ch">\n</span><span class="sc">{</span>stylesheet<span class="sc">}</span><span class="ss">```'</span>, margin<span class="op">=</span><span class="dv">0</span>, height<span class="op">=</span><span class="dv">300</span>, styles<span class="op">=</span>{<span class="st">'overflow-y'</span>: <span class="st">'scroll'</span>}),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    pn.chat.ChatMessage(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Style me up!"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        show_activity_dot<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        header_objects<span class="op">=</span>[<span class="st">'I am a custom header'</span>],</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        footer_objects<span class="op">=</span>[<span class="st">'I am a custom footer'</span>],</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        stylesheets<span class="op">=</span>[stylesheet], width<span class="op">=</span><span class="dv">600</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div id="c27ac54c-44fb-4c23-ab05-45961e74c476">
+  <div id="a2048524-8f0c-415e-9c94-4fde76b9ee37" data-root-id="c27ac54c-44fb-4c23-ab05-45961e74c476" style="display: contents;"></div>
+</div>
+<script type="application/javascript">(function(root) {
+  var docs_json = {"b27246fd-ab50-4055-ad1e-555a49f735b5":{"version":"3.4.0","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"c27ac54c-44fb-4c23-ab05-45961e74c476","attributes":{"name":"Row00919","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"6759def9-e99b-4723-8b4e-7b031e26d748","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"1f40bee6-c6bf-4292-886a-6742f756ae76","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"a53e5f3a-5741-4443-8525-0a578857f1cd","attributes":{"url":"https://cdn.jsdelivr.net/npm/material-components-web@7.0.0/dist/material-components-web.min.css"}},{"type":"object","name":"ImportedStyleSheet","id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/bundled/theme/material_variables.css"}},{"type":"object","name":"ImportedStyleSheet","id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/bundled/theme/material.css"}}],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.markup.HTML","id":"0a9d1aa6-4a52-4b90-bfd3-cdd34e1f3d54","attributes":{"css_classes":["markdown"],"styles":{"type":"map","entries":[["overflow-y","scroll"]]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"type":"object","name":"ImportedStyleSheet","id":"2cfc9de3-7d21-41d8-9c17-0aee10ea56bb","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/css/markdown.css"}},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"height":300,"min_height":300,"margin":0,"align":"start","text":"&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;&lt;div class=&quot;codehilite&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;tan&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;font-family&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Courier New&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;avatar&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;footer&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;orange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;timestamp&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;purple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;activity-dot&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;black&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;reaction-icons&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;copy-icon&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;gold&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;grey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;pink&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;\n&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;yellow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;\n&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;\n&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;\n&lt;/code&gt;&lt;/pre&gt;\n"}},{"type":"object","name":"Row","id":"1702a8ec-49c6-4d2f-8d8f-28d0bb5d3604","attributes":{"name":"Row00918","css_classes":["chat-message"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"},{"type":"object","name":"ImportedStyleSheet","id":"0aab768f-73cb-4332-a559-bad36873b34b","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/css/chat_message.css"}},"\n.message {\n    background-color: tan;\n    font-size: 24px;\n    font-family: \"Courier New\";\n}\n.avatar {\n    background-color: red;\n    border-radius: 5%;\n}\n.header {\n    background-color: green;\n}\n.footer {\n    background-color: blue;\n}\n.name {\n    background-color: orange;\n}\n.timestamp {\n    background-color: purple;\n}\n.activity-dot {\n    background-color: black;\n}\n.reaction-icons {\n    background-color: white;\n}\n.copy-icon {\n    background-color: gold;\n}\n.right {\n    background-color: grey;\n}\n.center {\n    background-color: pink;\n}\n.left {\n    background-color: yellow;\n}\n"],"width":600,"min_width":600,"max_width":1200,"margin":[5,10],"align":"start","children":[{"type":"object","name":"panel.models.layout.Column","id":"e3e46fed-d17d-4213-9463-2c4213a8e02b","attributes":{"name":"Column00885","css_classes":["left"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"},{"id":"0aab768f-73cb-4332-a559-bad36873b34b"},"\n.message {\n    background-color: tan;\n    font-size: 24px;\n    font-family: \"Courier New\";\n}\n.avatar {\n    background-color: red;\n    border-radius: 5%;\n}\n.header {\n    background-color: green;\n}\n.footer {\n    background-color: blue;\n}\n.name {\n    background-color: orange;\n}\n.timestamp {\n    background-color: purple;\n}\n.activity-dot {\n    background-color: black;\n}\n.reaction-icons {\n    background-color: white;\n}\n.copy-icon {\n    background-color: gold;\n}\n.right {\n    background-color: grey;\n}\n.center {\n    background-color: pink;\n}\n.left {\n    background-color: yellow;\n}\n"],"height":100,"min_height":100,"max_width":60,"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.markup.HTML","id":"006a0a70-11f3-4c2b-852b-79a320e03860","attributes":{"css_classes":["avatar"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"margin":[5,10],"align":"start","text":"\ud83e\uddd1","disable_math":true}}]}},{"type":"object","name":"panel.models.layout.Column","id":"30b4b971-df96-41f7-bc2d-27012006db55","attributes":{"name":"Column00917","css_classes":["right"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"},{"id":"0aab768f-73cb-4332-a559-bad36873b34b"},"\n.message {\n    background-color: tan;\n    font-size: 24px;\n    font-family: \"Courier New\";\n}\n.avatar {\n    background-color: red;\n    border-radius: 5%;\n}\n.header {\n    background-color: green;\n}\n.footer {\n    background-color: blue;\n}\n.name {\n    background-color: orange;\n}\n.timestamp {\n    background-color: purple;\n}\n.activity-dot {\n    background-color: black;\n}\n.reaction-icons {\n    background-color: white;\n}\n.copy-icon {\n    background-color: gold;\n}\n.right {\n    background-color: grey;\n}\n.center {\n    background-color: pink;\n}\n.left {\n    background-color: yellow;\n}\n"],"min_width":15,"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Row","id":"992aeec2-7a66-444d-8fe9-c9a92297e58c","attributes":{"name":"Row00902","css_classes":["header"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"},{"id":"0aab768f-73cb-4332-a559-bad36873b34b"},"\n.message {\n    background-color: tan;\n    font-size: 24px;\n    font-family: \"Courier New\";\n}\n.avatar {\n    background-color: red;\n    border-radius: 5%;\n}\n.header {\n    background-color: green;\n}\n.footer {\n    background-color: blue;\n}\n.name {\n    background-color: orange;\n}\n.timestamp {\n    background-color: purple;\n}\n.activity-dot {\n    background-color: black;\n}\n.reaction-icons {\n    background-color: white;\n}\n.copy-icon {\n    background-color: gold;\n}\n.right {\n    background-color: grey;\n}\n.center {\n    background-color: pink;\n}\n.left {\n    background-color: yellow;\n}\n"],"min_width":15,"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"panel.models.markup.HTML","id":"66f9c942-2e1d-4624-b9cf-bd9a7eea4737","attributes":{"css_classes":["name"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"},{"id":"0aab768f-73cb-4332-a559-bad36873b34b"}],"height":20,"min_height":20,"margin":[5,10],"align":"start","text":"User","disable_math":true}},{"type":"object","name":"Row","id":"c547cc3b-cc11-49b2-a376-923486e7321f","attributes":{"name":"Row00892","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"margin":0,"align":"start","children":[{"type":"object","name":"Row","id":"816afc32-c455-4555-b73b-61d01439a660","attributes":{"name":"Row00901","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.layout.Column","id":"238ad2c2-1e3a-4573-9b12-e887884cbabe","attributes":{"name":"Column00897","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.markup.HTML","id":"2b625b2e-b4e0-43ef-b989-8ce11d88195c","attributes":{"css_classes":["markdown"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"2cfc9de3-7d21-41d8-9c17-0aee10ea56bb"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"margin":[5,10],"align":"start","text":"&lt;p&gt;I am a custom header&lt;/p&gt;\n"}}]}}]}}]}},{"type":"object","name":"panel.models.reactive_html.ReactiveHTML","id":"d6fbd73e-7e46-40ba-bbce-7d503dfc8213","attributes":{"subscribed_events":{"type":"set","entries":["dom_event"]},"css_classes":["copy-icon"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"type":"object","name":"ImportedStyleSheet","id":"360c0110-f2c4-41bf-8758-8ba640a30154","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/css/chat_copy_icon.css"}},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"},{"id":"0aab768f-73cb-4332-a559-bad36873b34b"},"\n.message {\n    background-color: tan;\n    font-size: 24px;\n    font-family: \"Courier New\";\n}\n.avatar {\n    background-color: red;\n    border-radius: 5%;\n}\n.header {\n    background-color: green;\n}\n.footer {\n    background-color: blue;\n}\n.name {\n    background-color: orange;\n}\n.timestamp {\n    background-color: purple;\n}\n.activity-dot {\n    background-color: black;\n}\n.reaction-icons {\n    background-color: white;\n}\n.copy-icon {\n    background-color: gold;\n}\n.right {\n    background-color: grey;\n}\n.center {\n    background-color: pink;\n}\n.left {\n    background-color: yellow;\n}\n"],"width":15,"height":15,"margin":0,"sizing_mode":"fixed","align":"start","attrs":{"type":"map","entries":[["copy-button",[["onclick",[],"{script('copy_to_clipboard')}"]]],["copy-icon",[["fill",["fill"],"{fill}"]]]]},"callbacks":{"type":"map","entries":[["copy-button",[["onclick","script('copy_to_clipboard')"]]]]},"data":{"type":"object","name":"copy_to_clipboard1","id":"f7ac7a5c-2272-44c2-b854-f0663f414673","attributes":{"name":"ChatCopyIcon00880","value":"Style me up!"}},"html":"\n&lt;div\n    type=&quot;button&quot;\n    id=&quot;copy-button-${id}&quot;\n    onclick=&quot;${script(&#x27;copy_to_clipboard&#x27;)}&quot;\n    style=&quot;cursor: pointer; width: ${model.width}px; height: ${model.height}px;&quot;\n    title=&quot;Copy message to clipboard&quot;\n&gt;\n    &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; class=&quot;icon icon-tabler icon-tabler-copy&quot; id=&quot;copy-icon-${id}&quot;\n        width=&quot;${model.width}&quot; height=&quot;${model.height}&quot; viewBox=&quot;0 0 24 24&quot;\n        stroke-width=&quot;2&quot; stroke=&quot;currentColor&quot; fill=${fill} stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;\n    &gt;\n        &lt;path stroke=&quot;none&quot; d=&quot;M0 0h24v24H0z&quot; fill=&quot;none&quot;&gt;&lt;/path&gt;\n        &lt;path d=&quot;M8 8m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z&quot;&gt;&lt;/path&gt;\n        &lt;path d=&quot;M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2&quot;&gt;&lt;/path&gt;\n    &lt;/svg&gt;\n&lt;/div&gt;\n","nodes":["copy-button","copy-icon"],"scripts":{"type":"map","entries":[["copy_to_clipboard",["navigator.clipboard.writeText(`${data.value}`);\ndata.fill = &quot;currentColor&quot;;\nsetTimeout(() =&gt; data.fill = &quot;none&quot;, 50);"]]]}}},{"type":"object","name":"panel.models.markup.HTML","id":"34607a12-5da9-40a2-ba2a-3c5b6d16d20a","attributes":{"css_classes":["activity-dot"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"},{"id":"0aab768f-73cb-4332-a559-bad36873b34b"},"\n.message {\n    background-color: tan;\n    font-size: 24px;\n    font-family: \"Courier New\";\n}\n.avatar {\n    background-color: red;\n    border-radius: 5%;\n}\n.header {\n    background-color: green;\n}\n.footer {\n    background-color: blue;\n}\n.name {\n    background-color: orange;\n}\n.timestamp {\n    background-color: purple;\n}\n.activity-dot {\n    background-color: black;\n}\n.reaction-icons {\n    background-color: white;\n}\n.copy-icon {\n    background-color: gold;\n}\n.right {\n    background-color: grey;\n}\n.center {\n    background-color: pink;\n}\n.left {\n    background-color: yellow;\n}\n"],"margin":[5,10],"align":"start","text":"\u25cf","disable_math":true}}]}},{"type":"object","name":"Row","id":"054678a8-c80a-420f-8d80-27f595dc82c4","attributes":{"name":"Row00888","css_classes":["center"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"},{"id":"0aab768f-73cb-4332-a559-bad36873b34b"},"\n.message {\n    background-color: tan;\n    font-size: 24px;\n    font-family: \"Courier New\";\n}\n.avatar {\n    background-color: red;\n    border-radius: 5%;\n}\n.header {\n    background-color: green;\n}\n.footer {\n    background-color: blue;\n}\n.name {\n    background-color: orange;\n}\n.timestamp {\n    background-color: purple;\n}\n.activity-dot {\n    background-color: black;\n}\n.reaction-icons {\n    background-color: white;\n}\n.copy-icon {\n    background-color: gold;\n}\n.right {\n    background-color: grey;\n}\n.center {\n    background-color: pink;\n}\n.left {\n    background-color: yellow;\n}\n"],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.markup.HTML","id":"fba7405d-d29a-4a07-b9c5-584ddb506008","attributes":{"css_classes":["markdown","message"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"2cfc9de3-7d21-41d8-9c17-0aee10ea56bb"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"},{"id":"0aab768f-73cb-4332-a559-bad36873b34b"},"\n.message {\n    background-color: tan;\n    font-size: 24px;\n    font-family: \"Courier New\";\n}\n.avatar {\n    background-color: red;\n    border-radius: 5%;\n}\n.header {\n    background-color: green;\n}\n.footer {\n    background-color: blue;\n}\n.name {\n    background-color: orange;\n}\n.timestamp {\n    background-color: purple;\n}\n.activity-dot {\n    background-color: black;\n}\n.reaction-icons {\n    background-color: white;\n}\n.copy-icon {\n    background-color: gold;\n}\n.right {\n    background-color: grey;\n}\n.center {\n    background-color: pink;\n}\n.left {\n    background-color: yellow;\n}\n"],"margin":[5,10],"align":"start","text":"&lt;p&gt;Style me up!&lt;/p&gt;\n"}},{"type":"object","name":"panel.models.layout.Column","id":"ef0d1d2a-339c-4b53-8570-3ee8bb13edb0","attributes":{"name":"Column00876","css_classes":["reaction-icons"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"},{"id":"0aab768f-73cb-4332-a559-bad36873b34b"},"\n.message {\n    background-color: tan;\n    font-size: 24px;\n    font-family: \"Courier New\";\n}\n.avatar {\n    background-color: red;\n    border-radius: 5%;\n}\n.header {\n    background-color: green;\n}\n.footer {\n    background-color: blue;\n}\n.name {\n    background-color: orange;\n}\n.timestamp {\n    background-color: purple;\n}\n.activity-dot {\n    background-color: black;\n}\n.reaction-icons {\n    background-color: white;\n}\n.copy-icon {\n    background-color: gold;\n}\n.right {\n    background-color: grey;\n}\n.center {\n    background-color: pink;\n}\n.left {\n    background-color: yellow;\n}\n"],"width":15,"height":15,"margin":[5,10],"sizing_mode":"fixed","align":"start","children":[{"type":"object","name":"panel.models.icon.ToggleIcon","id":"5b58f29a-4729-4744-b88b-29619627fc14","attributes":{"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"type":"object","name":"ImportedStyleSheet","id":"2b9385fb-b52d-4bd8-8b95-d95df14a1d92","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/css/icon.css"}},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"margin":0,"align":"start"}}]}}]}},{"type":"object","name":"panel.models.layout.Column","id":"477fa73a-477c-448e-9a11-a6220ab75864","attributes":{"name":"Column00916","css_classes":["footer"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"},{"id":"0aab768f-73cb-4332-a559-bad36873b34b"},"\n.message {\n    background-color: tan;\n    font-size: 24px;\n    font-family: \"Courier New\";\n}\n.avatar {\n    background-color: red;\n    border-radius: 5%;\n}\n.header {\n    background-color: green;\n}\n.footer {\n    background-color: blue;\n}\n.name {\n    background-color: orange;\n}\n.timestamp {\n    background-color: purple;\n}\n.activity-dot {\n    background-color: black;\n}\n.reaction-icons {\n    background-color: white;\n}\n.copy-icon {\n    background-color: gold;\n}\n.right {\n    background-color: grey;\n}\n.center {\n    background-color: pink;\n}\n.left {\n    background-color: yellow;\n}\n"],"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Row","id":"7c20d874-ada4-4046-9883-51bc6953bc3b","attributes":{"name":"Row00906","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"margin":0,"align":"start","children":[{"type":"object","name":"Row","id":"22a55239-5327-4778-9820-84532f6c765b","attributes":{"name":"Row00915","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.layout.Column","id":"9190d4d1-6936-46b3-a174-bf75eee84626","attributes":{"name":"Column00911","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"1f40bee6-c6bf-4292-886a-6742f756ae76"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.markup.HTML","id":"ff3c3a88-1e88-4bde-becf-352a1fce9515","attributes":{"css_classes":["markdown"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"2cfc9de3-7d21-41d8-9c17-0aee10ea56bb"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"margin":[5,10],"align":"start","text":"&lt;p&gt;I am a custom footer&lt;/p&gt;\n"}}]}}]}}]}},{"type":"object","name":"panel.models.markup.HTML","id":"8796aa8c-6c71-4ecd-a80f-09a76c8c0a07","attributes":{"css_classes":["timestamp"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"6759def9-e99b-4723-8b4e-7b031e26d748"},{"id":"a53e5f3a-5741-4443-8525-0a578857f1cd"},{"id":"1dcf3163-6dc7-428d-94e9-f39e7e6df9ef"},{"id":"59a0044f-d7c7-47cf-8d8a-274f8a7ee9f9"},{"id":"bf4aa97c-b0e6-45aa-9a08-f8d2212233f9"}],"margin":[5,10],"align":"start","text":"17:31","disable_math":true}}]}}]}}]}}]}},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"253a5eab-85cd-47e4-81eb-3944b5bf7da9","attributes":{"plot_id":"c27ac54c-44fb-4c23-ab05-45961e74c476","comm_id":"48d84c6f2ee747fda5ac078bffa6be94","client_comm_id":"40a409aa751d4544960498043387c10a"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"justify_content","kind":"Any","default":"flex-start"},{"name":"gap","kind":"Any","default":""}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"b27246fd-ab50-4055-ad1e-555a49f735b5","roots":{"c27ac54c-44fb-4c23-ab05-45961e74c476":"a2048524-8f0c-415e-9c94-4fde76b9ee37"},"root_ids":["c27ac54c-44fb-4c23-ab05-45961e74c476"]}];
+  var docs = Object.values(docs_json)
+  if (!docs) {
+    return
+  }
+  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
+  function embed_document(root) {
+    var Bokeh = get_bokeh(root)
+    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    for (const render_item of render_items) {
+      for (const root_id of render_item.root_ids) {
+    const id_el = document.getElementById(root_id)
+    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+      const root_el = id_el.children[0]
+      root_el.id = root_el.id + '-rendered'
+    }
+      }
+    }
+  }
+  function get_bokeh(root) {
+    if (root.Bokeh === undefined) {
+      return null
+    } else if (root.Bokeh.version !== py_version) {
+      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
+    return null
+      }
+      return root.Bokeh.versions.get(py_version);
+    } else if (root.Bokeh.version === py_version) {
+      return root.Bokeh
+    }
+    return null
+  }
+  function is_loaded(root) {
+    var Bokeh = get_bokeh(root)
+    return (Bokeh != null && Bokeh.Panel !== undefined)
+  }
+  if (is_loaded(root)) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (is_loaded(root)) {
+        clearInterval(timer);
+        embed_document(root);
+      } else if (document.readyState == "complete") {
+        attempts++;
+        if (attempts > 200) {
+          clearInterval(timer);
+      var Bokeh = get_bokeh(root)
+      if (Bokeh == null || Bokeh.Panel == null) {
+            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
+      } else {
+        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
+        embed_document(root)
+      }
+        }
+      }
+    }, 25, root)
+  }
+})(window);</script>
+</div>
+</div>
+</section>
+</section>
+<section id="reactive-expressions-references" class="level2">
+<h2 class="anchored" data-anchor-id="reactive-expressions-references">Reactive Expressions &amp; References</h2>
+<p>In Panel 1.3.0 we introduced new concepts around <strong>r</strong>eactive e<strong>x</strong>pressions using the <code>param.rx</code> API and the ability to bind reactive references to parameters. This release continues to build on this support in a number of ways:</p>
+<section id="asynchronous-generator-expressions" class="level3">
+<h3 class="anchored" data-anchor-id="asynchronous-generator-expressions">(Asynchronous) Generator Expressions</h3>
+<p>Streaming in Panel has long been possible by registering periodic callbacks, but as we are moving more and more towards a more reactive approach to writing applications we have been improving the support for building applications with (asynchronous) generators. If you upgrade to Param 2.1 you can now use <code>rx</code> expressions that are driven by a generator.</p>
+<p>To provide a simple demonstration of this approach let us build a generator that emits a value every 0.1 seconds. By wrapping the generator in <code>pn.rx</code> we can now perform standard arithmetic on this dynamic value, e.g.&nbsp;by adding an offset derived from a widget value:</p>
+<div id="cell-15" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gen():</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        time.sleep(<span class="fl">0.1</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> np.random.randn()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>offset <span class="op">=</span> pn.widgets.FloatSlider(value<span class="op">=</span><span class="dv">0</span>, end<span class="op">=</span><span class="dv">5</span>, name<span class="op">=</span><span class="st">'Offset'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>pn.Column(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    offset,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    pn.widgets.Number(value<span class="op">=</span>pn.rx(gen)<span class="op">+</span>offset, <span class="bu">format</span><span class="op">=</span><span class="st">'</span><span class="sc">{value:.3f}</span><span class="st">'</span>, width<span class="op">=</span><span class="dv">250</span>, font_size<span class="op">=</span><span class="st">'36pt'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="./images/gen_rx.gif"></p>
+<p>The ability to perform operations on dynamic values derived from generators, parameter values and widgets in this way provides a concise way to express complex data pipelines in a declarative way and thanks to support for binding the reactive references you can easily tie these dynamic values to visual outputs. To discover more about this read some of the new explanation materials on <a href="https://panel.holoviz.org/explanation/api/reactivity.html">reactivity in Panel</a> and <a href="https://param.holoviz.org/user_guide/References.html">references in Param</a>.</p>
+</section>
+<section id="skipping-updates" class="level3">
+<h3 class="anchored" data-anchor-id="skipping-updates">Skipping updates</h3>
+<p>One sticking point when working with reactive functions created using the <code>pn.bind</code> API was that there was no way to signal that you did not want to update the output until some condition was met. In Param 2.1 and Panel 1.4 it is now possible to <code>Skip</code> updates by raising a <code>param.Skip</code> exception.</p>
+<p>A good example of this is a form that gathers some inputs but should not run until a button is clicked. In our <code>add</code> callback we return <code>Skip</code> until the button triggers a calculate event at which point we yield a message to say we are Calculating and then yield the result:</p>
+<div id="cell-19" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>a_slider <span class="op">=</span> pn.widgets.FloatSlider()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>b_slider <span class="op">=</span> pn.widgets.FloatSlider()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>button <span class="op">=</span> pn.widgets.Button(name<span class="op">=</span><span class="st">'Calculate'</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add(a, b, calculate):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> calculate:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> pn.param.Skip</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="st">'**Calculating...**'</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">1</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="ss">f'**</span><span class="sc">{</span>a<span class="sc">}</span><span class="ss"> + </span><span class="sc">{</span>b<span class="sc">}</span><span class="ss"> = </span><span class="sc">{</span>a<span class="op">+</span>b<span class="sc">:.1f}</span><span class="ss">**'</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>pn.Column(a_slider, b_slider, button, pn.bind(add, a_slider, b_slider, button))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="./images/skip.gif"></p>
+</section>
+</section>
+<section id="new-components" class="level2">
+<h2 class="anchored" data-anchor-id="new-components">New Components</h2>
+<p>No new Panel release would be complete without the addition of at least a few new components. In addition to some of the new Chat components we also have a few new panes and widgets for you.</p>
+<section id="textual" class="level3">
+<h3 class="anchored" data-anchor-id="textual">Textual</h3>
+<p><a href="https://textual.textualize.io/">Textual</a> is a Rapid Application Development framework for Python allowing users to build so called TUIs. As the popularity of this framework has grown and more and a growing number of tools offer Textual UIs we decided to explore whether it would be possible to embed these apps inside Panel, and quickly the <a href="https://panel.holoviz.org/reference/panes/Textual.html"><code>Textual</code> pane</a> was born - wrap any Textual application in Panel and use it from within a notebook or in your standalone application:</p>
+<p><img src="./images/textual.gif" style="max-width: 50%; margin-left: auto; margin-right: auto; display: block;"></p>
+</section>
+<section id="new-widgets" class="level3">
+<h3 class="anchored" data-anchor-id="new-widgets">New widgets</h3>
+<p>Every new Panel release must come with at least a few new widgets, in this release we have three main new additions for you the <a href="https://panel.holoviz.org/reference/widgets/NestedSelect.html"><code>NestedSelect</code></a> widget to simplify selection of values with a hierarchical relationship, the <a href="https://panel.holoviz.org/reference/widgets/DateRangePicker.html"><code>DateRangePicker</code></a>, a simplified version of the <code>DatetimeRangePicker</code> without the time selection and the <a href="https://panel.holoviz.org/reference/widgets/ButtonIcon.html"><code>ButtonIcon</code></a>.</p>
+</section>
+<section id="nestedselect" class="level3">
+<h3 class="anchored" data-anchor-id="nestedselect">NestedSelect</h3>
+<p>The <a href="https://panel.holoviz.org/reference/widgets/NestedSelect.html"><code>NestedSelect</code> widget</a> makes it possible to express hierarchical relationship either using a static definition or by providing a callback to generate the valid values:</p>
+<div id="cell-24" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nested_select <span class="op">=</span> pn.widgets.NestedSelect(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    options<span class="op">=</span>{</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Africa"</span>: {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Ghana"</span>: [<span class="st">"Accra"</span>, <span class="st">"Kumasi"</span>, <span class="st">"Tamale"</span>],</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Nigeria"</span>: [<span class="st">"Abuja"</span>, <span class="st">"Kano"</span>, <span class="st">"Ibadan"</span>, <span class="st">"Lagos"</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Asia"</span>: {</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Thailand"</span>: [<span class="st">"Bangkok"</span>, <span class="st">"Chiang Mai"</span>, <span class="st">"Nakhon Ratchasima"</span>],</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Vietnam"</span>: [<span class="st">"Da Nang"</span>, <span class="st">"Hanoi"</span>, <span class="st">"Ho Chi Minh City"</span>],</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    levels<span class="op">=</span>[<span class="st">"Continent"</span>, <span class="st">"Country"</span>, <span class="st">"City"</span>],</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>pn.Row(nested_select, pn.pane.ParamRef(nested_select.param.value))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="./images/nested_select.gif"></p>
+</section>
+<section id="daterangepicker" class="level3">
+<h3 class="anchored" data-anchor-id="daterangepicker">DateRangePicker</h3>
+<p>The <a href="https://panel.holoviz.org/reference/widgets/DateRangePicker.html"><code>DateRangePicker</code></a> widget provides a simple but welcome addition to the widget pantheon as the smaller brother of the <code>DatetimeRangePicker</code>.</p>
+<div id="cell-27" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pn.widgets.DateRangePicker(value<span class="op">=</span>(dt.date(<span class="dv">2023</span>, <span class="dv">11</span>, <span class="dv">17</span>), dt.date(<span class="dv">2024</span>, <span class="dv">3</span>, <span class="dv">27</span>)), name<span class="op">=</span><span class="st">'DateRangePicker'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="./images/DateRangePicker.png" style="max-width: 300px"></p>
+</section>
+<section id="buttonicon" class="level3">
+<h3 class="anchored" data-anchor-id="buttonicon">ButtonIcon</h3>
+<p>The new <a href="https://panel.holoviz.org/reference/widgets/ButtonIcon.html"><code>ButtonIcon</code></a> is to the <a href="https://panel.holoviz.org/reference/widgets/ToggleIcon.html"><code>ToggleIcon</code></a> what <a href="https://panel.holoviz.org/reference/widgets/Button.html"><code>Button</code></a> is to the <a href="https://panel.holoviz.org/reference/widgets/Toggle.html"><code>Toggle</code> widget</a>. Sometimes you just want to be able to click on an icon and trigger an event:</p>
+<div id="cell-30" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pn.GridBox(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    pn.widgets.ButtonIcon(icon<span class="op">=</span><span class="st">"heart"</span>, size<span class="op">=</span><span class="st">"8em"</span>, description<span class="op">=</span><span class="st">"Favorite"</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    pn.widgets.ButtonIcon(icon<span class="op">=</span><span class="st">"clipboard"</span>, active_icon<span class="op">=</span><span class="st">"check"</span>, size<span class="op">=</span><span class="st">"8em"</span>, description<span class="op">=</span><span class="st">"Copy"</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    ncols<span class="op">=</span><span class="dv">2</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div id="cb6fb2fc-6e62-4068-aa1b-ce33a8647e35">
+  <div id="dfaca64f-e808-4da7-85c2-987d596a8fd8" data-root-id="cb6fb2fc-6e62-4068-aa1b-ce33a8647e35" style="display: contents;"></div>
+</div>
+<script type="application/javascript">(function(root) {
+  var docs_json = {"91d6e580-aa7c-48ef-afc8-04e7c2cbbfd2":{"version":"3.4.0","title":"Bokeh Application","roots":[{"type":"object","name":"GridBox","id":"cb6fb2fc-6e62-4068-aa1b-ce33a8647e35","attributes":{"rows":null,"cols":null,"name":"GridBox01000","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"44d90e68-5003-44c5-a9fc-c9f8a237750f","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"561e8cc7-3757-4ab0-8ce2-04cbca463f9f","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/css/gridbox.css"}},{"type":"object","name":"ImportedStyleSheet","id":"7bb76b6d-2975-437f-b602-0e0b283c1805","attributes":{"url":"https://cdn.jsdelivr.net/npm/material-components-web@7.0.0/dist/material-components-web.min.css"}},{"type":"object","name":"ImportedStyleSheet","id":"3b62f6ff-bcb0-4564-9aee-378f9969737d","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"5ea79cbe-066a-4e25-a16a-5b876c064c8d","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/bundled/theme/material_variables.css"}},{"type":"object","name":"ImportedStyleSheet","id":"56e1d5b9-1c57-40bd-91d6-99af7c5b4336","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/bundled/theme/material.css"}}],"margin":0,"align":"start","children":[[{"type":"object","name":"panel.models.icon.ButtonIcon","id":"ea4138ca-6ed5-4d2a-90a9-f2e5f5e69f15","attributes":{"subscribed_events":{"type":"set","entries":["button_click"]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"44d90e68-5003-44c5-a9fc-c9f8a237750f"},{"type":"object","name":"ImportedStyleSheet","id":"d93cddf5-a9b5-4207-ad17-20015492171b","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.0/dist/css/icon.css"}},{"id":"7bb76b6d-2975-437f-b602-0e0b283c1805"},{"id":"3b62f6ff-bcb0-4564-9aee-378f9969737d"},{"id":"5ea79cbe-066a-4e25-a16a-5b876c064c8d"},{"id":"56e1d5b9-1c57-40bd-91d6-99af7c5b4336"}],"margin":[5,10],"align":"start","size":"8em","tooltip":{"type":"object","name":"Tooltip","id":"d0ed2063-6cda-478b-9e2e-242bf3280d06","attributes":{"position":"right","content":"Favorite"}}}},0,0,1,1],[{"type":"object","name":"panel.models.icon.ButtonIcon","id":"91120b0f-2bdd-4a52-87b6-81556f418b75","attributes":{"subscribed_events":{"type":"set","entries":["button_click"]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"44d90e68-5003-44c5-a9fc-c9f8a237750f"},{"id":"d93cddf5-a9b5-4207-ad17-20015492171b"},{"id":"7bb76b6d-2975-437f-b602-0e0b283c1805"},{"id":"3b62f6ff-bcb0-4564-9aee-378f9969737d"},{"id":"5ea79cbe-066a-4e25-a16a-5b876c064c8d"},{"id":"56e1d5b9-1c57-40bd-91d6-99af7c5b4336"}],"margin":[5,10],"align":"start","icon":"clipboard","active_icon":"check","size":"8em","tooltip":{"type":"object","name":"Tooltip","id":"8260baf6-acca-492e-aa91-d61537c7752b","attributes":{"position":"right","content":"Copy"}}}},0,1,1,1]]}},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"a4968f62-16b1-4f98-947e-7996f879d45e","attributes":{"plot_id":"cb6fb2fc-6e62-4068-aa1b-ce33a8647e35","comm_id":"fc0aa868211848c1998975cc6026c41a","client_comm_id":"77baf53603674e8c91d4e54aa7f4397f"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"justify_content","kind":"Any","default":"flex-start"},{"name":"gap","kind":"Any","default":""}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"91d6e580-aa7c-48ef-afc8-04e7c2cbbfd2","roots":{"cb6fb2fc-6e62-4068-aa1b-ce33a8647e35":"dfaca64f-e808-4da7-85c2-987d596a8fd8"},"root_ids":["cb6fb2fc-6e62-4068-aa1b-ce33a8647e35"]}];
+  var docs = Object.values(docs_json)
+  if (!docs) {
+    return
+  }
+  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
+  function embed_document(root) {
+    var Bokeh = get_bokeh(root)
+    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    for (const render_item of render_items) {
+      for (const root_id of render_item.root_ids) {
+    const id_el = document.getElementById(root_id)
+    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+      const root_el = id_el.children[0]
+      root_el.id = root_el.id + '-rendered'
+    }
+      }
+    }
+  }
+  function get_bokeh(root) {
+    if (root.Bokeh === undefined) {
+      return null
+    } else if (root.Bokeh.version !== py_version) {
+      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
+    return null
+      }
+      return root.Bokeh.versions.get(py_version);
+    } else if (root.Bokeh.version === py_version) {
+      return root.Bokeh
+    }
+    return null
+  }
+  function is_loaded(root) {
+    var Bokeh = get_bokeh(root)
+    return (Bokeh != null && Bokeh.Panel !== undefined)
+  }
+  if (is_loaded(root)) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (is_loaded(root)) {
+        clearInterval(timer);
+        embed_document(root);
+      } else if (document.readyState == "complete") {
+        attempts++;
+        if (attempts > 200) {
+          clearInterval(timer);
+      var Bokeh = get_bokeh(root)
+      if (Bokeh == null || Bokeh.Panel == null) {
+            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
+      } else {
+        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
+        embed_document(root)
+      }
+        }
+      }
+    }, 25, root)
+  }
+})(window);</script>
+</div>
+</div>
+</section>
+</section>
+<section id="roadmap" class="level2">
+<h2 class="anchored" data-anchor-id="roadmap">Roadmap</h2>
+<p>The Panel 1.4.0 release was quite feature packed but we already have a number of major new features in the pipline.</p>
+<section id="esm-components" class="level3">
+<h3 class="anchored" data-anchor-id="esm-components">ESM Components</h3>
+<p>In Panel 1.5.0 we plan to finally provide a more robust replacement for <code>ReactiveHTML</code> based on ESM modules with a modern development experience including hotreloading, ability to import JS modules and React based components.</p>
+</section>
+<section id="session-handling-scaling" class="level3">
+<h3 class="anchored" data-anchor-id="session-handling-scaling">Session Handling &amp; Scaling</h3>
+<p>Recently we found various opportunities for optimizing and parallelizing session creation and session handling including moving the session creation to threads and opening up the ability to re-connect to a session if the websocket is closed.</p>
+</section>
+</section>
+<section id="changelog" class="level2">
+<h2 class="anchored" data-anchor-id="changelog">Changelog</h2>
+<section id="features" class="level3">
+<h3 class="anchored" data-anchor-id="features">Features</h3>
+<ul>
+<li>Add <code>EditableTemplate</code> to support dashboard builder UI in Jupyter (<a href="https://github.com/holoviz/panel/pull/5802">#5802</a>)</li>
+<li>Add <code>ChatAreaInput</code> as default text input widget for <code>ChatInterface</code> (<a href="https://github.com/holoviz/panel/pull/6379">#6379</a>)</li>
+<li>Add <code>NestedSelect</code> widget (<a href="https://github.com/holoviz/panel/pull/5791">#5791</a>, <a href="https://github.com/holoviz/panel/pull/6011">#6011</a>)</li>
+<li>Add Panel tutorials (<a href="https://github.com/holoviz/panel/pull/5525">#5525</a>, <a href="https://github.com/holoviz/panel/pull/6208">#6208</a>, <a href="https://github.com/holoviz/panel/pull/6212">#6212</a>, <a href="https://github.com/holoviz/panel/pull/6388">#6388</a>, <a href="https://github.com/holoviz/panel/pull/6425">#6425</a>, <a href="https://github.com/holoviz/panel/pull/6466">#6466</a>, <a href="https://github.com/holoviz/panel/pull/6491">#6491</a>)</li>
+<li>Add <code>DateRangePicker</code> widget (<a href="https://github.com/holoviz/panel/pull/6027">#6027</a>)</li>
+<li>Add <code>Feed</code> layout and use it as layout for <code>ChatFeed</code> (<a href="https://github.com/holoviz/panel/pull/6031">#6031</a>, <a href="https://github.com/holoviz/panel/pull/6296">#6296</a>)</li>
+<li>Add <code>WebP</code> pane (<a href="https://github.com/holoviz/panel/pull/6035">#6035</a>)</li>
+<li>Add <code>ButtonIcon</code> (<a href="https://github.com/holoviz/panel/pull/6138">#6138</a>)</li>
+<li>Add <code>Textual</code> pane (<a href="https://github.com/holoviz/panel/pull/6181">#6181</a>)</li>
+</ul>
+</section>
+<section id="enhancements" class="level3">
+<h3 class="anchored" data-anchor-id="enhancements">Enhancements</h3>
+<ul>
+<li>Improve <code>--autoreload</code> by using watchfiles and selectively reloading packages (<a href="https://github.com/holoviz/panel/pull/5894">#5894</a>, <a href="https://github.com/holoviz/panel/pull/6459">#6459</a>) Load loading indicator from file instead of inlining (<a href="https://github.com/holoviz/panel/pull/6112">#6112</a>)</li>
+<li>Allow providing additional stylesheets in <code>card_params</code> (<a href="https://github.com/holoviz/panel/pull/6242">#6242</a>)</li>
+<li>Add <code>scroll</code> options to permanently toggle on layouts (<a href="https://github.com/holoviz/panel/pull/6266">#6266</a>)</li>
+<li>Allow choosing position of frozen columns on <code>Tabulator</code> (<a href="https://github.com/holoviz/panel/pull/6309">#6309</a>)</li>
+<li>Add help message on <code>ChatFeed</code> (<a href="https://github.com/holoviz/panel/pull/6311">#6311</a>)</li>
+<li>Ensure CSS can be applied to every aspect of <code>ChatMessage</code> (<a href="https://github.com/holoviz/panel/pull/6346">#6346</a>)</li>
+<li>Add HoloViz logos as <code>ChatMessage</code> avatars (<a href="https://github.com/holoviz/panel/pull/6348">#6348</a>)</li>
+<li>Add <code>gap</code> parameter to <code>FlexBox</code> (<a href="https://github.com/holoviz/panel/pull/6354">#6354</a>)</li>
+<li>Set default <code>step</code> of <code>DatetimeRangeSlider</code> to 1 minute (<a href="https://github.com/holoviz/panel/pull/6373">#6373</a>)</li>
+<li>Add support for passing objects reference to <code>FlexBox</code> (<a href="https://github.com/holoviz/panel/pull/6387">#6387</a>)</li>
+<li>Allow editable sliders to be embedded (<a href="https://github.com/holoviz/panel/pull/6391">#6391</a>)</li>
+<li>Add <code>message</code> into <code>css_classes</code> to <code>ChatMessage</code> markup (<a href="https://github.com/holoviz/panel/pull/6407">#6407</a>)</li>
+<li>Allow appending objects to the <code>ChatMessage</code> header &amp; footer (<a href="https://github.com/holoviz/panel/pull/6410">#6410</a>)</li>
+<li>Add ability to declare icon label (<a href="https://github.com/holoviz/panel/pull/6411">#6411</a>)</li>
+<li>Add title and settings and fix datetime to <code>Perspective</code> (<a href="https://github.com/holoviz/panel/pull/6482">#6482</a>)</li>
+<li>Warn user if loading extension in VSCode or Colab without <code>jupyter_bokeh</code> (<a href="https://github.com/holoviz/panel/pull/6485">#6485</a>)</li>
+<li>Throttle updates to Boolean indicators (<a href="https://github.com/holoviz/panel/pull/6481">#6481</a>)</li>
+<li>Add <code>ParamRef</code> baseclass for <code>ParamFunction</code> and <code>ParamMethod</code> (<a href="https://github.com/holoviz/panel/pull/6392">#6392</a>)</li>
+<li>Add ability to Skip <code>Param&lt;Ref|Function|Method&gt;</code> updates (<a href="https://github.com/holoviz/panel/pull/6396">#6396</a>)</li>
+<li>Add <code>Param&lt;Ref|Method|Function&gt;</code> and <code>ReactiveExpr</code> to panes module (<a href="https://github.com/holoviz/panel/pull/6432">#6432</a>)</li>
+<li>Set up <code>param.rx</code> display accessor on import (<a href="https://github.com/holoviz/panel/pull/6470">#6470</a>)</li>
+<li>Allow using Carto tiles in <code>DeckGL</code> (<a href="https://github.com/holoviz/panel/pull/6531">#6531</a>)</li>
+<li>Improve <code>VTKJS</code> binary serialization (<a href="https://github.com/holoviz/panel/pull/6559">#6559</a>)</li>
+<li>Ensure component CSS is pre-loaded if possible, avoiding flicker on load (<a href="https://github.com/holoviz/panel/pull/6563">#6563</a>)</li>
+</ul>
+</section>
+<section id="styling" class="level3">
+<h3 class="anchored" data-anchor-id="styling">Styling</h3>
+<ul>
+<li>Ensure navbar toggle icon is correct color in <code>BootstrapTemplate</code> (<a href="https://github.com/holoviz/panel/pull/6111">#6111</a>)</li>
+<li>Change <code>loading</code> background filters to work better in dark themes (<a href="https://github.com/holoviz/panel/pull/6112">#6112</a>)</li>
+<li>Improve styling of <code>FileInput</code> widget (<a href="https://github.com/holoviz/panel/pull/6479">#6479</a>)</li>
+<li>Improve Jupyter Preview error handling and error template (<a href="https://github.com/holoviz/panel/pull/6496">#6496</a>)</li>
+<li>Add scale animation to icons on hover and click (<a href="https://github.com/holoviz/panel/pull/6376">#6376</a>)</li>
+<li>Redesign index pages (<a href="https://github.com/holoviz/panel/pull/6497">#6497</a>)</li>
+<li>Improve <code>Tabulator</code> editor text color in <code>Fast</code> design (<a href="https://github.com/holoviz/panel/pull/6512">#6512</a>)</li>
+<li>Ensure <code>BootstrapTemplate</code> hamburger icon is white (<a href="https://github.com/holoviz/panel/pull/6562">#6562</a>)</li>
+</ul>
+</section>
+<section id="compatibility-version-updates" class="level3">
+<h3 class="anchored" data-anchor-id="compatibility-version-updates">Compatibility &amp; Version Updates</h3>
+<ul>
+<li>Bump <code>Perspective</code> version to 2.9.0 (<a href="https://github.com/holoviz/panel/pull/5722">#5722</a>)</li>
+<li>Upgrade to Bokeh 3.4.x (<a href="https://github.com/holoviz/panel/pull/6072">#6072</a>)</li>
+<li>Upgrade <code>Vizzu</code> to 0.9.3 (<a href="https://github.com/holoviz/panel/pull/6476">#6476</a>)</li>
+<li>Bump <code>JSONEditor</code> version to 10.0.1 (<a href="https://github.com/holoviz/panel/pull/6477">#6477</a>)</li>
+<li>Upgrade to PyScript Next and Pyodide 0.25.0 in <code>panel convert</code> (<a href="https://github.com/holoviz/panel/pull/6490">#6490</a>)</li>
+<li>Bump vtk.js version to 30.1.0 (<a href="https://github.com/holoviz/panel/pull/6559">#6559</a>)</li>
+</ul>
+</section>
+<section id="bug-fixes" class="level3">
+<h3 class="anchored" data-anchor-id="bug-fixes">Bug fixes</h3>
+<ul>
+<li>Add resize handler for <code>FloatPanel</code> (<a href="https://github.com/holoviz/panel/pull/6201">#6201</a>)</li>
+<li>Fix serving of global template in notebook (<a href="https://github.com/holoviz/panel/pull/6210">#6210</a>)</li>
+<li>Ensure <code>Tabulator</code> renders in collapsed <code>Card</code> (<a href="https://github.com/holoviz/panel/pull/6223">#6223</a>)</li>
+<li>Fix issues with <code>VTK</code>, <code>VTKVolume</code> and <code>VTKJS</code> due to webgpu renderer (<a href="https://github.com/holoviz/panel/issues/6244">#6244</a>)</li>
+<li>Ensure <code>HTML</code> and other markup panes can be emptied (<a href="https://github.com/holoviz/panel/pull/6303">#6303</a>)</li>
+<li>Ensure collapsed <code>Card</code> does not cause stretching (<a href="https://github.com/holoviz/panel/pull/6305">#6305</a>)</li>
+<li>Ensure notebook preview always uses server resources (<a href="https://github.com/holoviz/panel/pull/6317">#6317</a>)</li>
+<li>Remove animation from loading spinner without spin (<a href="https://github.com/holoviz/panel/pull/6324">#6324</a>)</li>
+<li>Ensure model is only added/removed from Document once (<a href="https://github.com/holoviz/panel/pull/6342">#6342</a>)</li>
+<li>Ensure <code>loading_indicator</code> resets when configured with context manager (<a href="https://github.com/holoviz/panel/pull/6343">#6343</a>)</li>
+<li>Fix modal overflow and resizing issues (<a href="https://github.com/holoviz/panel/pull/6355">#6355</a>)</li>
+<li>Ensure that ripple matches notification size (<a href="https://github.com/holoviz/panel/pull/6360">#6360</a>)</li>
+<li>Fully re-render <code>CodeEditor</code> on render calls ensuring it displays correctly (<a href="https://github.com/holoviz/panel/pull/6361">#6361</a>)</li>
+<li>Ensure <code>FileDownload</code> button has correct height (<a href="https://github.com/holoviz/panel/pull/6362">#6362</a>)</li>
+<li>Ensure <code>HTML</code> model is redrawn if <code>stylesheets</code> is emptied (<a href="https://github.com/holoviz/panel/pull/6365">#6365</a>)</li>
+<li>Allow providing custom template (<a href="https://github.com/holoviz/panel/pull/6383">#6383</a>)</li>
+<li>Ensure <code>Debugger</code> renders without error (<a href="https://github.com/holoviz/panel/pull/6423">#6423</a>)</li>
+<li>Ensure pending writes are dispatched in order and only from correct thread (<a href="https://github.com/holoviz/panel/pull/6443">#6443</a>)</li>
+<li>Ensure layout reuses model if available (<a href="https://github.com/holoviz/panel/pull/6446">#6446</a>)</li>
+<li>Improved exception handler in unlocked message dispatch (<a href="https://github.com/holoviz/panel/pull/6447">#6447</a>)</li>
+<li>Fix display of interactive <code>Matplotlib</code> (<a href="https://github.com/holoviz/panel/pull/6450">#6450</a>)</li>
+<li>Ensure <code>Plotly</code> pane renders and hides correctly in <code>Card</code> (<a href="https://github.com/holoviz/panel/pull/6468">#6468</a>)</li>
+<li>Fix issues rendering widget components with <code>Fast</code> design (<a href="https://github.com/holoviz/panel/pull/6474">#6474</a>)</li>
+<li>Fix binary serialization from JS -&gt; Pyodide (<a href="https://github.com/holoviz/panel/pull/6490">#6490</a>)</li>
+<li>Avoid overeager garbage collection (<a href="https://github.com/holoviz/panel/pull/6518">#6518</a>)</li>
+<li>Fix floating point error in <code>IntRangeSlider</code> (<a href="https://github.com/holoviz/panel/pull/6516">#6516</a>)</li>
+<li>Load JS modules from relative path (<a href="https://github.com/holoviz/panel/pull/6526">#6526</a>)</li>
+<li>Ensure no events are dispatched before the websocket is open (<a href="https://github.com/holoviz/panel/pull/6528">#6528</a>)</li>
+<li>Ensure <code>Markdown</code> parsing does not choke on partial links (<a href="https://github.com/holoviz/panel/pull/6535">#6535</a>)</li>
+<li>Fixes to ensure larger <code>PDF</code>s can be rendered (<a href="https://github.com/holoviz/panel/pull/6538">#6538</a>)</li>
+<li>Ensure <code>IPywidget</code> comms are only opened once (<a href="https://github.com/holoviz/panel/pull/6542">#6542</a>)</li>
+<li>Fixes for message handling in Jupyter Preview context (<a href="https://github.com/holoviz/panel/pull/6547">#6547</a>)</li>
+<li>Fix unnecessary loading of <code>ReactiveHTML</code> resources (<a href="https://github.com/holoviz/panel/pull/6552">#6552</a>)</li>
+<li>Ensure <code>Template.raw_css</code> has higher precedence than default template CSS (<a href="https://github.com/holoviz/panel/pull/6554">#6554</a>)</li>
+<li>Avoid asyncio event loop startup issues in some contexts (<a href="https://github.com/holoviz/panel/pull/6555">#6555</a>)</li>
+<li>Ensure column subset is retained on <code>Tabulator.style</code> (<a href="https://github.com/holoviz/panel/pull/6560">#6560</a>)</li>
+<li>Ensure bokeh mathjax bundle when mathjax extension is loaded in notebook (<a href="https://github.com/holoviz/panel/pull/6564">#6564</a>)</li>
+</ul>
+</section>
+<section id="chat-components" class="level3">
+<h3 class="anchored" data-anchor-id="chat-components">Chat Components</h3>
+<ul>
+<li>Ensure <code>ChatInterface</code> respect supplied default user (<a href="https://github.com/holoviz/panel/pull/6290">#6290</a>)</li>
+<li>Ensure <code>ChatMessage</code> internals correctly respect <code>Design</code> (<a href="https://github.com/holoviz/panel/pull/6304">#6304</a>)</li>
+<li>Fix <code>ChatInterface</code> <code>stop</code> button for synchronous functions (<a href="https://github.com/holoviz/panel/pull/6312">#6312</a>)</li>
+<li>Include <code>stylesheets</code> downstream, including layouts in ChatMessage (<a href="https://github.com/holoviz/panel/pull/6405">#6405</a>)</li>
+<li>Ensure <code>ChatMessage</code> <code>header</code> updates dynamically (<a href="https://github.com/holoviz/panel/pull/6441">#6441</a>)</li>
+<li>Ensure streaming <code>ChatMessage</code> on <code>ChatInterface</code> and mention <code>serialize</code> (<a href="https://github.com/holoviz/panel/pull/6452">#6452</a>)</li>
+<li>Ensure ChatInterface supports chat input without <code>value_input</code> parameter (<a href="https://github.com/holoviz/panel/pull/6505">#6505</a>)</li>
+<li>Ensure word breaks to avoid overflow in <code>ChatMessage</code> (<a href="https://github.com/holoviz/panel/pull/6187">#6187</a>, <a href="https://github.com/holoviz/panel/pull/6509">#6509</a>)</li>
+<li>Ensure nested disabled state stays disabled on <code>ChatFeed</code> (<a href="https://github.com/holoviz/panel/pull/6507">#6507</a>)</li>
+<li>Allow streaming <code>None</code> as the initial <code>ChatMessage</code> value (<a href="https://github.com/holoviz/panel/pull/6522">#6522</a>)</li>
+</ul>
+</section>
+<section id="documentation" class="level3">
+<h3 class="anchored" data-anchor-id="documentation">Documentation</h3>
+<ul>
+<li>Add Roadmap to documentation (<a href="https://github.com/holoviz/panel/pull/5443">#5443</a>)</li>
+<li>Refactor <code>ReactiveHTML</code> docs (<a href="https://github.com/holoviz/panel/pull/5448">#5448</a>, <a href="https://github.com/holoviz/panel/pull/6358">#6358</a>)</li>
+<li>Improve <code>HoloViews</code> reference guide (<a href="https://github.com/holoviz/panel/pull/6065">#6065</a>)</li>
+<li>Improve the user experience for resetting Jupyterlite (<a href="https://github.com/holoviz/panel/pull/6198">#6198</a>)</li>
+<li>Add explanation docs about APIs (<a href="https://github.com/holoviz/panel/pull/6289">#6289</a>, <a href="https://github.com/holoviz/panel/pull/6469">#6469</a>)</li>
+<li>Add section headers to Chat reference documentation (<a href="https://github.com/holoviz/panel/pull/6370">#6370</a>)</li>
+<li>Migrate gallery to new Anaconda DSP instance (<a href="https://github.com/holoviz/panel/pull/6413">#6413</a>)</li>
+<li>Improve home page (<a href="https://github.com/holoviz/panel/pull/6422">#6422</a>)</li>
+<li>Adding AWS deployment to documentation (<a href="https://github.com/holoviz/panel/pull/6434">#6434</a>)</li>
+<li>Update Streamlit comparison (<a href="https://github.com/holoviz/panel/pull/6467">#6467</a>)</li>
+<li>Add logging how-to guide (<a href="https://github.com/holoviz/panel/pull/6511">#6511</a>)</li>
+<li>Document pygments dependency for code syntax highlighting (<a href="https://github.com/holoviz/panel/pull/6519">#6519</a>)</li>
+<li>Add how-to guide on configuring PyCharm (<a href="https://github.com/holoviz/panel/pull/6525">#6525</a>)</li>
+</ul>
+</section>
+<section id="deprecations-removals" class="level3">
+<h3 class="anchored" data-anchor-id="deprecations-removals">Deprecations &amp; Removals</h3>
+<ul>
+<li>Remove <code>Ace</code> alias for <code>CodeEditor</code></li>
+<li>Remove <code>ChatBox</code> which has been replaced by <code>panel.chat</code> components</li>
+<li>Remove <code>HTML.style</code> which is now replaced with <code>HTML.styles</code></li>
+<li>Remove <code>Trend.title</code> which is now replaced by <code>Trend.name</code></li>
+<li>Remove <code>Viewable.app</code> which is now replaced with <code>pn.io.notebook.show_server</code></li>
+<li>Remove <code>Viewable.background</code> which is now replaced with <code>Viewable(styles={'background': ...})</code></li>
+<li>Remove <code>Viewable.pprint</code> which is now replaced with <code>print(Viewable(...))</code></li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/blog\.holoviz\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Copyright 2023 Holoviz contributors</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.dev/holoviz-dev/blog/blob/main/posts/panel_release_1.4/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
