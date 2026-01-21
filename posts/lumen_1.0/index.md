@@ -47,10 +47,9 @@ The original UI proved the concept, but it was difficult to evolve, theme consis
 * A foundation for report and dashboard composition
 * Ability to theme the UI easily 
 
-<div style="width:80%; margin:0 auto; text-align:center;">
+<div style="width:10%; margin:0 auto; text-align:center;">
   <img src="images/ui.png" alt="UI Screenshot" style="width:100%; height:auto;" />
   <div style="margin-top:0.5rem; font-size:0.9em; color:#555;">
-    <!-- Caption goes here -->
     <em><b>Modernized UI</b>: The new UI built on `panel-material-ui` and `panel-splitjs` with modernized menus, clearer navigation and a resizable results area.</em>
   </div>
 </div>
@@ -69,10 +68,9 @@ In Lumen 1.0, we introduced a **new API based on explicit context passing**:
 * Chaining agents becomes auditable, testable, and predictable
 * The execution graph is intelligent and automatically re-runs dependent tasks when one of its inputs changes
 
-<div style="width:80%; margin:0 auto; text-align:center;">
+<div style="width:100%; margin:0 auto; text-align:center;">
   <img src="images/typed_context.svg" alt="Typed context diagram" style="width:100%; height:auto;" />
   <div style="margin-top:0.5rem; font-size:0.9em; color:#555;">
-    <!-- Caption goes here -->
     <em><b>Context Flow</b>: A graph highlighting how context flows through a series of tasks.</em>
   </div>
 </div>
@@ -91,10 +89,9 @@ Instead of treating plans as ephemeral instructions, Lumen now executes them thr
 * External data access
 * Custom Python logic
 
-<div style="width:70%; margin:0 auto; text-align:center;">
+<div style="width:100%; margin:0 auto; text-align:center;">
   <img src="images/report_diagram.svg" alt="Typed context diagram" style="width:100%; height:auto;" />
   <div style="margin-top:0.5rem; font-size:0.9em; color:#555;">
-    <!-- Caption goes here -->
     <em><b>Report Structure</b>: A diagram representing the structure of a <code>Report</code> containing sections including an example of a deterministic <code>SQLAction</code> and two <code>ActorTask</code>s that invoke the <code>VegaLiteAgent</code> and <code>ChatAgent</code> respectively.</em>
   </div>
 </div>
@@ -114,7 +111,6 @@ Lumen 1.0 also significantly expands its practical reach:
 * Substantial improvements in **performance, stability, and failure handling**
 
 These changes reflect a shift from experimentation toward production-oriented usage, especially in enterprise and research environments.
-
 
 ## What’s Next
 
