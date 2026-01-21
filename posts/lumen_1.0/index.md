@@ -41,21 +41,15 @@ As Lumen matured, a few core lessons consistently shaped our design decisions.
 
 One of the biggest visible changes in Lumen 1.0 is the **full rewrite of the UI on top of [`panel-material-ui`](https://panel-material-ui.holoviz.org)** and the newly created [`panel-splitjs`](https://github.com/panel-extensions/panel-splitjs).
 
+![**Modernized UI**: The new UI built on `panel-material-ui` and `panel-splitjs` with modernized menus, clearer navigation and a resizable results area.](images/ui.png){fig-align="center" width="100%" fig-alt="UI Screenshot"}
+
 The original UI proved the concept, but it was difficult to evolve, theme consistently, or extend cleanly. The new UI provides:
 
 * A modern, cohesive visual design
 * Better layout primitives for complex outputs
 * A clearer separation between exploration, results, and controls
 * A foundation for report and dashboard composition
-* Ability to theme the UI easily 
-
-<div style="width:10%; margin:0 auto; text-align:center;">
-  <img src="images/ui.png" alt="UI Screenshot" style="width:100%; height:auto;" />
-  <div style="margin-top:0.5rem; font-size:0.9em; color:#555;">
-    <em><b>Modernized UI</b>: The new UI built on `panel-material-ui` and `panel-splitjs` with modernized menus, clearer navigation and a resizable results area.</em>
-  </div>
-</div>
-</br>
+* Ability to theme the UI easily
 
 This is not just a visual refresh, it is an enabling step for everything that follows, including persistent sessions, report composition, and application-like workflows.
 
@@ -63,20 +57,14 @@ This is not just a visual refresh, it is an enabling step for everything that fo
 
 Early versions of Lumen relied on a shared global memory object to pass information between agents and tools. While workable, this model made reasoning, validation, and reuse increasingly difficult as workflows became more complex.
 
+![**Context Flow**: A graph highlighting how context flows through a series of tasks.](images/typed_context.svg){fig-align="center" width="100%" fig-alt="Typed context diagram"}
+
 In Lumen 1.0, we introduced a **new API based on explicit context passing**:
 
 * Agents and tools declare **typed inputs and outputs** using Pydantic models
 * Context is passed explicitly between steps rather than implicitly shared
 * Chaining agents becomes auditable, testable, and predictable
 * The execution graph is intelligent and automatically re-runs dependent tasks when one of its inputs changes
-
-<div style="width:100%; margin:0 auto; text-align:center;">
-  <img src="images/typed_context.svg" alt="Typed context diagram" style="width:100%; height:auto;" />
-  <div style="margin-top:0.5rem; font-size:0.9em; color:#555;">
-    <em><b>Context Flow</b>: A graph highlighting how context flows through a series of tasks.</em>
-  </div>
-</div>
-</br>
 
 This shift makes Lumen workflows easier to reason about for both humans and LLMs, while laying the groundwork for reproducibility, validation, and long-running executions.
 
@@ -91,16 +79,9 @@ Instead of treating plans as ephemeral instructions, Lumen now executes them thr
 * External data access
 * Custom Python logic
 
-<div style="width:100%; margin:0 auto; text-align:center;">
-  <img src="images/report_diagram.svg" alt="Typed context diagram" style="width:100%; height:auto;" />
-  <div style="margin-top:0.5rem; font-size:0.9em; color:#555;">
-    <em><b>Report Structure</b>: A diagram representing the structure of a <code>Report</code> containing sections including an example of a deterministic <code>SQLAction</code> and two <code>ActorTask</code>s that invoke the <code>VegaLiteAgent</code> and <code>ChatAgent</code> respectively.</em>
-  </div>
-</div>
-</br>
-
-
 This architecture directly powers a new **Reports capability**, where tasks can be defined declaratively and executed to produce exportable, repeatable outputs, whether or not an LLM is involved.
+
+![**Report Structure**: A diagram representing the structure of a `Report` containing sections including an example of a deterministic `SQLAction` and two `ActorTask`s that invoke the `VegaLiteAgent` and `ChatAgent` respectively.](images/report_diagram.svg){fig-align="center" width="100%" fig-alt="Report structure diagram"}
 
 This is a key step toward treating Lumen not just as a chat interface, but as a system for building structured analytical workflows (and provides the foundation for future persistence features).
 
