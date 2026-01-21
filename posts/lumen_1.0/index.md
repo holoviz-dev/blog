@@ -7,6 +7,8 @@ categories: [announcement, lumen]
 image: "images/ai-diagram.png"
 ---
 
+{{< video https://assets.holoviz.org/lumen/videos/intro_v2.mp4 >}}
+
 ## A Major Step Toward Structured, Auditable AI-Driven Data Apps
 
 When we [first announced Lumen AI](./lumen_ai_announcement/), our goal was ambitious: build a fully open, extensible framework for conversational data exploration that remains transparent, inspectable, and composable, rather than opaque and ad-hoc.
