@@ -11,9 +11,9 @@ image: "images/ai-diagram.png"
 
 ## A Major Step Toward Structured, Auditable AI-Driven Data Apps
 
-When we [first announced Lumen AI](./lumen_ai_announcement/), our goal was ambitious: build a fully open, extensible framework for conversational data exploration that remains transparent, inspectable, and composable, rather than opaque and ad-hoc.
+When we [first announced Lumen AI](./lumen_ai_announcement/), our goal was ambitious: build a fully open, extensible framework for conversational data exploration that remains transparent, inspectable, and composable, rather than opaque, closed and non-extensible.
 
-Today, with the release of **Lumen 1.0**, that vision has materially matured. This release represents a substantial re-architecture of both the UI and the core execution model, along with major improvements in robustness, extensibility, and real-world applicability.
+Today, with the release of **Lumen 1.0**, that vision has significantly evolved. This release represents a substantial re-architecture of both the UI and the core execution model, along with major improvements in robustness, extensibility, and real-world applicability.
 
 This post highlights what has changed since the initial announcement, why those changes matter, and where we are headed next.
 
@@ -21,11 +21,40 @@ This post highlights what has changed since the initial announcement, why those 
 
 ## What is Lumen AI?
 
-Let's quickly recap the core ideas and design behind Lumen AI. Lumen AI is an open-source framework for **conversational data exploration and analysis** that combines large language models with a structured, declarative execution model. It allows users to explore data, generate SQL, build transformations, and produce visualizations using natural language, while keeping every step inspectable, editable, and reproducible.
+Before diving any deeper let's recap, Lumen AI is an open-source framework for **conversational data exploration and analysis** that combines large language models with a structured, declarative execution model. It allows users to explore data, generate SQL, build transformations, and produce visualizations using natural language, while keeping every step inspectable, editable, and reproducible.
 
 Unlike chat-only tools, Lumen is designed around **explicit data pipelines and typed execution plans**. LLMs are used to propose transformations, analyses, and visual outputs, but those proposals are expressed as concrete, serializable specifications that can be validated, re-run, shared, or extended with custom Python logic. Because Lumen is built on Panel and the broader HoloViz ecosystem, it can render rich interactive outputs, from tables and charts to full dashboards—directly as part of the workflow.
 
 At its core, Lumen is not just a chat interface over data, but a framework for building **auditable, extensible, AI-assisted data applications**, where conversational exploration is the entry point rather than the end state.
+
+## A First Look at Using Lumen
+
+A typical Lumen session starts with a question, but it does not end with a single answer.
+
+You might begin by asking:
+
+> *“How has monthly revenue changed by product category over the past year?”*
+
+From there, Lumen walks through a structured flow:
+
+1. **Interpret the intent**
+   The `Planner` translates the question into a concrete plan: what data is needed, which tables to query, and how results should be grouped or aggregated.
+
+2. **Generate and expose SQL**
+   The `SQlAgent` produces a SQL query, executes it, and shows both the result and the query itself. You can inspect it, edit it, or reuse it directly.
+
+3. **Produce a visualization**
+   Based on the result, the `VegaLiteAgent` generates a Vega-Lite specification to visualize the data. The specification is visible and editable, just like the SQL.
+
+4. **Iterate conversationally**
+   You can refine the analysis with follow-up questions—filter a category, change the aggregation, or add a comparison—and Lumen updates only the affected steps.
+
+5. **Turn exploration into something reusable**
+   At any point, the steps taken so far can become part of a report or a larger workflow, re-run against fresh data or combined with additional analyses.
+
+The key difference is that nothing disappears. Each step produces explicit artifacts that remain part of the session, making it easy to understand how a result was produced and to build on it over time.
+
+This makes Lumen well suited for workflows that start with open-ended exploration but need to evolve into repeatable analysis, shared reports, or data applications.
 
 ## Lessons Learned
 
@@ -37,7 +66,11 @@ As Lumen matured, a few core lessons consistently shaped our design decisions.
 
 **Lean into what LLMs do well and pair it with Python.** Rather than asking models to do everything, we focused on their strengths: generating **structured, validatable outputs** and orchestrating workflows. Those outputs can then be checked, executed, and refined using deterministic systems. At the same time, Lumen makes it easy to inject **custom Python analysis code**, allowing domain-specific logic, complex transformations, and reuse of existing libraries. This combination, LLMs for intent and structure, Python for execution and extensibility, has proven to be a powerful and sustainable foundation.
 
-## A Complete UI Rewrite on `panel-material-ui`
+## What's Changed Since the Initial Release
+
+Since the initial announcement, Lumen has undergone a series of substantial changes driven by real-world usage, technical constraints, and a clearer understanding of where LLMs add value in data workflows. Rather than layering features onto the original design, we revisited several core assumptions, resulting in meaningful changes to the UI, execution model, and extension points. The sections below highlight the most important improvements in Lumen 1.0, and how they move the project from an early proof of concept toward a more robust and extensible foundation.
+
+### A Complete UI Rewrite on `panel-material-ui`
 
 One of the biggest visible changes in Lumen 1.0 is the **full rewrite of the UI on top of [`panel-material-ui`](https://panel-material-ui.holoviz.org)** and the newly created [`panel-splitjs`](https://github.com/panel-extensions/panel-splitjs).
 
@@ -53,7 +86,7 @@ The original UI proved the concept, but it was difficult to evolve, theme consis
 
 This is not just a visual refresh, it is an enabling step for everything that follows, including persistent sessions, report composition, and application-like workflows.
 
-## From Global Memory to Explicit, Typed Context
+### From Global Memory to Explicit, Typed Context
 
 Early versions of Lumen relied on a shared global memory object to pass information between agents and tools. While workable, this model made reasoning, validation, and reuse increasingly difficult as workflows became more complex.
 
@@ -68,7 +101,7 @@ In Lumen 1.0, we introduced a **new API based on explicit context passing**:
 
 This shift makes Lumen workflows easier to reason about for both humans and LLMs, while laying the groundwork for reproducibility, validation, and long-running executions.
 
-## A New Execution Architecture and the Foundation for Reports
+### A New Execution Architecture and the Foundation for Reports
 
 We also reworked how Lumen executes the plans generated by an LLM.
 
@@ -85,7 +118,7 @@ This architecture directly powers a new **Reports capability**, where tasks can 
 
 This is a key step toward treating Lumen not just as a chat interface, but as a system for building structured analytical workflows (and provides the foundation for future persistence features).
 
-## Broader Connectivity and Improved Robustness
+### Broader Connectivity and Improved Robustness
 
 Lumen 1.0 also significantly expands its practical reach:
 
@@ -94,6 +127,26 @@ Lumen 1.0 also significantly expands its practical reach:
 * Substantial improvements in **performance, stability, and failure handling**
 
 These changes reflect a shift from experimentation toward production-oriented usage, especially in enterprise and research environments.
+
+Below is a draft section that fits naturally after the core architecture sections or just before *What’s Next*. It introduces **lumen-anndata** while generalizing to domain-specific Lumen variants.
+
+## Domain-Specific Lumen: Genomics with `lumen-anndata`
+
+Alongside the core Lumen 1.0 release, we have been exploring what it looks like to **tailor Lumen to specific scientific and analytical domains**. One early example of this work is **`lumen-anndata`**, a proof-of-concept integration focused on genomic and single-cell analysis workflows.
+
+![**lumen-anndata**: A domain-customized version of Lumen AI applied to genomics data showing 2D UMap embedding of single cell genomics data.](images/lumen-anndata.png){fig-align="center" width="100%" fig-alt="lumen-anndata example"}
+
+`lumen-anndata` demonstrates how Lumen can be extended beyond generic tabular data exploration by layering in domain knowledge and tooling:
+
+* **Custom data catalogs** that connect to domain-specific sources, such as CellxGene, and load data directly from `h5ad` / AnnData files
+* **Domain-specific analyses and transformations**, enabling LLM-guided workflows that understand common genomic operations rather than treating them as opaque Python code
+* **Rich, specialized visual outputs**, including complex UMAP embeddings rendered directly within the Lumen UI and composed alongside tables, metadata, and narrative context
+
+While still experimental, this work highlights an important aspect of Lumen’s design: the core framework is intentionally **domain-agnostic**, but it is built to support **domain-specific adaptations**. By swapping or extending data catalogs, agents, tools, and analysis steps, Lumen can be shaped to fit workflows in genomics, finance, geospatial analysis, or other specialized fields.
+
+We are actively developing additional tailored variants of Lumen along these lines. The goal is not to create a single, one-size-fits-all assistant, but a shared foundation that makes it straightforward to build **expert-oriented, auditable, AI-assisted analysis environments**—each grounded in the conventions, data formats, and best practices of its domain.
+
+As these efforts mature, they will increasingly feed back into the core framework, strengthening Lumen as a platform for both general and highly specialized data applications.
 
 ## What’s Next
 
@@ -119,6 +172,18 @@ Building on the new execution and reporting architecture, we plan to support:
 * Composition of explorations into dashboards and data applications
 
 The goal is to let users move seamlessly from conversational exploration to structured, deployable outputs, without leaving Lumen.
+
+## Get Started with Lumen
+
+If you are interested in structured, inspectable AI-driven data workflows, Lumen 1.0 is ready to explore.
+
+* **Documentation:** [https://lumen.holoviz.org](https://lumen.holoviz.org)
+  Installation guides, concepts, and examples to get started.
+
+* **Source code:** [https://github.com/holoviz/lumen](https://github.com/holoviz/lumen)
+  Open-source development, issue tracking, and contribution guidelines.
+
+Lumen is still evolving, and feedback from real-world usage continues to shape its direction. If you are experimenting with conversational data exploration, reproducible analysis, or AI-assisted data applications, we encourage you to try Lumen and engage with the project. If you want our help to tailor Lumen to your domain or to interface with your company's data, reach out to us and we'd be happy to explore this with you.
 
 ## Closing Thoughts
 
