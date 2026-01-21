@@ -144,7 +144,7 @@ Alongside the core Lumen 1.0 release, we have been exploring what it looks like 
 
 While still experimental, this work highlights an important aspect of Lumen’s design: the core framework is intentionally **domain-agnostic**, but it is built to support **domain-specific adaptations**. By swapping or extending data catalogs, agents, tools, and analysis steps, Lumen can be shaped to fit workflows in genomics, finance, geospatial analysis, or other specialized fields.
 
-We are actively developing additional tailored variants of Lumen along these lines. The goal is not to create a single, one-size-fits-all assistant, but a shared foundation that makes it straightforward to build **expert-oriented, auditable, AI-assisted analysis environments**—each grounded in the conventions, data formats, and best practices of its domain.
+We are actively developing additional tailored variants of Lumen along these lines. The goal is not to create a single, one-size-fits-all assistant, but a shared foundation that makes it straightforward to build **expert-oriented, auditable, AI-assisted analysis environments**, each grounded in the conventions, data formats, and best practices of its domain.
 
 As these efforts mature, they will increasingly feed back into the core framework, strengthening Lumen as a platform for both general and highly specialized data applications.
 
