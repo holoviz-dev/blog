@@ -1,10 +1,10 @@
 ---
-title: "Lumen AI 1.0"
+title: "A Major Step Toward Structured, Auditable AI-Driven Data Apps: Lumen AI 1.0"
 date: "2026-01-20"
-description: "Announcing the release of Lumen AI 1.0"
+description: "Lumen AI 1.0 introduces a structured, auditable framework for conversational data exploration and analysis. This release features a redesigned UI, a new typed execution model, report-oriented workflows, and early examples of domain-specific extensions, laying the foundation for building reproducible, AI-assisted data applications."
 author: "Philipp Rudiger & Andrew Huang"
 categories: [announcement, lumen]
-image: "images/ai-diagram.png"
+image: "images/lumen-anndata.png"
 ---
 
 {{< video https://assets.holoviz.org/lumen/videos/intro_v2.mp4 >}}
