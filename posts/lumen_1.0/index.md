@@ -41,7 +41,7 @@ From there, Lumen walks through a structured flow:
    The `Planner` translates the question into a concrete plan: what data is needed, which tables to query, and how results should be grouped or aggregated.
 
 2. **Generate and expose SQL**
-   The `SQlAgent` produces a SQL query, executes it, and shows both the result and the query itself. You can inspect it, edit it, or reuse it directly.
+   The `SQLAgent` produces a SQL query, executes it, and shows both the result and the query itself. You can inspect it, edit it, or reuse it directly.
 
 3. **Produce a visualization**
    Based on the result, the `VegaLiteAgent` generates a Vega-Lite specification to visualize the data if needed. The specification is human-readable, visible, and editable, just like the SQL.
