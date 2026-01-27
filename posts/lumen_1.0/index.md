@@ -4,7 +4,7 @@ date: "2026-01-27"
 description: "Lumen AI 1.0 introduces a structured, auditable framework for conversational data exploration and analysis. This release features a redesigned UI, a new typed execution model, report-oriented workflows, and early examples of domain-specific extensions, laying the foundation for building reproducible, AI-assisted data applications."
 author: "Philipp Rudiger & Andrew Huang"
 categories: [announcement, lumen]
-image: "images/lumen-anndata.png"
+image: "images/logo.png"
 ---
 
 {{< video https://assets.holoviz.org/lumen/videos/intro_v2.mp4 >}}
@@ -26,6 +26,64 @@ Before diving any deeper, let's recap: Lumen AI is an open-source framework for 
 Unlike chat-only tools, Lumen is designed around **explicit data pipelines and typed execution plans**. As in a chatting tool, LLMs are used to propose transformations, analyses, and visual outputs, but in Lumen those proposals are expressed as concrete, serializable specifications that can be validated, re-run, shared, or extended with custom Python logic. Because Lumen is built on Panel and the broader HoloViz ecosystem, it can render rich interactive outputs, from tables and charts to full dashboards—directly as part of the workflow.
 
 At its core, Lumen is much more than a chat interface over data; it is a complete framework for building **auditable, extensible, AI-assisted data applications**, where conversational exploration is the entry point rather than the end state.
+
+## Try it out
+
+The best way to understand what Lumen does is simply to try it out. We have provided [a deployment you can try out today](http://lumen-ai.holoviz-demo.anaconda.com/), pre-configured with a few datasets.
+
+### Run Locally
+
+Install it with `uv` / `pip` or `conda`:
+
+::: {.panel-tabset}
+
+### uv/pip
+
+```bash
+uv install 'lumen[ai-openai]'
+```
+
+### conda
+
+```bash
+conda install -c conda-forge lumen openai
+
+:::
+
+We are assuming using OpenAI here but we also [support many other LLM Providers](https://lumen.holoviz.org/configuration/llm_providers/). Next configure the `OPENAI_API_KEY` (or whatever other provider you want to use).
+
+```bash
+export OPENAI_API_KEY="sk-..."
+```
+
+Finally launch it with:
+
+::: {.panel-tabset}
+
+### Command Line
+
+```bash
+lumen-ai serve https://datasets.holoviz.org/penguins/v1/penguins.csv --show
+```
+
+### Python
+
+```python
+from lumen.ai import ExplorerUI
+
+ui = ExplorerUI(
+    'https://datasets.holoviz.org/penguins/v1/penguins.csv'
+   )
+ui.servable()
+```
+
+```bash
+panel serve app.py --show
+```
+
+:::
+
+If a browser tab doesn't automatically open, visit [https://localhost:5006](https://localhost:5006) and start chatting with your data. For more details check out our [Quickstart Guide](https://lumen.holoviz.org/quick_start/).
 
 ## A First Look at Using Lumen
 
@@ -52,7 +110,7 @@ From there, Lumen walks through a structured flow:
 5. **Turn exploration into something reusable**
    At any point, the steps taken so far can become part of a report or a larger workflow, re-run against fresh data, or combined with additional analyses.
 
-The key difference is that nothing disappears. Each step produces explicit artifacts that remain part of the session, making it easy to understand how a result was produced and to build on it over time.
+Each step produces explicit artifacts that remain part of the session, making it easy to understand how a result was produced and to build on it over time.
 
 This makes Lumen well suited for workflows that start with open-ended exploration but need to evolve into repeatable analysis, shared reports, or hosted data applications.
 
@@ -90,14 +148,14 @@ This is not just a visual refresh, it is an enabling step for everything that fo
 
 Early versions of Lumen relied on a shared global memory object to pass information between agents and tools. While initially workable, this model made reasoning, validation, and reuse increasingly difficult as workflows became more complex.
 
-![**Context Flow**: A graph highlighting how context flows through a series of tasks.](images/typed_context.svg){fig-align="center" width="100%" fig-alt="Typed context diagram"}
-
 In Lumen 1.0, we introduced a **new API based on explicit context passing**:
 
 * Agents and tools declare **typed inputs and outputs** using Pydantic models
 * Context is passed explicitly between steps rather than implicitly shared
 * Chaining agents becomes auditable, testable, and predictable
 * The execution graph is intelligent and automatically re-runs dependent tasks when one of its inputs changes
+
+![**Context Flow**: A graph highlighting how context flows through a series of tasks.](images/typed_context.svg){fig-align="center" width="100%" fig-alt="Typed context diagram"}
 
 This shift makes Lumen workflows easier to reason about for both humans and LLMs, while laying the groundwork for reproducibility, validation, and long-running executions.
 
@@ -128,8 +186,6 @@ Lumen 1.0 also significantly expands its practical reach:
 
 These changes reflect a shift from experimentation toward production-oriented usage, especially in enterprise and research environments.
 
-Below is a draft section that fits naturally after the core architecture sections or just before *What’s Next*. It introduces **lumen-anndata** while generalizing to domain-specific Lumen variants.
-
 ## Domain-Specific Lumen: Genomics with `lumen-anndata`
 
 One of the main value propositions of Lumen is that it is an open, extensible, system that can be customized for your particular needs and requirements. Alongside the core Lumen 1.0 release, we have been exploring what it looks like to **tailor Lumen to specific scientific and analytical domains**. One early example of this work is **`lumen-anndata`**, a proof-of-concept integration focused on genomic and single-cell analysis workflows for the biosciences.
@@ -150,7 +206,7 @@ As these efforts mature, they will increasingly feed back into the core framewor
 
 ## What’s Next
 
-While Lumen 1.0 is a milestone, but it is not the end of the roadmap. Two major areas of active development are:
+While Lumen 1.0 is a major milestone, it is not the end of the roadmap. Two major areas of active development are:
 
 ### Session Persistence and Shared Explorations
 
