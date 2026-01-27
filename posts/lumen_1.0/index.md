@@ -47,6 +47,7 @@ uv install 'lumen[ai-openai]'
 
 ```bash
 conda install -c conda-forge lumen openai
+```
 
 :::
 
