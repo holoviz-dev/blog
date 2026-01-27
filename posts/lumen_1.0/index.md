@@ -1,6 +1,6 @@
 ---
 title: "A Major Step Toward Structured, Auditable AI-Driven Data Apps: Lumen AI 1.0"
-date: "2026-01-20"
+date: "2026-01-27"
 description: "Lumen AI 1.0 introduces a structured, auditable framework for conversational data exploration and analysis. This release features a redesigned UI, a new typed execution model, report-oriented workflows, and early examples of domain-specific extensions, laying the foundation for building reproducible, AI-assisted data applications."
 author: "Philipp Rudiger & Andrew Huang"
 categories: [announcement, lumen]
