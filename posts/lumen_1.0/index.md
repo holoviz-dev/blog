@@ -37,16 +37,16 @@ Install it with `uv` / `pip` or `conda`:
 
 ::: {.panel-tabset}
 
-### uv/pip
-
-```bash
-uv install 'lumen[ai-openai]'
-```
-
 ### conda
 
 ```bash
 conda install -c conda-forge lumen openai
+```
+
+### uv/pip
+
+```bash
+uv install 'lumen[ai-openai]'
 ```
 
 :::
