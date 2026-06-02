@@ -1,6 +1,6 @@
 ---
 title: "Param 2.4.0 Release"
-date: "2025-05-21"
+date: "2026-05-21"
 description: "Release announcement for Param 2.4.0, introducing full typing support"
 author: "Philipp Rudiger"
 categories: [release, param]
@@ -150,15 +150,15 @@ assert_type(p.fallback, Engine | None)
 
 ## py.typed Marker
 
-Param 2.4.0 ships a `py.typed` marker file in the `param` package, as specified in [PEP 561](https://peps.python.org/pep-0561/). This signals to type checkers and build tools that Param provides its own inline type annotations and that no separate type stubs are needed. You do not need to install any `param-stubs` package or configure anything manually — the types are bundled with the library.
+Param 2.4.0 ships a `py.typed` marker file in the `param` package, as specified in [PEP 561](https://peps.python.org/pep-0561/). This signals to type checkers and build tools that Param provides its own inline type annotations and that no separate type stubs are needed.
 
 ## Type Checker Compatibility
 
 Python's type checking ecosystem has matured considerably and now includes several competing tools with different strengths. Param 2.4.0 is verified against four of them in CI:
 
-**mypy** is the original Python type checker and remains the most widely used, particularly in CI pipelines and pre-commit hooks. Param passes mypy's strict checking.
+**mypy** is the original Python type checker and remains the most widely used, particularly in CI pipelines. Param passes mypy's strict checking.
 
-**pyright** is Microsoft's type checker, which powers the Pylance language server in VSCode. It is the primary target for Param's type annotations. If you or your users develop in VSCode, correct inference will surface automatically without any extra configuration.
+**pyright** is Microsoft's type checker, which powers the Pylance language server in VSCode. It is the **primary target for Param's type annotations**. If you or your users develop in VSCode, correct inference will surface automatically without any extra configuration.
 
 **pyrefly** is a new type checker from Meta, written in Rust and still in beta. It ships its own language server and is focused on performance at scale.
 
@@ -204,14 +204,14 @@ This is not elegant, and it is one of the reasons the typing story for Param is 
 
 The typing approach in 2.4.0, inferring types from constructor arguments, is a significant improvement over the untyped state before it, but it has an inherent ceiling. The overload-based narrowing cannot express everything a developer might want to communicate.
 
-The next step is annotation-first parameter declarations, which is being prototyped in [PR #1066](https://github.com/holoviz/param/pull/1066) and is planned for Param 3.0. The idea is to allow defining parameters using standard Python type annotations, similar to how dataclasses and Pydantic models work:
+The next step is annotation-first parameter declarations, which is being prototyped in [PR #1133](https://github.com/holoviz/param/pull/1133) and is planned for Param 3.0. The idea is to allow defining parameters using standard Python type annotations, similar to how dataclasses and Pydantic models work:
 
 ```python
 # Future Param 3.0 style (prototype, not yet released)
 class Model(param.ParamModel):
     threshold: float = 3.5
-    mode: Literal["train", "eval"] = param.(default="train")
-    tags: list[str] = param.List(default=[])
+    mode: Literal["train", "eval"] = "train"
+    tags: list[str] = []
 ```
 
 In this model, the type annotation is the source of truth for static analysis, and Param uses it to configure the parameter's runtime behavior. This eliminates the `Selector`/`Literal` workaround, removes the need for overloads in Param's internals, and aligns Param with the conventions that Python developers already know from dataclasses and Pydantic.
