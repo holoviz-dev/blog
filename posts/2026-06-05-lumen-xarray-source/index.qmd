@@ -2,9 +2,9 @@
 title: "Lumen now speaks SQL on N-dimensional scientific data"
 description: |
   XArraySQLSource brings xarray, NetCDF and cloud Zarr into Lumen
-  pipelines. Dimensions, coordinates and attributes are preserved
-  through the SQL query, and Dask-backed laziness carries through
-  to multi-million-row datasets.
+  pipelines. Coordinate metadata is exposed through the source
+  schema, and Dask-backed laziness carries through to
+  multi-million-row queries.
 author:
   - name: Aman Kumar
     url: https://github.com/ghostiee-11
@@ -30,14 +30,14 @@ As of [PR #1741](https://github.com/holoviz/lumen/pull/1741),
 Lumen has a proper Source for this: `XArraySQLSource`. It takes any
 `xarray.Dataset`, exposes its data variables as SQL tables with
 full coordinate columns, and routes queries through
-[xarray-sql](https://github.com/xarray-contrib/xarray-sql) and
+[xarray-sql](https://github.com/alxmrs/xarray-sql) and
 [Apache DataFusion](https://github.com/apache/datafusion) under the
 hood. NetCDF, Zarr, HDF5 and GRIB all flow through
 `xr.open_dataset` automatically. Cloud stores work through the same
-anonymous fsspec credentials xarray already accepts. Dimensions,
-coordinate units, and attributes survive the round trip, and
-Dask-backed laziness carries through to multi-million-row datasets
-without materialising the grid.
+anonymous fsspec credentials xarray already accepts. Coordinate
+metadata is exposed through the source schema, and Dask-backed
+laziness carries through to multi-million-row queries without
+materialising the grid.
 
 This post walks through what landed, how the source is shaped, what
 it preserves, and what is next on the xarray integration roadmap.
@@ -207,34 +207,42 @@ ERA-Interim multi-variable, a 10M-row synthetic stress test, Zarr,
 HDF5, and one documented upstream limit on mixed-dimension chunking.
 Each was executed and verified.
 
-## What stays intact
+## Where the metadata lives
 
-This is the part that matters more than the speed numbers. Every
-Lumen pipeline downstream of an XArraySQLSource sees the source's
-real schema, not a flattened approximation.
+The result of `source.execute(sql)` is, today, a pandas DataFrame.
+Coordinate metadata does not ride along on that result. What does
+get preserved, and where Lumen actually consumes it, is the source
+schema.
 
-![What survives the SQL query.](images/diagram-4-roundtrip.png){fig-align="center"}
+![Where the metadata lives.](images/diagram-4-metadata.png){fig-align="center"}
 
 In practice this means:
 
 - **Dims** are exposed as named SQL columns, so a WHERE clause on
   `latitude` filters along the latitude axis. No need to remember
   which integer index corresponded to which physical coordinate.
-- **Coordinate units** (`degrees_north`, `K`, `datetime64[ns]`)
-  flow through to the schema description, so the Lumen AI agent and
-  any human looking at the table know what the values mean.
-- **`attrs`** like `long_name` and `standard_name` ride along on
-  the schema metadata and are surfaced in the docstring view of the
-  table.
+- **Coordinate units** (`degrees_north`, `K`, `datetime64[ns]`),
+  variable `dtype`, and `attrs` like `long_name` and
+  `standard_name` are all accessible through
+  `source.get_schema(table)`. The Lumen AI agent and downstream
+  views consume them from there, not from the result DataFrame.
 - **Dask laziness** carries from the underlying Zarr or NetCDF
   through xarray-sql into DataFusion's query plan. Filters push
-  down; aggregations stream.
+  down, aggregations stream. The result is materialised to pandas
+  only at the very end of the query.
+- **What is not on the result today**: the `dims` object,
+  coordinate units, and `attrs`. Those live on the source. The full
+  Dataset round-trip, where a SQL result comes back as an
+  `xarray.Dataset` with all coordinate metadata preserved on the
+  result itself, is tracked upstream at
+  [xarray-sql#58](https://github.com/alxmrs/xarray-sql/issues/58).
 
 The deliberate non-goal here is to make xarray and SQL look like
-the same thing. They are not. SQL is unaware of grid structure;
-`Dataset.sel(time=..., lat=...)` is. The XArraySQLSource gives Lumen
-a faithful SQL view of the data without pretending the underlying
-representation is flat.
+the same thing. They are not. SQL is unaware of grid structure,
+`Dataset.sel(time=..., lat=...)` is. The XArraySQLSource gives
+Lumen a faithful SQL view of the data, with coordinate metadata
+introspectable through the source, without pretending the
+underlying representation is flat.
 
 ## Design decisions
 
@@ -258,7 +266,7 @@ DuckDB-on-pandas, which would have meant materialising every query
 result into pandas. That foreclosure on lazy compute felt worse
 than the cost of an additional dependency. xarray-sql also gives
 Lumen a direct path to contribute upstream when the round-trip
-back to `xarray.Dataset` lands ([xarray-sql#58](https://github.com/xarray-contrib/xarray-sql/issues/58)).
+back to `xarray.Dataset` lands ([xarray-sql#58](https://github.com/alxmrs/xarray-sql/issues/58)).
 
 **`uri=` or `from_dataset()`, never both.** The constructor accepts
 either a path the source opens itself, or a pre-opened Dataset
