@@ -26,7 +26,6 @@ pipeline meant flattening the cube to a pandas DataFrame and
 watching the coordinates, units, and attributes evaporate on the way
 in. The Dask graph behind a lazy Zarr disappeared with them.
 
-As of [PR #1741](https://github.com/holoviz/lumen/pull/1741),
 Lumen has a proper Source for this: `XArraySQLSource`. It takes any
 `xarray.Dataset`, exposes its data variables as SQL tables with
 full coordinate columns, and routes queries through
