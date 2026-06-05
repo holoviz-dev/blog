@@ -12,7 +12,7 @@ image: "images/panel-live-server.png"
 
 Anyone who has built interactive data applications with Panel, hvPlot, or HoloViews knows the workflow: write code, spin up a server, open a browser, refresh, repeat. For quick experiments and exploratory work, that loop adds up. And if you are working inside an AI assistant, asking Claude or GitHub Copilot to help you build a chart, there has been no clean way to actually *see* the result without leaving your tool.
 
-**Panel Live Server** removes that friction. It is a lightweight local server that takes a Python code snippet, executes it, and hands you back a live, interactive URL in seconds. You can use it standalone from the terminal, or hook it directly into your AI assistant via the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/), so visualizations render right inside the chat.
+**Panel Live Server** removes that friction. When connected to an MCP-compatible AI assistant like Claude, VS Code, or Cursor via the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/), you can point it at a dataset file or a URL and ask for a visualization directly in the chat. The assistant generates the code, Panel Live Server executes it, and the result comes back as a live, interactive visualization rendered inline in the chat via iframe, without leaving your IDE. You can also use it standalone from the terminal, submitting code through a browser UI and getting a persistent URL back instantly.
 
 ![](images/introduction_panel_live_server.png)
 
@@ -342,3 +342,5 @@ If you are interested in faster visualization workflows or AI-assisted data expl
 - **Source code:** <https://github.com/panel-extensions/panel-live-server> Open-source development, issue tracking, and contribution guidelines.
 
 Panel Live Server is actively evolving. If you are experimenting with MCP integrations, interactive dashboards, or AI-assisted visualization workflows, we encourage you to try it and share your feedback on [Discourse](https://discourse.holoviz.org) or [Discord](https://discord.gg/UXdtYyGVQX). We would love to hear how you are using it and what you would like to see next.
+
+A special shoutout to [Marc Skov Madsen](https://github.com/MarcSkovMadsen) for the initial version of this project at [holoviz-mcp](https://github.com/MarcSkovMadsen/holoviz-mcp), which laid the foundation for Panel Live Server.
