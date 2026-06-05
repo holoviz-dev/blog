@@ -5,7 +5,7 @@ description: "Panel Live Server is an MCP server and local web server that lets 
 author:
   - Sumaiya Islam
 categories: [announcement, panel, GSoC, panel-live-server, chatbot, MCP]
-image: "images/logo.svg"
+image: "images/panel-live-server.png"
 ---
 
 ## A Faster Path from Code to Visualization
