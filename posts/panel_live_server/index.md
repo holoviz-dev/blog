@@ -14,7 +14,7 @@ Anyone who has built interactive data applications with Panel, hvPlot, or HoloVi
 
 **Panel Live Server** removes that friction. When connected to an MCP-compatible AI assistant like Claude, VS Code, or Cursor via the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/), you can point it at a dataset file or a URL and ask for a visualization directly in the chat. The assistant generates the code, Panel Live Server executes it, and the result comes back as a live, interactive visualization rendered inline in the chat via iframe, without leaving your IDE. You can also use it standalone from the terminal, submitting code through a browser UI and getting a persistent URL back instantly.
 
-![](images/introduction_panel_live_server.png)
+![](images/pls.png)
 
 ## What is Panel Live Server?
 
