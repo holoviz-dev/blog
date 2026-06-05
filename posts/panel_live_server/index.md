@@ -343,4 +343,4 @@ If you are interested in faster visualization workflows or AI-assisted data expl
 
 Panel Live Server is actively evolving. If you are experimenting with MCP integrations, interactive dashboards, or AI-assisted visualization workflows, we encourage you to try it and share your feedback on [Discourse](https://discourse.holoviz.org) or [Discord](https://discord.gg/UXdtYyGVQX). We would love to hear how you are using it and what you would like to see next.
 
-A special shoutout to [Marc Skov Madsen](https://github.com/MarcSkovMadsen) for the initial version of this project at [holoviz-mcp](https://github.com/MarcSkovMadsen/holoviz-mcp), which laid the foundation for Panel Live Server.
+Thanks to [Marc Skov Madsen](https://github.com/MarcSkovMadsen) for designing and building the initial version of panel-live-server.
