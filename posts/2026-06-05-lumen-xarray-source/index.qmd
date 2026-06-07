@@ -17,7 +17,7 @@ toc: true
 toc-depth: 2
 ---
 
-{{< video https://youtu.be/Ao6p0_npW54 title="Drop a NetCDF into Lumen AI: from file to chart, no glue code" >}}
+{{< video lumen-xarray.mp4 title="Drop a NetCDF into Lumen AI: from file to chart, no glue code" >}}
 
 ![](images/diagram-1-hero.png){fig-align="center"}
 
