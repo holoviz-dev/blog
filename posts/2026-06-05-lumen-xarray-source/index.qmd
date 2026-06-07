@@ -2,9 +2,9 @@
 title: "Lumen now speaks SQL on N-dimensional scientific data"
 description: |
   XArraySQLSource brings xarray, NetCDF and cloud Zarr into Lumen
-  pipelines. Coordinate metadata is exposed through the source
-  schema, and Dask-backed laziness carries through to
-  multi-million-row queries.
+  with full coordinate metadata. The follow-on wiring teaches
+  Lumen AI to reach for it when a scientific file shows up in the
+  chat.
 author:
   - name: Aman Kumar
     url: https://github.com/ghostiee-11
@@ -17,6 +17,8 @@ toc: true
 toc-depth: 2
 ---
 
+{{< video https://youtu.be/Ao6p0_npW54 title="Drop a NetCDF into Lumen AI: from file to chart, no glue code" >}}
+
 ![](images/diagram-1-hero.png){fig-align="center"}
 
 Lumen is a SQL-first framework. That makes it natural for tabular
@@ -27,36 +29,29 @@ watching the coordinates, units, and attributes evaporate on the way
 in. The Dask graph behind a lazy Zarr disappeared with them.
 
 Lumen has a proper Source for this: `XArraySQLSource`. It takes any
-`xarray.Dataset`, exposes its data variables as SQL tables with
-full coordinate columns, and routes queries through
+`xarray.Dataset`, registers each data variable as a SQL table with
+its coordinate columns intact, and routes queries through
 [xarray-sql](https://github.com/alxmrs/xarray-sql) and
-[Apache DataFusion](https://github.com/apache/datafusion) under the
-hood. NetCDF, Zarr, HDF5 and GRIB all flow through
-`xr.open_dataset` automatically. Cloud stores work through the same
-anonymous fsspec credentials xarray already accepts. Coordinate
-metadata is exposed through the source schema, and Dask-backed
-laziness carries through to multi-million-row queries without
-materialising the grid.
+[Apache DataFusion](https://github.com/apache/datafusion). NetCDF,
+Zarr, HDF5 and GRIB all flow through `xr.open_dataset` automatically.
+Cloud stores use the same anonymous fsspec credentials xarray
+already accepts. Dask laziness carries from the underlying file
+through DataFusion's query plan, so multi-million-row aggregations
+stream instead of materialising the grid.
 
-This post walks through what landed, how the source is shaped, what
-it preserves, and what is next on the xarray integration roadmap.
+## A two-minute recap of Lumen AI
 
-## A two-minute recap of Lumen
-
-If you have not used Lumen before:
 [Lumen](https://lumen.holoviz.org) is the declarative data
-application framework in the HoloViz stack. You describe a `Source`
-(where data comes from), a `Pipeline` (how to filter and transform
-it), and a `View` (how to render it). Lumen wires the three together
-into a deployable Panel app, an embeddable component, or, since the
+application framework in the HoloViz stack. Since the
 [Lumen AI 1.0 release earlier this year](https://blog.holoviz.org/posts/lumen_1.0/),
-a chat-driven exploration surface.
+the front door is a chat surface: you ask a question, a `Planner`
+breaks it down, a `SourceAgent` picks the right data source, a
+`SQLAgent` writes and runs the query, and a `ViewAgent` decides how
+to draw the answer.
 
-The whole framework is built around SQL. Sources expose tables, the
-Pipeline composes SQL transforms, and the AI agent reasons about
-columns and joins. That is a great model for relational data and it
-is exactly the model that scientific N-dimensional data sits
-awkwardly inside.
+Every one of those agents speaks SQL. That is a clean model for
+Postgres, DuckDB or BigQuery, and exactly the model that scientific
+N-dimensional data sits awkwardly inside.
 
 ## The mismatch
 
@@ -83,8 +78,7 @@ that keeps the structure intact.
 
 ## What XArraySQLSource is
 
-It is a Lumen `Source` subclass that wraps any `xarray.Dataset`,
-either by URI:
+`XArraySQLSource` wraps any `xarray.Dataset`, either by URI:
 
 ```python
 from lumen.sources.xarray_sql import XArraySQLSource
@@ -129,12 +123,11 @@ NCEP/NCAR reanalysis end to end:
 
 ![Standard NCEP/NCAR `air_temperature` reanalysis: schema, a SELECT, the result table, and the full metadata block.](images/nb-cell-03.png){fig-align="center"}
 
-Two things to notice. First, the source reports its schema as a
-real schema, with dtypes and human-readable descriptions pulled
-from the xarray `attrs`. The Lumen agent and the SQLTransform layer
-both consume that. Second, the variable name `air` is now a SQL
-identifier; the query is plain DataFusion SQL with no Lumen-specific
-syntax to learn.
+The source reports a real schema with dtypes and human-readable
+descriptions pulled straight from the xarray `attrs`. The Lumen
+agent and the SQLTransform layer both consume it. The variable
+name `air` becomes a SQL identifier, and the query above is plain
+DataFusion SQL with no Lumen-specific syntax to learn.
 
 Multi-variable datasets register everything in one pass. ERA-Interim's
 bundled three-variable subset of zonal wind, meridional wind, and
@@ -142,18 +135,102 @@ geopotential becomes three SQL tables you can query independently:
 
 ![ERA-Interim u, v, z. Three variables, three SQL tables, no extra wiring.](images/nb-cell-07.png){fig-align="center"}
 
-Cross-variable queries through joins do not work yet (each variable
-is registered separately), but per-variable queries with their own
-coordinate filters are direct, and that is the common case for
-scientific exploration.
+Joins across variables are not in yet; each variable is its own
+table. Per-variable queries with their own coordinate filters work
+out of the box, and that covers most scientific exploration anyway.
+
+## From a dropped file to a SQL agent
+
+The Source is a Python class. Useful, but you reach for it
+manually. The second half of the work is getting Lumen AI to grab
+it for you when a scientific file shows up in the chat. That
+landed in [`holoviz/lumen#1791`](https://github.com/holoviz/lumen/pull/1791),
+184 added lines across six files, no new agent code, no new
+prompts.
+
+It sits in one upload handler. Every xarray-supported extension
+(`nc`, `nc4`, `netcdf`, `h5`, `hdf5`, `he5`, `zarr`, `grib`,
+`grib2`, `grb`, `grb2`) maps to a small helper that writes the
+upload to a temp file, opens it with xarray, and wraps the result
+in `XArraySQLSource`:
+
+```python
+# lumen/ai/ui.py (simplified)
+@staticmethod
+def _get_xarray_upload_handlers():
+    def _handle_xarray_upload(context, file_obj, alias, filename):
+        tmp = tempfile.NamedTemporaryFile(delete=False, suffix=...)
+        tmp.write(file_obj.read())
+        tmp.close()
+        return XArraySQLSource(uri=tmp.name, name=alias)
+    return {ext: _handle_xarray_upload for ext in XARRAY_EXTENSIONS}
+```
+
+That is the whole new wiring. Five stages, end to end:
+
+![From a dropped file to a SQL agent in five hops.](images/diagram-5-upload-flow.png){fig-align="center"}
+
+Stages 02 to 04 are the new code; the rest of Lumen AI did not
+change. Once the source is registered, the existing chain takes
+over: `Planner` writes a checklist, `SourceAgent` confirms the
+source, `SQLAgent` writes the query, `ViewAgent` picks a chart.
+`XArraySQLSource` shows up to the rest of the system as one more
+SQL source, the same way DuckDB or Postgres does.
+
+Drop NCEP `air.nc` into the chat (7.4 MB, monthly mean air
+temperature on a `time / lat / lon` grid). Ask a SQL-shaped
+question:
+
+![SQLAgent computes mean air temperature by latitude, Kelvin to Celsius, sorted coldest to warmest. The query, the result table, and a short AI summary, all in one turn.](images/ss-01-sql-by-latitude.png){fig-align="center"}
+
+Ask for a plot and `ViewAgent` picks the chart shape. A daily mean
+over the whole domain comes back as a line:
+
+![Plot the daily mean 2 m air temperature across the whole domain over time as a line chart, in Celsius.](images/ss-02-line-daily-mean.png){fig-align="center"}
+
+Follow up with "turn this into a bar chart now" and the View
+swaps without re-running the query:
+
+![One-line follow-up: turn this into a bar chart now. ViewAgent rebuilds the spec, the data stays put.](images/ss-03-bar-from-line.png){fig-align="center"}
+
+Ask a shape question and it drops to a coordinate axis with no
+extra hint:
+
+![Zonal mean air temperature in Celsius with latitude on the x-axis. The classic bell curve peaking near the equator, straight from a SQL GROUP BY on the lat column.](images/ss-07-zonal-mean.png){fig-align="center"}
+
+A three-band comparison comes back as a three-line chart, with the
+SQL filters carried into the legend:
+
+![Three lines on one chart: mean temperature over time for the tropics (-20 to 20), the northern mid-latitudes (30 to 60), and the Arctic (above 60). Phase-locked seasonal cycles, with the Arctic swinging hardest.](images/ss-08-tropics-mid-arctic.png){fig-align="center"}
+
+Drop a different file in (ECMWF ERA-40 subset, two variables `t2m`
+and `msl`) and the same chain handles it without ceremony. Spatial
+questions land on a map:
+
+![Global mean sea level pressure averaged over time, diverging colormap centered on 1013 hPa. Continents and pressure systems read at a glance.](images/ss-04-msl-global-map.png){fig-align="center"}
+
+Two questions in one query come back as one tidy table. Monthly
+mean `t2m` in Celsius alongside monthly mean `msl` in hPa, joined
+on the time axis:
+
+![For each month: mean t2m in Celsius and mean msl in hPa, side by side. One SQL statement, two physical quantities.](images/ss-05-monthly-t2m-msl.png){fig-align="center"}
+
+Back on `air.nc`, the postcard frame is a Hovmöller of zonal mean
+temperature across the year:
+
+![Hovmöller: month on the x-axis, latitude on the y-axis, color is zonal mean temperature in Celsius. The seasonal sine wave shows up as banded color, hemispheres flipping in phase.](images/ss-06-hovmoller.png){fig-align="center"}
+
+None of these turns required hand-written SQL. None required
+choosing a chart type. The data stayed in xarray until the final
+hop into Vega-Lite. Same code path that handles a Postgres
+connection now handles a 7 MB NetCDF on disk.
 
 ## Scale and shape
 
-The next question every scientific user asks is: does it actually
-hold up on real data, or does the source materialise the whole grid
-and run out of memory?
+Does it hold up on real data, or does the source materialise the
+whole grid?
 
-DataFusion processes the registered Xarray-backed tables lazily.
+DataFusion processes the registered xarray-backed tables lazily.
 Aggregations, filters and projections push down through the chunk
 graph. A 10 million row synthetic dataset on a laptop runs three
 back-to-back queries (count, aggregation, filtered region) without
@@ -204,13 +281,12 @@ across [seven dataset types and chunking edge cases](https://gist.github.com/gho
 before the PR landed: NCEP, RASM with non-linear `xc/yc` coordinates,
 ERA-Interim multi-variable, a 10M-row synthetic stress test, Zarr,
 HDF5, and one documented upstream limit on mixed-dimension chunking.
-Each was executed and verified.
 
 ## Where the metadata lives
 
-The result of `source.execute(sql)` is, today, a pandas DataFrame.
-Coordinate metadata does not ride along on that result. What does
-get preserved, and where Lumen actually consumes it, is the source
+`source.execute(sql)` returns a pandas DataFrame today. Coordinate
+metadata does not ride along on that result. What does get
+preserved, and where Lumen actually reads it from, is the source
 schema.
 
 ![Where the metadata lives.](images/diagram-4-metadata.png){fig-align="center"}
@@ -277,36 +353,45 @@ share all the downstream code.
 
 ## Get started
 
-The source is in `holoviz/lumen` main today:
+Both pieces are in `holoviz/lumen` `main` today:
 
 ```bash
 pip install lumen[xarray]
 ```
 
-Then:
-
 ```python
 from lumen.sources.xarray_sql import XArraySQLSource
 ```
 
-Source code lives at
-[`lumen/sources/xarray_sql.py`](https://github.com/holoviz/lumen/blob/main/lumen/sources/xarray_sql.py).
-The original PR with the full review history is
-[holoviz/lumen#1741](https://github.com/holoviz/lumen/pull/1741).
-The
-[edge-case validation Gist](https://gist.github.com/ghostiee-11/42f42d6cfb2ce2c1ed4f68e7c1fe7671)
-covers the seven dataset shapes used during development.
+Or open a chat surface, drop any xarray-readable file in, and start
+asking questions. Lumen AI ships with
+[LLM provider classes](https://lumen.holoviz.org/configuration/llm_providers/)
+for OpenAI, Anthropic, Google, Mistral, AWS Bedrock, Azure OpenAI,
+plus local runtimes (Llama.cpp, MLX, WebLLM) and a LiteLLM bridge
+for everything else. Pick whichever you have a key for:
 
-Feedback, edge cases, and bug reports are welcome on the
-[Lumen issue tracker](https://github.com/holoviz/lumen/issues), and
-the next post in this series will cover the AI-agent side of the
-integration, where the natural-language layer learns to ask
-xarray-shaped questions.
+```bash
+lumen-ai serve --provider <provider>
+```
+
+- Source code:
+  [`lumen/sources/xarray_sql.py`](https://github.com/holoviz/lumen/blob/main/lumen/sources/xarray_sql.py).
+- Source PR:
+  [holoviz/lumen#1741](https://github.com/holoviz/lumen/pull/1741).
+- AI wiring PR:
+  [holoviz/lumen#1791](https://github.com/holoviz/lumen/pull/1791).
+- Edge-case validation:
+  [Gist of seven dataset shapes](https://gist.github.com/ghostiee-11/42f42d6cfb2ce2c1ed4f68e7c1fe7671)
+  exercised during development (NCEP, RASM, ERA-Interim, a 10M-row
+  stress test, Zarr, HDF5, and one documented upstream limit).
+- Bug reports and feedback:
+  [Lumen issue tracker](https://github.com/holoviz/lumen/issues).
 
 ### Credits
 
-`XArraySQLSource` was contributed by [Aman Kumar](https://github.com/ghostiee-11)
-during Google Summer of Code 2026, with HoloViz under the
+The source (`#1741`) and the AI wiring (`#1791`) were contributed
+by [Aman Kumar](https://github.com/ghostiee-11) during Google
+Summer of Code 2026, with HoloViz under the
 [NumFOCUS](https://numfocus.org) umbrella. Design review and PR
 feedback by [Andrew Huang](https://github.com/ahuang11) and
 [Andy Maloney](https://github.com/amaloney).
