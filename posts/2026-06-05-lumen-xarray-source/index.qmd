@@ -198,20 +198,10 @@ extra hint:
 
 ![Zonal mean air temperature in Celsius with latitude on the x-axis. The classic bell curve peaking near the equator, straight from a SQL GROUP BY on the lat column.](images/ss-07-zonal-mean.png){fig-align="center"}
 
-A three-band comparison comes back as a three-line chart, with the
-SQL filters carried into the legend:
-
-![Three lines on one chart: mean temperature over time for the tropics (-20 to 20), the northern mid-latitudes (30 to 60), and the Arctic (above 60). Phase-locked seasonal cycles, with the Arctic swinging hardest.](images/ss-08-tropics-mid-arctic.png){fig-align="center"}
-
 Drop a different file in (ECMWF ERA-40 subset, two variables `t2m`
-and `msl`) and the same chain handles it without ceremony. Spatial
-questions land on a map:
-
-![Global mean sea level pressure averaged over time, diverging colormap centered on 1013 hPa. Continents and pressure systems read at a glance.](images/ss-04-msl-global-map.png){fig-align="center"}
-
-Two questions in one query come back as one tidy table. Monthly
-mean `t2m` in Celsius alongside monthly mean `msl` in hPa, joined
-on the time axis:
+and `msl`) and the same chain takes it. Two questions in one query
+come back as one tidy table, monthly mean `t2m` in Celsius
+alongside monthly mean `msl` in hPa, joined on the time axis:
 
 ![For each month: mean t2m in Celsius and mean msl in hPa, side by side. One SQL statement, two physical quantities.](images/ss-05-monthly-t2m-msl.png){fig-align="center"}
 
@@ -311,13 +301,6 @@ In practice this means:
   `xarray.Dataset` with all coordinate metadata preserved on the
   result itself, is tracked upstream at
   [xarray-sql#58](https://github.com/alxmrs/xarray-sql/issues/58).
-
-The deliberate non-goal here is to make xarray and SQL look like
-the same thing. They are not. SQL is unaware of grid structure,
-`Dataset.sel(time=..., lat=...)` is. The XArraySQLSource gives
-Lumen a faithful SQL view of the data, with coordinate metadata
-introspectable through the source, without pretending the
-underlying representation is flat.
 
 ## Design decisions
 
