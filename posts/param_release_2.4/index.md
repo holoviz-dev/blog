@@ -153,13 +153,13 @@ Param 2.4.0 ships a `py.typed` marker file in the `param` package, as specified 
 
 Python's type checking ecosystem has matured considerably and now includes several competing tools with different strengths. Param 2.4.0 is verified against four of them in CI:
 
-**pyright** is Microsoft's type checker, which powers the Pylance language server in VSCode. It is the **primary target for Param's type annotations**. If you or your users develop in VSCode, correct inference will surface automatically without any extra configuration.
+- **pyright** is Microsoft's type checker, which powers the Pylance language server in VSCode. It is the **primary target for Param's type annotations**. If you or your users develop in VSCode, correct inference will surface automatically without any extra configuration.
 
-**mypy** is the original Python type checker and remains the most widely used, particularly in CI pipelines. Param passes mypy's strict checking.
+- **mypy** is the original Python type checker and remains the most widely used, particularly in CI pipelines. Param passes mypy's strict checking.
 
-**pyrefly** is a new type checker from Meta, written in Rust and still in beta. It ships its own language server and is focused on performance at scale.
+- **pyrefly** is a new type checker from Meta, written in Rust and still in beta. It ships its own language server and is focused on performance at scale.
 
-**ty** is a new type checker from the Astral team (the authors of `ruff` and `uv`), also written in Rust and still in beta.
+- **ty** is a new type checker from the Astral team (the authors of `ruff` and `uv`), also written in Rust and still in beta.
 
 If you are developing a library built on Param, the recommendation is to use pyright as your primary type checker. Param's annotations are optimized for pyright first, and since it is the checker most users encounter implicitly through their editor, correct inference there benefits the widest audience.
 
@@ -224,6 +224,21 @@ reveal_type(config.mode)  # Literal["train", "eval"]
 
 This is not elegant, and it is one of the reasons the typing story for Param is not finished with this release.
 
+### Constructor Arguments
+
+As mentioned above, and unlike dataclasses or Pydantic models, the `Parameterized` constructor does not yet automatically infer typed keyword arguments from the parameter declarations. This means that passing parameters at instantiation time is not statically checked:
+
+```python
+class Model(param.Parameterized):
+    threshold = param.Number(default=0.5)
+    name_ = param.String(default="unnamed")
+
+# No type error here, even though 'threshold' expects a number:
+m = Model(threshold="oops")  # passes static analysis, fails at runtime
+```
+
+In dataclasses and Pydantic, the `__init__` signature is synthesized from the field declarations, so type checkers can validate constructor calls. Param does not yet generate a per-class `__init__` signature for static analysis. This is one of the key problems that the annotation-first approach in Param 3.0 (described below) is designed to solve.
+
 ## Future Direction
 
 The typing approach in 2.4.0, inferring types from constructor arguments, is a significant improvement over the untyped state before it, but it has an inherent ceiling. The overload-based narrowing cannot express everything a developer might want to communicate.
@@ -232,10 +247,15 @@ The next step is annotation-first parameter declarations, which is being prototy
 
 ```python
 # Future Param 3.0 style (prototype, not yet released)
-class Model(param.ParamModel):
-    threshold: float = 3.5
-    mode: Literal["train", "eval"] = "train"
+class Model(param.Model):
+
+    mode: Literal["train", "eval"] = param.Field(
+        "train", doc="The current mode."
+    )
+
     tags: list[str] = []
+
+    threshold: float = 3.5
 ```
 
 In this model, the type annotation is the source of truth for static analysis, and Param uses it to configure the parameter's runtime behavior. This eliminates the `Selector`/`Literal` workaround, removes the need for overloads in Param's internals, and aligns Param with the conventions that Python developers already know from dataclasses and Pydantic.
