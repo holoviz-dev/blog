@@ -9,12 +9,6 @@ aliases:
   - ../../param_2.4.html
 ---
 
-
-```python
-#| echo: false
-import param
-```
-
 ## What is Param?
 
 [Param](https://param.holoviz.org/) is an open-source Python library that lets you define classes with strongly typed, validated parameters. It is the foundation of the [HoloViz](https://holoviz.org) ecosystem, powering Panel, hvPlot, HoloViews, and many other libraries. Param handles runtime validation, serialization, and dependency tracking so you can focus on the logic of your application rather than on boilerplate data-checking code.
@@ -34,7 +28,7 @@ Many thanks to the contributors to this release.
 
 <hr>
 
-If you're using [Anaconda](https://www.anaconda.com/downloads), you can install the latest version of Param with `conda install param`. If you prefer pip, use `pip install param`.
+You can install the latest version of Param with `conda install param`, `pip install param`, or `uv add param`.
 
 <hr>
 
@@ -59,6 +53,8 @@ reveal_type(m.threshold)  # float | int
 reveal_type(m.name_)      # str
 reveal_type(m.count)      # int | None
 ```
+
+Note that this typing support currently applies to parameter *access* on instances. The `Parameterized` constructor (`__init__`) does not yet benefit from per-parameter type narrowing, so keyword arguments passed at instantiation time are not statically checked. This is a known limitation that will be addressed in a future release.
 
 This change is, of course, well overdue but it represents a first step towards modernizing not just Param but the entire HoloViz ecosystem.
 
@@ -107,6 +103,7 @@ The `allow_None` argument deserves special attention because it is the most comm
 | Declaration | Inferred type |
 |---|---|
 | `param.Integer()` | `int` |
+| `param.Integer(default=None)` | `int \| None` |
 | `param.Integer(allow_None=False)` | `int` |
 | `param.Integer(allow_None=True)` | `int \| None` |
 | `param.Number()` | `int \| float` |
@@ -150,21 +147,48 @@ assert_type(p.fallback, Engine | None)
 
 ## py.typed Marker
 
-Param 2.4.0 ships a `py.typed` marker file in the `param` package, as specified in [PEP 561](https://peps.python.org/pep-0561/). This signals to type checkers and build tools that Param provides its own inline type annotations and that no separate type stubs are needed.
+Param 2.4.0 ships a `py.typed` marker file in the `param` package, as specified in [PEP 561](https://peps.python.org/pep-0561/). This signals to type checkers and build tools that Param provides its own inline type annotations and no separate type stubs are needed.
 
 ## Type Checker Compatibility
 
 Python's type checking ecosystem has matured considerably and now includes several competing tools with different strengths. Param 2.4.0 is verified against four of them in CI:
 
-**mypy** is the original Python type checker and remains the most widely used, particularly in CI pipelines. Param passes mypy's strict checking.
-
 **pyright** is Microsoft's type checker, which powers the Pylance language server in VSCode. It is the **primary target for Param's type annotations**. If you or your users develop in VSCode, correct inference will surface automatically without any extra configuration.
+
+**mypy** is the original Python type checker and remains the most widely used, particularly in CI pipelines. Param passes mypy's strict checking.
 
 **pyrefly** is a new type checker from Meta, written in Rust and still in beta. It ships its own language server and is focused on performance at scale.
 
 **ty** is a new type checker from the Astral team (the authors of `ruff` and `uv`), also written in Rust and still in beta.
 
 If you are developing a library built on Param, the recommendation is to use pyright as your primary type checker. Param's annotations are optimized for pyright first, and since it is the checker most users encounter implicitly through their editor, correct inference there benefits the widest audience.
+
+## Mypy Plugin
+
+If you use mypy, we recommend enabling the param mypy plugin. Add the following to your `pyproject.toml`:
+
+```toml
+[tool.mypy]
+plugins = ["param.mypy_plugin"]
+```
+
+Or in `mypy.ini` / `setup.cfg`:
+
+```ini
+[mypy]
+plugins = param.mypy_plugin
+```
+
+The plugin is needed because param uses a metaclass `__setattr__` to route class-level parameter assignment through the descriptor protocol. Without the plugin, mypy does not recognize this pattern ([mypy #9758](https://github.com/python/mypy/issues/9758)) and rejects valid code like:
+
+```python
+class MyModel(param.Parameterized):
+    flag = param.Boolean(default=False)
+
+MyModel.flag = True  # mypy error without the plugin
+```
+
+With the plugin enabled, mypy correctly understands that the assignment sets the parameter's default value and type-checks it against the parameter's value type. Pyright handles this correctly without any plugin.
 
 ## Limitations
 
@@ -222,15 +246,10 @@ The migration path from the current style to this new style is designed to be st
 
 If you are updating an existing Param-based codebase to take advantage of the new typing, here is what we recommend:
 
-Use specific Parameter subclasses (`Integer`, `String`, `ClassSelector`, etc.) instead of the base `Parameter` class wherever possible. The more specific the subclass, the better the inferred type.
-
-Set `allow_None` explicitly on parameters where nullability matters. This improves both runtime safety and the precision of the inferred type.
-
-For `List` parameters, provide `item_type` whenever the list is homogeneous. This is good practice regardless of typing, since it adds a free runtime validation.
-
-For `ClassSelector` parameters, always provide `class_`. This is already common practice for correctness; it now also benefits type inference.
-
-For `Selector` parameters with a known fixed set of values, add an explicit `Literal` annotation with `type: ignore[assignment]` for now. This is a temporary workaround until Param 3.0.
+- Use specific Parameter subclasses (`Integer`, `String`, `ClassSelector`, etc.) instead of the base `Parameter` class wherever possible. The more specific the subclass, the better the inferred type.
+- Set `allow_None` explicitly on parameters where nullability matters. This improves both runtime safety and the precision of the inferred type.
+- For `List` parameters, provide `item_type` whenever the list is homogeneous. This is good practice regardless of typing, since it adds a free runtime validation.
+- For `Selector` parameters with a known fixed set of values, add an explicit `Literal` annotation with `type: ignore[assignment]` for now. This is a temporary workaround until Param 3.0.
 
 Run pyright alongside your tests. It is the checker most likely to benefit your users if you are building a library on top of Param, and catching type errors at development time is meaningfully cheaper than catching them at runtime.
 
@@ -245,5 +264,5 @@ For the full list of changes, see the [Param 2.4.0 changelog](https://github.com
 * Add `tests/assert_types.py` with `assert_type()` assertions verified in CI
 * Add CI jobs for `mypy`, `pyright`, `pyrefly`, and `ty`
 
-### 🐛 Bug Fixes
+### 🔧 Maintenance
 * Change `UndefinedType` sentinel from a custom class instance to an `enum.Enum` member for improved compatibility with type checkers
