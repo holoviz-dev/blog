@@ -20,7 +20,7 @@ As AI-assisted development becomes more common, users are increasingly relying o
 
 Our goal is to make the models generate more accurate, maintainable, and idiomatic HoloViz code while at the same time help users avoid common mistakes.
 
-Problem Formulation
+## Problem Formulation
 The first phase of the project was spent researching how large language models (LLMs) currently interact with the HoloViz libraries and identifying recurring failure modes. Some of the issues were already familiar, such as hallucinated APIs, outdated examples, missing imports, and code that looked correct but failed when executed. We also observed broader challenges around the models finding the right documentation and being version-aware.
 
 We also considered whether improving documentation would go a long way in addressing some of these issues.
@@ -79,7 +79,7 @@ This feedback loop has become one of the central ideas behind the project. Rathe
 ## Building an Evaluation Framework
 Creating the skills was only one part of the challenge. A recurring theme throughout the project has been the need for evidence. It is easy to claim that a prompt, skill, or documentation change improves AI-generated code. Demonstrating that improvement in a repeatable way is much harder.
 
-To address this, we developed an evaluation framework that allows prompts to be run with and without skills enabled. The framework captures outputs, executes the AI-generated code, gathers metrics, and can produce screenshots for visual comparison.
+To address this, we developed an evaluation framework that allows prompts to be run with and without skills enabled. The framework captures outputs, executes the AI-generated code, gathers metrics such as model used, execution time, total tokens consumed etc., and can also produce screenshots for visual comparison.
 
 **Prompt:** “Help me create a sunrise/sunset app using the astral package with holoviz. It should take a lat / lon and then create an area chart with a red vertical line marking the current date time. Do not try to create an env.”
 
@@ -104,7 +104,7 @@ While progress has been encouraging, several questions remain.
 ## Recent Progress
 Recent work has focused on expanding the skills repository with more package-specific skills, refining the evaluation workflows, adding more evaluation metrics, and comparing behaviour across models.
 
-We have also begun to adopt `llms.txt` files within the HoloViz repositories starting from [panel-material-ui](https://panel-material-ui.holoviz.org/llms.txt) and working across all the repositories.
+We have also begun to adopt `llms.txt` files within the HoloViz repositories starting from [panel-material-ui](https://panel-material-ui.holoviz.org/llms.txt) and working across all the repositories. This is because we observed that some models have a hard time parsing the html content in our websites directly.
 
 At the same time, evaluation tooling continues to mature. Current work includes improving reporting, and exploring ways to visualize performance trends over time.
 

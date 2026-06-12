@@ -10,3 +10,5 @@ posts/**/index.html
 posts/hvplot_release_0.8/index_files/figure-html/cell-6-output-1.png
 
 *.DS_store
+
+**/*.quarto_ipynb
