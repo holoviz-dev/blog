@@ -104,7 +104,9 @@ While progress has been encouraging, several questions remain.
 ## Recent Progress
 Recent work has focused on expanding the skills repository with more package-specific skills, refining the evaluation workflows, adding more evaluation metrics, and comparing behaviour across models.
 
-We have also begun to adopt `llms.txt` files within the HoloViz repositories starting from [panel-material-ui](https://panel-material-ui.holoviz.org/llms.txt) and working across all the repositories. This is because we observed that some models have a hard time parsing the html content in our websites directly.
+We have also begun to adopt `llms.txt` files within the HoloViz repositories starting from [panel-material-ui](https://panel-material-ui.holoviz.org/llms.txt) and working across all the repositories. This is because we observed that some models have a hard time parsing the html content in our websites directly likely due to excessive token overheard and structural noise like irrelevant CSS, javascript, and other navigation elements that consume context windows without adding semantic value.
+
+The processs will involve building markdown versions of the relevant parts of our documentation and then generating an `llm.txt` file that directs the AI assisstant to the markdown files.
 
 At the same time, evaluation tooling continues to mature. Current work includes improving reporting, and exploring ways to visualize performance trends over time.
 
