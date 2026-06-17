@@ -1,6 +1,6 @@
 ---
 title: "HoloViz for LLMs"
-date: "2026-06-11"
+date: "2026-06-16"
 description: "Fine-tuning LLMs to work better with the Holoviz tools"
 author:
   - name: "Isaiah Akorita"
