@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sumaiya Islam">
+<meta name="dcterms.date" content="2026-06-30">
+<meta name="description" content="Panel Live Server is an MCP server and local web server that lets AI assistants like Claude, VS Code, and Cursor render Python visualizations as interactive web pages in real time, with a standalone browser mode for use without AI.">
+
+<title>Introducing Panel Live Server: An MCP Server for Instant Python Visualization Rendering – HoloViz Blog</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-4bd490e9cd57f2396cbd188312c0541c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ee735f5ef79851cdc23a8bd5ba349cae.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script>
+<link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+    window.goatcounter = {
+        path: function(p) { return location.host + p }
+    }
+</script>
+<script data-goatcounter="https://holoviz.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+
+
+<link rel="stylesheet" href="../../custom.css">
+<meta property="og:title" content="Introducing Panel Live Server: An MCP Server for Instant Python Visualization Rendering – HoloViz Blog">
+<meta property="og:description" content="Panel Live Server is an MCP server and local web server that lets AI assistants like Claude, VS Code, and Cursor render Python visualizations as interactive web pages in real time, with a standalone browser mode for use without AI.">
+<meta property="og:image" content="https://blog.holoviz.org/posts/panel_live_server/images/panel-live-server.png">
+<meta property="og:site_name" content="HoloViz Blog">
+<meta property="og:image:height" content="494">
+<meta property="og:image:width" content="1022">
+<meta name="twitter:title" content="Introducing Panel Live Server: An MCP Server for Instant Python Visualization Rendering – HoloViz Blog">
+<meta name="twitter:description" content="Panel Live Server is an MCP server and local web server that lets AI assistants like Claude, VS Code, and Cursor render Python visualizations as interactive web pages in real time, with a standalone browser mode for use without AI.">
+<meta name="twitter:image" content="https://blog.holoviz.org/posts/panel_live_server/images/panel-live-server.png">
+<meta name="twitter:site" content="@HoloViz_org">
+<meta name="twitter:image-height" content="494">
+<meta name="twitter:image-width" content="1022">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="https://holoviz.org" class="navbar-brand navbar-brand-logo">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo light-content">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo dark-content">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-learn" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Learn</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-learn">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/presentations/index.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/background.html">
+ <span class="dropdown-text">Background</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/FAQ.html">
+ <span class="dropdown-text">FAQ</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/tutorial/index.html"> 
+<span class="menu-text">Tutorial</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://examples.holoviz.org/"> 
+<span class="menu-text">Examples</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/community.html"> 
+<span class="menu-text">Community</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/contribute.html"> 
+<span class="menu-text">Contribute</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-about">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/index.html">
+ <span class="dropdown-text">About Us</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/governance/index.html">
+ <span class="dropdown-text">Governance</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/heps/index.html">
+ <span class="dropdown-text">HEPs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/roadmap.html">
+ <span class="dropdown-text">Roadmap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/funding.html">
+ <span class="dropdown-text">Funding</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/holoviz" title="HoloViz Github" class="quarto-navigation-tool px-1" aria-label="HoloViz Github"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/holoviz_org" title="HoloViz Twitter" class="quarto-navigation-tool px-1" aria-label="HoloViz Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://discourse.holoviz.org" title="HoloViz Forum" class="quarto-navigation-tool px-1" aria-label="HoloViz Forum"><i class="bi bi-chat-text"></i></a>
+    <a href="https://discord.gg/UXdtYyGVQX" title="HoloViz Discord" class="quarto-navigation-tool px-1" aria-label="HoloViz Discord"><i class="bi bi-discord"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#a-faster-path-from-code-to-visualization" id="toc-a-faster-path-from-code-to-visualization" class="nav-link active" data-scroll-target="#a-faster-path-from-code-to-visualization">A Faster Path from Code to Visualization</a></li>
+  <li><a href="#what-is-panel-live-server" id="toc-what-is-panel-live-server" class="nav-link" data-scroll-target="#what-is-panel-live-server">What is Panel Live Server?</a>
+  <ul class="collapse">
+  <li><a href="#mcp-server" id="toc-mcp-server" class="nav-link" data-scroll-target="#mcp-server">1. MCP Server</a></li>
+  <li><a href="#standalone-server" id="toc-standalone-server" class="nav-link" data-scroll-target="#standalone-server">2. Standalone Server</a></li>
+  </ul></li>
+  <li><a href="#try-it-out" id="toc-try-it-out" class="nav-link" data-scroll-target="#try-it-out">Try it Out</a></li>
+  <li><a href="#connect-to-your-mcp-client" id="toc-connect-to-your-mcp-client" class="nav-link" data-scroll-target="#connect-to-your-mcp-client">Connect to your MCP Client</a></li>
+  <li><a href="#architecture" id="toc-architecture" class="nav-link" data-scroll-target="#architecture">Architecture</a>
+  <ul class="collapse">
+  <li><a href="#the-show-tool" id="toc-the-show-tool" class="nav-link" data-scroll-target="#the-show-tool">The <code>show</code> Tool</a></li>
+  <li><a href="#the-screenshot-tool" id="toc-the-screenshot-tool" class="nav-link" data-scroll-target="#the-screenshot-tool">The <code>screenshot</code> Tool</a></li>
+  <li><a href="#why-an-independent-panel-server" id="toc-why-an-independent-panel-server" class="nav-link" data-scroll-target="#why-an-independent-panel-server">Why an Independent Panel Server?</a></li>
+  <li><a href="#snippets-and-execution-methods" id="toc-snippets-and-execution-methods" class="nav-link" data-scroll-target="#snippets-and-execution-methods">Snippets and Execution Methods</a></li>
+  <li><a href="#code-validation" id="toc-code-validation" class="nav-link" data-scroll-target="#code-validation">Code Validation</a></li>
+  <li><a href="#persistent-storage" id="toc-persistent-storage" class="nav-link" data-scroll-target="#persistent-storage">Persistent Storage</a></li>
+  <li><a href="#browser-pages" id="toc-browser-pages" class="nav-link" data-scroll-target="#browser-pages">Browser Pages</a></li>
+  </ul></li>
+  <li><a href="#get-started-with-panel-live-server" id="toc-get-started-with-panel-live-server" class="nav-link" data-scroll-target="#get-started-with-panel-live-server">Get Started with Panel Live Server</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/holoviz-dev/blog/edit/main/posts/panel_live_server/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introducing Panel Live Server: An MCP Server for Instant Python Visualization Rendering</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">announcement</div>
+    <div class="quarto-category">panel</div>
+    <div class="quarto-category">GSoC</div>
+    <div class="quarto-category">panel-live-server</div>
+    <div class="quarto-category">chatbot</div>
+    <div class="quarto-category">MCP</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Panel Live Server is an MCP server and local web server that lets AI assistants like Claude, VS Code, and Cursor render Python visualizations as interactive web pages in real time, with a standalone browser mode for use without AI.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Sumaiya Islam </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 30, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+.quarto-title-meta-contents p:not(.date) {
+    font-weight: 700;
+}
+
+strong code, b code {
+    font-weight: 700;
+}
+</style>
+<section id="a-faster-path-from-code-to-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="a-faster-path-from-code-to-visualization">A Faster Path from Code to Visualization</h2>
+<p>Anyone who has built interactive data applications with Panel, hvPlot, or HoloViews knows the workflow: write code, spin up a server, open a browser, refresh, repeat. For quick experiments and exploratory work, that loop adds up. And if you are working inside an AI assistant, asking Claude or GitHub Copilot to help you build a chart, there has been no clean way to actually <em>see</em> the result without leaving your tool.</p>
+<p><strong>Panel Live Server</strong> removes that friction. When connected to an MCP-compatible AI assistant like Claude, VS Code, or Cursor via the <a href="https://modelcontextprotocol.io/">Model Context Protocol (MCP)</a>, you can point it at a dataset file or a URL and ask for a visualization directly in the chat. The assistant generates the code, Panel Live Server executes it, and the result comes back as a live, interactive visualization rendered inline in the chat via iframe, without leaving your IDE. You can also use it standalone from the terminal, submitting code through a browser UI and getting a persistent URL back instantly.</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="images/pls-mcp.mp4"></video></div>
+</section>
+<section id="what-is-panel-live-server" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-panel-live-server">What is Panel Live Server?</h2>
+<p>Panel Live Server (<code>panel-live-server</code>) is an open-source local web server built around Panel. You submit Python code, anything from a simple chart to a full Panel dashboard, and it renders the output as a persistent, interactive web page. Every snippet gets its own URL stored in a SQLite database, so your visualizations survive server restarts and can be revisited or shared.</p>
+<p>It is designed for two distinct use cases:</p>
+<section id="mcp-server" class="level3">
+<h3 class="anchored" data-anchor-id="mcp-server">1. MCP Server</h3>
+<p>Give Claude, GitHub Copilot, Cursor, or any MCP-compatible AI assistant the ability to render visualizations directly in your IDE. Once connected, the assistant gains access to four tools, intended to be used in order:</p>
+<ul>
+<li><strong><code>list_packages</code></strong>: lists the Python packages installed in the server environment. Called once at the start of a session so the AI knows exactly what libraries it can use before writing any code.</li>
+<li><strong><code>validate</code></strong>: validates code before rendering. Runs five checks in sequence: syntax, security, package availability, Panel extension declarations, and a runtime execution test. Returns a structured error with recovery hints on failure, or caches the result on success so <code>show</code> can reuse it at zero cost.</li>
+<li><strong><code>show</code></strong>: executes the code and renders it as a live, interactive visualization, returning a URL. The user gets a real interactive page, not a static image.</li>
+<li><strong><code>screenshot</code></strong>: gives the AI vision into the rendered visualization. A chart can run without errors and still look wrong. With this vision capability, the AI receives an actual PNG of what the user sees in the browser, allowing it to spot clipped legends, misaligned labels, or inconsistent margins and make precise fixes without editing the code blind.</li>
+</ul>
+<p>The image below shows the MCP server connected in a VS Code IDE, rendering a visualization directly in the chat:</p>
+<p><a href="images/pls.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/pls.png" class="img-fluid"></a></p>
+<p>Once hooked up with an MCP client such as Claude, GitHub Copilot, or Cursor, just ask:</p>
+<blockquote class="blockquote">
+<p>“Please show a quick and beautiful Matplotlib trading dashboard”</p>
+<p>“Please show a basic, interactive Panel app with a slider”</p>
+<p>“Please show the most beautiful matplotlib plot”</p>
+</blockquote>
+<p>The AI calls <code>show</code> to render it and the visualization appears immediately in your chat interface, no manual setup required.</p>
+</section>
+<section id="standalone-server" class="level3">
+<h3 class="anchored" data-anchor-id="standalone-server">2. Standalone Server</h3>
+<p>Start a local web server and create interactive visualizations through a browser UI or REST API. Every snippet gets its own permanent URL.</p>
+<p>The video below shows the standalone server running locally, with code submitted through the browser UI and rendered as an interactive web page instantly:</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video2" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="images/pls-standalone.mp4"></video></div>
+<p>To get the server started, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pls</span> serve</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Open <code>http://localhost:5077/add</code> and submit any Python visualization:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hvplot.pandas</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'Product'</span>: [<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>, <span class="st">'D'</span>], <span class="st">'Sales'</span>: [<span class="dv">120</span>, <span class="dv">95</span>, <span class="dv">180</span>, <span class="dv">150</span>]})</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df.hvplot.bar(x<span class="op">=</span><span class="st">'Product'</span>, y<span class="op">=</span><span class="st">'Sales'</span>, title<span class="op">=</span><span class="st">'Sales by Product'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Browse your visualizations at <code>/feed</code>, manage them at <code>/admin</code>, and link directly to any individual chart at <code>/view?id=...</code>.</p>
+</section>
+</section>
+<section id="try-it-out" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-out">Try it Out</h2>
+<p><strong>What You’ll Need</strong></p>
+<ul>
+<li>Python 3.12 or later</li>
+<li>A package manager: uv, pip (built into Python), or pixi</li>
+</ul>
+<p>Install Panel Live Server using <code>pip</code>, <code>uv</code>, or <code>pixi</code>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">pip</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">uv</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">pixi</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="st">"panel-live-server[pydata]"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install <span class="st">"panel-live-server[pydata]"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> add <span class="at">--pypi</span> <span class="st">"panel-live-server[pydata]"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<p>Then launch it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Standalone browser mode</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pls</span> serve</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># MCP mode for AI assistants</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pls</span> mcp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="connect-to-your-mcp-client" class="level2">
+<h2 class="anchored" data-anchor-id="connect-to-your-mcp-client">Connect to your MCP Client</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">VS Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Cursor</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Claude Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href="">Claude Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false" href="">claude.ai</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>Add to <code>.vscode/mcp.json</code> (create if it doesn’t exist):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"servers"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"panel-live-server"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"stdio"</span><span class="fu">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"/path/to/pls"</span><span class="fu">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"args"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"mcp"</span><span class="ot">]</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Replace <code>"command": "/path/to/pls"</code> with the path printed by <code>which pls</code></p>
+</div>
+</div>
+</div>
+<p>Once connected, ask your AI: <em>“Show me a scatter plot of this data using the show tool.”</em></p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>Add to <code>~/.cursor/mcp.json</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"mcpServers"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"panel-live-server"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"/path/to/pls"</span><span class="fu">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"args"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"mcp"</span><span class="ot">]</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Replace <code>"command": "/path/to/pls"</code> with the path printed by <code>which pls</code></p>
+</div>
+</div>
+</div>
+<p>Open Cursor Settings → MCP and verify the green dot. Use Agent mode in chat.</p>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<p>Add to <code>claude_desktop_config.json</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"mcpServers"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"panel-live-server"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"/path/to/pls"</span><span class="fu">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"args"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"mcp"</span><span class="ot">]</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Replace <code>"command": "/path/to/pls"</code> with the path printed by <code>which pls</code></p>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> mcp add panel-live-server <span class="at">--</span> /path/to/pls mcp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Replace <code>/path/to/pls</code> with the path printed by <code>which pls</code></p>
+</div>
+</div>
+</div>
+<p>Once connected, ask your AI: <em>“Show me a scatter plot of this data using the show tool.”</em></p>
+</div>
+<div id="tabset-2-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-5-tab">
+<p>claude.ai requires HTTP transport and a public URL. You can use any tunneling service (ngrok, Cloudflare, localhost.run, etc.). This example uses Cloudflare.</p>
+<p><strong>Terminal 1</strong> — start the MCP server:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/path/to/pls</span> mcp <span class="at">--transport</span> http <span class="at">--port</span> 8001</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Replace <code>/path/to/pls</code> with the path printed by <code>which pls</code></p>
+</div>
+</div>
+</div>
+<p><strong>Terminal 2</strong> — tunnel for the MCP server:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cloudflared</span> tunnel <span class="at">--url</span> http://localhost:8001</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Terminal 3</strong> — tunnel for the Panel server:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cloudflared</span> tunnel <span class="at">--url</span> http://localhost:5077</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Stop Terminal 1, set the Panel tunnel URL, and restart:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PANEL_LIVE_SERVER_EXTERNAL_URL</span><span class="op">=&lt;</span>url-from-terminal-3<span class="op">&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/path/to/pls</span> mcp <span class="at">--transport</span> http <span class="at">--port</span> 8001</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then go to claude.ai → Settings → Connectors → Add custom connector and enter <code>&lt;url-from-terminal-2&gt;/mcp</code> as the URL.</p>
+<p>Once connected, ask your AI: <em>“Show me a scatter plot of this data using the show tool.”</em></p>
+</div>
+</div>
+</div>
+</section>
+<section id="architecture" class="level2">
+<h2 class="anchored" data-anchor-id="architecture">Architecture</h2>
+<p>Panel Live Server uses a two-process architecture:</p>
+<p><a href="images/architecture.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/architecture.png" class="img-fluid"></a></p>
+<ul>
+<li><strong>MCP Server (<code>pls mcp</code>)</strong>: hosts the <code>list_packages</code>, <code>validate</code>, <code>show</code>, and <code>screenshot</code> MCP tools, starts the Standalone Server as a subprocess, and manages its lifecycle.</li>
+<li><strong>Standalone Server (<code>pls serve</code>)</strong>: executes Python code and serves visualizations as web pages. Exposes a REST API and four browser-accessible pages.</li>
+<li><strong>Browser</strong>: displays visualizations and management interfaces.</li>
+</ul>
+<section id="the-show-tool" class="level3">
+<h3 class="anchored" data-anchor-id="the-show-tool">The <code>show</code> Tool</h3>
+<p>The <code>show</code> MCP tool is the primary interface for AI assistants. When called:</p>
+<ol type="1">
+<li>The AI sends Python code via the <code>show</code> tool</li>
+<li>The MCP server validates the code (syntax, imports, test execution)</li>
+<li>The MCP server POSTs the snippet to the Panel server’s <code>/api/snippet</code> endpoint</li>
+<li>The Panel server stores the snippet in SQLite and returns a URL</li>
+<li>The MCP server returns the URL to the AI assistant</li>
+<li>The user accesses the visualization via URL in the browser (or inline in the MCP App UI)</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>show(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    code<span class="op">=</span><span class="st">"df.hvplot.bar(x='Product', y='Sales')"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"Sales Chart"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Bar chart of product sales"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">"inline"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    zoom<span class="op">=</span><span class="dv">75</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The tool accepts:</p>
+<ul>
+<li><strong><code>code</code></strong> (required): Python code to execute</li>
+<li><strong><code>name</code></strong>: human-readable title</li>
+<li><strong><code>description</code></strong>: one-sentence explanation</li>
+<li><strong><code>method</code></strong>: execution method: <code>"inline"</code> (default) or <code>"server"</code></li>
+<li><strong><code>zoom</code></strong>: initial zoom level: 25, 50, 75, or 100</li>
+</ul>
+</section>
+<section id="the-screenshot-tool" class="level3">
+<h3 class="anchored" data-anchor-id="the-screenshot-tool">The <code>screenshot</code> Tool</h3>
+<p>The <code>screenshot</code> tool lets the AI see how a visualization actually looks in the browser. When called:</p>
+<ol type="1">
+<li>The AI passes the <code>snippet_id</code> returned by <code>show</code></li>
+<li>A headless Chromium browser navigates to the snippet’s <code>/view</code> page</li>
+<li>It waits for the content to mount and for Bokeh to finish painting</li>
+<li>A PNG image is captured and returned to the AI (not the user)</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>screenshot(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    snippet_id<span class="op">=</span><span class="st">"abc123"</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">1200</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">800</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    full_page<span class="op">=</span><span class="va">False</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The tool accepts:</p>
+<ul>
+<li><strong><code>snippet_id</code></strong> (required): the ID of an already-rendered snippet from <code>show</code></li>
+<li><strong><code>width</code></strong>: browser viewport width in pixels (default 1200)</li>
+<li><strong><code>height</code></strong>: browser viewport height in pixels (default 800)</li>
+<li><strong><code>full_page</code></strong>: if <code>True</code>, captures the full scrollable page instead of just the viewport</li>
+</ul>
+<p>The screenshot goes to the AI, not the user. The user already has the live interactive visualization. This tool gives the model vision — if the margins look off or the layout is inconsistent, the AI can see that directly and fix it, rather than editing the code blind.</p>
+</section>
+<section id="why-an-independent-panel-server" class="level3">
+<h3 class="anchored" data-anchor-id="why-an-independent-panel-server">Why an Independent Panel Server?</h3>
+<p>Running visualizations in an independent subprocess provides several key benefits:</p>
+<ul>
+<li><strong>Isolation</strong>: if visualization code crashes or hangs, it does not affect the MCP server or the AI assistant’s session. Errors are captured and returned as structured messages.</li>
+<li><strong>Decoupling</strong>: the Panel server and MCP server are independent. You can restart, update, or reconfigure the Panel server without restarting the MCP session.</li>
+<li><strong>State management</strong>: the Panel server maintains its own SQLite database. Visualizations persist across MCP sessions and are accessible even if the MCP server is stopped.</li>
+<li><strong>Resource control</strong>: long-running visualizations or large datasets run in a separate process with their own memory space.</li>
+</ul>
+</section>
+<section id="snippets-and-execution-methods" class="level3">
+<h3 class="anchored" data-anchor-id="snippets-and-execution-methods">Snippets and Execution Methods</h3>
+<p>A snippet is a stored code sample with metadata. Each snippet has a unique ID and URL-friendly slug, Python code, name and description, a status of <code>pending</code>, <code>success</code>, or <code>error</code>, detected package imports and Panel extensions, execution method, and timestamps.</p>
+<ol type="1">
+<li><p><strong>Inline method (default)</strong>: executes code and captures the last expression, wrapping it with <code>pn.panel()</code> for display:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'x'</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], <span class="st">'y'</span>: [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]})</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df  <span class="co"># This expression is displayed</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Best for data exploration, quick charts, and any Python object (DataFrames, plots, widgets).</p></li>
+<li><p><strong>Server method</strong>: executes code that explicitly calls <code>.servable()</code> on Panel components:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> panel <span class="im">as</span> pn</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>pn.extension()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>slider <span class="op">=</span> pn.widgets.IntSlider(name<span class="op">=</span><span class="st">'Value'</span>, start<span class="op">=</span><span class="dv">0</span>, end<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>pn.Column(slider, pn.bind(<span class="kw">lambda</span> x: <span class="ss">f'</span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">² = </span><span class="sc">{</span>x<span class="op">**</span><span class="dv">2</span><span class="sc">}</span><span class="ss">'</span>, slider)).servable()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Best for complex interactive applications and multi-component dashboards.</p></li>
+</ol>
+<p>Code executes inside a <code>types.ModuleType</code> namespace registered in <code>sys.modules</code>, so Panel decorators like <code>@pn.cache</code> and <code>@pn.depends</code> work correctly, just as they do in Panel application files.</p>
+</section>
+<section id="code-validation" class="level3">
+<h3 class="anchored" data-anchor-id="code-validation">Code Validation</h3>
+<p>Before submitting code to the Panel server, the MCP server runs a validation chain:</p>
+<ol type="1">
+<li><strong>Syntax check</strong>: <code>ast.parse()</code> to catch syntax errors early</li>
+<li><strong>Extension check</strong>: verifies required Panel extensions are available (plotly, vega, deckgl, etc.)</li>
+<li><strong>Execution test</strong>: runs the code in a module namespace to catch runtime errors</li>
+</ol>
+<p>If validation fails, a structured error message is returned with recovery suggestions, without creating a database entry.</p>
+</section>
+<section id="persistent-storage" class="level3">
+<h3 class="anchored" data-anchor-id="persistent-storage">Persistent Storage</h3>
+<p>Every snippet is saved to a local SQLite database with full-text search. Visualizations are not ephemeral; they have stable URLs and survive server restarts. This makes it practical for building up a personal library of reusable snippets over time.</p>
+<p>Panel Live Server adapts to where you are working:</p>
+<ul>
+<li><strong>Local machine</strong>: standard <code>localhost:5077</code> setup</li>
+<li><strong>JupyterHub</strong>: automatic URL externalization</li>
+<li><strong>GitHub Codespaces</strong>: remote URL exposed correctly</li>
+</ul>
+<p>The same <code>pls serve</code> or <code>pls mcp</code> command works across all of these, no environment-specific configuration needed.</p>
+</section>
+<section id="browser-pages" class="level3">
+<h3 class="anchored" data-anchor-id="browser-pages">Browser Pages</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">URL</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>/view?id=...</code></td>
+<td style="text-align: left;">Executes and renders a single snippet</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>/feed</code></td>
+<td style="text-align: left;">Browse all saved visualizations</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>/add</code></td>
+<td style="text-align: left;">Web form to create snippets manually</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>/admin</code></td>
+<td style="text-align: left;">Management table: search, inspect, delete</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="get-started-with-panel-live-server" class="level2">
+<h2 class="anchored" data-anchor-id="get-started-with-panel-live-server">Get Started with Panel Live Server</h2>
+<p>If you are interested in faster visualization workflows or AI-assisted data exploration with real rendered outputs, Panel Live Server is ready to try.</p>
+<ul>
+<li><strong>Documentation:</strong> <a href="https://panel-extensions.github.io/panel-live-server/" class="uri">https://panel-extensions.github.io/panel-live-server/</a> Installation guides, concepts, and examples to get started.</li>
+<li><strong>Source code:</strong> <a href="https://github.com/panel-extensions/panel-live-server" class="uri">https://github.com/panel-extensions/panel-live-server</a> Open-source development, issue tracking, and contribution guidelines.</li>
+</ul>
+<p>Panel Live Server is actively evolving. If you are experimenting with MCP integrations, interactive dashboards, or AI-assisted visualization workflows, we encourage you to try it and share your feedback on <a href="https://discourse.holoviz.org">Discourse</a> or <a href="https://discord.gg/UXdtYyGVQX">Discord</a>. We would love to hear how you are using it and what you would like to see next.</p>
+<p>Thanks to <a href="https://github.com/MarcSkovMadsen">Marc Skov Madsen</a> for designing and building the initial version of panel-live-server.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/blog\.holoviz\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Copyright 2023 Holoviz contributors</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/holoviz-dev/blog/edit/main/posts/panel_live_server/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>videojs(video_shortcode_videojs_video1);</script>
+<script>videojs(video_shortcode_videojs_video2);</script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

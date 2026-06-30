@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Philipp Rudiger">
+<meta name="dcterms.date" content="2026-05-21">
+<meta name="description" content="Release announcement for Param 2.4.0, introducing full typing support">
+
+<title>Param 2.4.0 Release – HoloViz Blog</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-4bd490e9cd57f2396cbd188312c0541c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ee735f5ef79851cdc23a8bd5ba349cae.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+    window.goatcounter = {
+        path: function(p) { return location.host + p }
+    }
+</script>
+<script data-goatcounter="https://holoviz.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+
+
+<link rel="stylesheet" href="../../custom.css">
+<meta property="og:title" content="Param 2.4.0 Release – HoloViz Blog">
+<meta property="og:description" content="Release announcement for Param 2.4.0, introducing full typing support">
+<meta property="og:image" content="https://blog.holoviz.org/posts/param_release_2.4/images/param_typing.png">
+<meta property="og:site_name" content="HoloViz Blog">
+<meta property="og:image:height" content="938">
+<meta property="og:image:width" content="1686">
+<meta name="twitter:title" content="Param 2.4.0 Release – HoloViz Blog">
+<meta name="twitter:description" content="Release announcement for Param 2.4.0, introducing full typing support">
+<meta name="twitter:image" content="https://blog.holoviz.org/posts/param_release_2.4/images/param_typing.png">
+<meta name="twitter:site" content="@HoloViz_org">
+<meta name="twitter:image-height" content="938">
+<meta name="twitter:image-width" content="1686">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="https://holoviz.org" class="navbar-brand navbar-brand-logo">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo light-content">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo dark-content">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-learn" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Learn</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-learn">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/presentations/index.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/background.html">
+ <span class="dropdown-text">Background</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/FAQ.html">
+ <span class="dropdown-text">FAQ</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/tutorial/index.html"> 
+<span class="menu-text">Tutorial</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://examples.holoviz.org/"> 
+<span class="menu-text">Examples</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/community.html"> 
+<span class="menu-text">Community</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/contribute.html"> 
+<span class="menu-text">Contribute</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-about">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/index.html">
+ <span class="dropdown-text">About Us</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/governance/index.html">
+ <span class="dropdown-text">Governance</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/heps/index.html">
+ <span class="dropdown-text">HEPs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/roadmap.html">
+ <span class="dropdown-text">Roadmap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/funding.html">
+ <span class="dropdown-text">Funding</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/holoviz" title="HoloViz Github" class="quarto-navigation-tool px-1" aria-label="HoloViz Github"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/holoviz_org" title="HoloViz Twitter" class="quarto-navigation-tool px-1" aria-label="HoloViz Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://discourse.holoviz.org" title="HoloViz Forum" class="quarto-navigation-tool px-1" aria-label="HoloViz Forum"><i class="bi bi-chat-text"></i></a>
+    <a href="https://discord.gg/UXdtYyGVQX" title="HoloViz Discord" class="quarto-navigation-tool px-1" aria-label="HoloViz Discord"><i class="bi bi-discord"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-param" id="toc-what-is-param" class="nav-link active" data-scroll-target="#what-is-param">What is Param?</a></li>
+  <li><a href="#new-release" id="toc-new-release" class="nav-link" data-scroll-target="#new-release">New Release!</a></li>
+  <li><a href="#full-typing-support" id="toc-full-typing-support" class="nav-link" data-scroll-target="#full-typing-support">Full Typing Support</a></li>
+  <li><a href="#type-inference-from-constructor-arguments" id="toc-type-inference-from-constructor-arguments" class="nav-link" data-scroll-target="#type-inference-from-constructor-arguments">Type Inference from Constructor Arguments</a>
+  <ul class="collapse">
+  <li><a href="#the-allow_none-pattern" id="toc-the-allow_none-pattern" class="nav-link" data-scroll-target="#the-allow_none-pattern">The <code>allow_None</code> Pattern</a></li>
+  <li><a href="#list-with-item_type" id="toc-list-with-item_type" class="nav-link" data-scroll-target="#list-with-item_type"><code>List</code> with <code>item_type</code></a></li>
+  <li><a href="#classselector-with-class_" id="toc-classselector-with-class_" class="nav-link" data-scroll-target="#classselector-with-class_"><code>ClassSelector</code> with <code>class_</code></a></li>
+  </ul></li>
+  <li><a href="#py.typed-marker" id="toc-py.typed-marker" class="nav-link" data-scroll-target="#py.typed-marker">py.typed Marker</a></li>
+  <li><a href="#type-checker-compatibility" id="toc-type-checker-compatibility" class="nav-link" data-scroll-target="#type-checker-compatibility">Type Checker Compatibility</a></li>
+  <li><a href="#mypy-plugin" id="toc-mypy-plugin" class="nav-link" data-scroll-target="#mypy-plugin">Mypy Plugin</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a>
+  <ul class="collapse">
+  <li><a href="#selector-and-literal-types" id="toc-selector-and-literal-types" class="nav-link" data-scroll-target="#selector-and-literal-types"><code>Selector</code> and <code>Literal</code> Types</a></li>
+  <li><a href="#constructor-arguments" id="toc-constructor-arguments" class="nav-link" data-scroll-target="#constructor-arguments">Constructor Arguments</a></li>
+  </ul></li>
+  <li><a href="#future-direction" id="toc-future-direction" class="nav-link" data-scroll-target="#future-direction">Future Direction</a></li>
+  <li><a href="#practical-recommendations" id="toc-practical-recommendations" class="nav-link" data-scroll-target="#practical-recommendations">Practical Recommendations</a></li>
+  <li><a href="#changelog" id="toc-changelog" class="nav-link" data-scroll-target="#changelog">Changelog</a>
+  <ul class="collapse">
+  <li><a href="#features" id="toc-features" class="nav-link" data-scroll-target="#features">🚀 Features</a></li>
+  <li><a href="#maintenance" id="toc-maintenance" class="nav-link" data-scroll-target="#maintenance">🔧 Maintenance</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/holoviz-dev/blog/edit/main/posts/param_release_2.4/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Param 2.4.0 Release</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">release</div>
+    <div class="quarto-category">param</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Release announcement for Param 2.4.0, introducing full typing support
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Philipp Rudiger </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 21, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-is-param" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-param">What is Param?</h2>
+<p><a href="https://param.holoviz.org/">Param</a> is an open-source Python library that lets you define classes with strongly typed, validated parameters. It is the foundation of the <a href="https://holoviz.org">HoloViz</a> ecosystem, powering Panel, hvPlot, HoloViews, and many other libraries. Param handles runtime validation, serialization, and dependency tracking so you can focus on the logic of your application rather than on boilerplate data-checking code.</p>
+</section>
+<section id="new-release" class="level2">
+<h2 class="anchored" data-anchor-id="new-release">New Release!</h2>
+<p>We are excited to announce the 2.4.0 release of Param! This release brings first-class static typing support to Param, a long-awaited improvement that makes the entire Param-based ecosystem significantly easier to use in modern Python development environments.</p>
+<ul>
+<li><a href="#full-typing-support"><strong>Full typing support</strong></a>: Parameters now carry precise type information that flows through to IDE autocompletion, inline documentation, and static analysis tools.</li>
+<li><a href="#type-inference-from-constructor-arguments"><strong>Type inference from constructor arguments</strong></a>: Types are inferred not just from the Parameter subclass, but also from keyword arguments like <code>allow_None</code>, <code>item_type</code>, and <code>class_</code>.</li>
+<li><a href="#type-checker-compatibility"><strong>Four type checkers tested</strong></a>: Param is now verified against <code>mypy</code>, <code>pyright</code>, <code>pyrefly</code>, and <code>ty</code> in CI.</li>
+<li><a href="#pytyped-marker"><strong>py.typed marker</strong></a>: The <code>py.typed</code> PEP 561 marker is now included, signaling to tools that Param ships its own type annotations.</li>
+<li><a href="#limitations"><strong>Limitations and workarounds</strong></a>: Known limitations with <code>Selector</code> and <code>Literal</code> types, and how to work around them today.</li>
+<li><a href="#future-direction"><strong>Future direction</strong></a>: A preview of annotation-first parameter declarations coming in Param 3.0.</li>
+</ul>
+<p>Many thanks to the contributors to this release.</p>
+<hr>
+<p>You can install the latest version of Param with <code>conda install param</code>, <code>pip install param</code>, or <code>uv add param</code>.</p>
+<hr>
+</section>
+<section id="full-typing-support" class="level2">
+<h2 class="anchored" data-anchor-id="full-typing-support">Full Typing Support</h2>
+<p>Param 2.4.0 introduces comprehensive static typing support, making <code>Parameterized</code> classes significantly more useful in modern development workflows. If you use VSCode (via Pylance), PyCharm, or any other editor with a Python language server, you will now get accurate autocompletion, inline documentation, and type-error highlighting for all Param-based code, including the entire HoloViz ecosystem built on top of it.</p>
+<p>Before this release, Param’s parameters were effectively untyped from a static analysis perspective. A value like <code>slider.value</code> would be inferred as <code>Any</code>, meaning your type checker could not help you catch bugs where the wrong type was passed or returned. With 2.4.0, types flow through correctly:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> param</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Model(param.Parameterized):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    threshold <span class="op">=</span> param.Number(default<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    name_ <span class="op">=</span> param.String(default<span class="op">=</span><span class="st">"unnamed"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> param.Integer(allow_None<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> Model()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Your IDE now knows these types precisely:</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>reveal_type(m.threshold)  <span class="co"># float | int</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>reveal_type(m.name_)      <span class="co"># str</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>reveal_type(m.count)      <span class="co"># int | None</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note that this typing support currently applies to parameter <em>access</em> on instances. The <code>Parameterized</code> constructor (<code>__init__</code>) does not yet benefit from per-parameter type narrowing, so keyword arguments passed at instantiation time are not statically checked. This is a known limitation that will be addressed in a future release.</p>
+<p>This change is, of course, well overdue but it represents a first step towards modernizing not just Param but the entire HoloViz ecosystem.</p>
+</section>
+<section id="type-inference-from-constructor-arguments" class="level2">
+<h2 class="anchored" data-anchor-id="type-inference-from-constructor-arguments">Type Inference from Constructor Arguments</h2>
+<p>The core design decision in Param’s typing approach is that types are inferred from the <em>Parameter declaration</em>, not from a separate type annotation. This means the same constructor call you already write for runtime validation also communicates intent to your type checker.</p>
+<p>The inference works at two levels:</p>
+<ol type="1">
+<li><strong>The Parameter subclass</strong> determines the base type. <code>param.String</code> implies <code>str</code>, <code>param.Integer</code> implies <code>int</code>, <code>param.Number</code> implies <code>int | float</code>, and so on.</li>
+<li><strong>Keyword arguments</strong> refine the type further. <code>allow_None=True</code> adds <code>None</code> to the union. <code>item_type=str</code> on a <code>List</code> narrows the element type. <code>class_=MyModel</code> on a <code>ClassSelector</code> pins the type to <code>MyModel</code>.</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> param</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> typing <span class="im">as</span> t</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Any</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing_extensions <span class="im">import</span> assert_type</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyModel:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Example(param.Parameterized):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> param.String()</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    retries <span class="op">=</span> param.Integer(allow_None<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    timeout <span class="op">=</span> param.Number(allow_None<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    tags <span class="op">=</span> param.List(item_type<span class="op">=</span><span class="bu">str</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> param.ClassSelector(class_<span class="op">=</span>MyModel, allow_None<span class="op">=</span><span class="va">False</span>, default<span class="op">=</span>MyModel())</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    optional_model <span class="op">=</span> param.ClassSelector(class_<span class="op">=</span>MyModel, allow_None<span class="op">=</span><span class="va">True</span>, default<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> Example()</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>assert_type(e.title, <span class="bu">str</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>assert_type(e.retries, <span class="bu">int</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>assert_type(e.timeout, <span class="bu">int</span> <span class="op">|</span> <span class="bu">float</span> <span class="op">|</span> <span class="va">None</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>assert_type(e.tags, <span class="bu">list</span>[<span class="bu">str</span>])</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>assert_type(e.model, MyModel)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>assert_type(e.optional_model, MyModel <span class="op">|</span> <span class="va">None</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Under the hood, this works through Python’s overload mechanism. <code>Parameter</code> is now a generic class — <code>Parameter[_T]</code> — and each subclass defines <code>@overload</code> signatures that perform type narrowing based on the keyword arguments present in the call. This is purely a static analysis mechanism: no runtime behavior changes.</p>
+<section id="the-allow_none-pattern" class="level3">
+<h3 class="anchored" data-anchor-id="the-allow_none-pattern">The <code>allow_None</code> Pattern</h3>
+<p>The <code>allow_None</code> argument deserves special attention because it is the most common way to control nullability. The inference rules are consistent:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Declaration</th>
+<th>Inferred type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>param.Integer()</code></td>
+<td><code>int</code></td>
+</tr>
+<tr class="even">
+<td><code>param.Integer(default=None)</code></td>
+<td><code>int \| None</code></td>
+</tr>
+<tr class="odd">
+<td><code>param.Integer(allow_None=False)</code></td>
+<td><code>int</code></td>
+</tr>
+<tr class="even">
+<td><code>param.Integer(allow_None=True)</code></td>
+<td><code>int \| None</code></td>
+</tr>
+<tr class="odd">
+<td><code>param.Number()</code></td>
+<td><code>int \| float</code></td>
+</tr>
+<tr class="even">
+<td><code>param.Number(allow_None=True)</code></td>
+<td><code>int \| float \| None</code></td>
+</tr>
+<tr class="odd">
+<td><code>param.String()</code></td>
+<td><code>str</code></td>
+</tr>
+<tr class="even">
+<td><code>param.String(allow_None=True)</code></td>
+<td><code>str \| None</code></td>
+</tr>
+</tbody>
+</table>
+<p>The default for <code>allow_None</code> varies by Parameter subclass, so when in doubt, be explicit. Being explicit about <code>allow_None</code> also serves as useful documentation for anyone reading your class definition.</p>
+</section>
+<section id="list-with-item_type" class="level3">
+<h3 class="anchored" data-anchor-id="list-with-item_type"><code>List</code> with <code>item_type</code></h3>
+<p>A <code>param.List</code> without <code>item_type</code> is inferred as <code>list[Any]</code>. Providing <code>item_type</code> narrows the element type:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Config(param.Parameterized):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> param.List(item_type<span class="op">=</span><span class="bu">str</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    weights <span class="op">=</span> param.List(item_type<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    callbacks <span class="op">=</span> param.List()  <span class="co"># list[Any]</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> Config()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>assert_type(c.labels, <span class="bu">list</span>[<span class="bu">str</span>])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>assert_type(c.weights, <span class="bu">list</span>[<span class="bu">float</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="classselector-with-class_" class="level3">
+<h3 class="anchored" data-anchor-id="classselector-with-class_"><code>ClassSelector</code> with <code>class_</code></h3>
+<p>For <code>ClassSelector</code>, the <code>class_</code> argument determines the inferred type. Combined with <code>allow_None</code>, it cleanly expresses optional object references:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Engine(param.Parameterized):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Pipeline(param.Parameterized):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    engine <span class="op">=</span> param.ClassSelector(class_<span class="op">=</span>Engine, allow_None<span class="op">=</span><span class="va">False</span>, default<span class="op">=</span>Engine())</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    fallback <span class="op">=</span> param.ClassSelector(class_<span class="op">=</span>Engine, allow_None<span class="op">=</span><span class="va">True</span>, default<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> Pipeline()</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>assert_type(p.engine, Engine)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>assert_type(p.fallback, Engine <span class="op">|</span> <span class="va">None</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="py.typed-marker" class="level2">
+<h2 class="anchored" data-anchor-id="py.typed-marker">py.typed Marker</h2>
+<p>Param 2.4.0 ships a <code>py.typed</code> marker file in the <code>param</code> package, as specified in <a href="https://peps.python.org/pep-0561/">PEP 561</a>. This signals to type checkers and build tools that Param provides its own inline type annotations and no separate type stubs are needed.</p>
+</section>
+<section id="type-checker-compatibility" class="level2">
+<h2 class="anchored" data-anchor-id="type-checker-compatibility">Type Checker Compatibility</h2>
+<p>Python’s type checking ecosystem has matured considerably and now includes several competing tools with different strengths. Param 2.4.0 is verified against four of them in CI:</p>
+<ul>
+<li><p><strong>pyright</strong> is Microsoft’s type checker, which powers the Pylance language server in VSCode. It is the <strong>primary target for Param’s type annotations</strong>. If you or your users develop in VSCode, correct inference will surface automatically without any extra configuration.</p></li>
+<li><p><strong>mypy</strong> is the original Python type checker and remains the most widely used, particularly in CI pipelines. Param passes mypy’s strict checking.</p></li>
+<li><p><strong>pyrefly</strong> is a new type checker from Meta, written in Rust and still in beta. It ships its own language server and is focused on performance at scale.</p></li>
+<li><p><strong>ty</strong> is a new type checker from the Astral team (the authors of <code>ruff</code> and <code>uv</code>), also written in Rust and still in beta.</p></li>
+</ul>
+<p>If you are developing a library built on Param, the recommendation is to use pyright as your primary type checker. Param’s annotations are optimized for pyright first, and since it is the checker most users encounter implicitly through their editor, correct inference there benefits the widest audience.</p>
+</section>
+<section id="mypy-plugin" class="level2">
+<h2 class="anchored" data-anchor-id="mypy-plugin">Mypy Plugin</h2>
+<p>If you use mypy, we recommend enabling the param mypy plugin. Add the following to your <code>pyproject.toml</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[tool.mypy]</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">plugins</span> <span class="op">=</span> <span class="op">[</span><span class="st">"param.mypy_plugin"</span><span class="op">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or in <code>mypy.ini</code> / <code>setup.cfg</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[mypy]</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">plugins </span><span class="ot">=</span><span class="st"> param.mypy_plugin</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The plugin is needed because param uses a metaclass <code>__setattr__</code> to route class-level parameter assignment through the descriptor protocol. Without the plugin, mypy does not recognize this pattern (<a href="https://github.com/python/mypy/issues/9758">mypy #9758</a>) and rejects valid code like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyModel(param.Parameterized):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    flag <span class="op">=</span> param.Boolean(default<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>MyModel.flag <span class="op">=</span> <span class="va">True</span>  <span class="co"># mypy error without the plugin</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>With the plugin enabled, mypy correctly understands that the assignment sets the parameter’s default value and type-checks it against the parameter’s value type. Pyright handles this correctly without any plugin.</p>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<p>Type narrowing in Python’s type system has real limits, and it is worth being honest about what Param’s typing cannot do today.</p>
+<section id="selector-and-literal-types" class="level3">
+<h3 class="anchored" data-anchor-id="selector-and-literal-types"><code>Selector</code> and <code>Literal</code> Types</h3>
+<p>The most significant limitation involves <code>Selector</code> parameters with a fixed set of objects. Ideally, <code>param.Selector(objects=["train", "eval"])</code> would infer <code>Literal["train", "eval"]</code>. Unfortunately, Python’s type system does not currently support narrowing a generic type parameter based on the runtime <em>values</em> of a list argument, only based on the <em>types</em> of arguments.</p>
+<p>As a result, <code>Selector</code> currently infers <code>Any</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TrainingConfig(param.Parameterized):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    mode <span class="op">=</span> param.Selector(objects<span class="op">=</span>[<span class="st">"train"</span>, <span class="st">"eval"</span>])</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> TrainingConfig()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>reveal_type(config.mode)  <span class="co"># Any</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The workaround is to add a redundant explicit annotation with a <code>type: ignore</code> comment to suppress the assignment type mismatch:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Literal</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TrainingConfig(param.Parameterized):</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    mode: Literal[<span class="st">"train"</span>, <span class="st">"eval"</span>] <span class="op">=</span> param.Selector(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        objects<span class="op">=</span>[<span class="st">"train"</span>, <span class="st">"eval"</span>]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    )  <span class="co"># type: ignore[assignment]</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> TrainingConfig()</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>reveal_type(config.mode)  <span class="co"># Literal["train", "eval"]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is not elegant, and it is one of the reasons the typing story for Param is not finished with this release.</p>
+</section>
+<section id="constructor-arguments" class="level3">
+<h3 class="anchored" data-anchor-id="constructor-arguments">Constructor Arguments</h3>
+<p>As mentioned above, and unlike dataclasses or Pydantic models, the <code>Parameterized</code> constructor does not yet automatically infer typed keyword arguments from the parameter declarations. This means that passing parameters at instantiation time is not statically checked:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Model(param.Parameterized):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    threshold <span class="op">=</span> param.Number(default<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    name_ <span class="op">=</span> param.String(default<span class="op">=</span><span class="st">"unnamed"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># No type error here, even though 'threshold' expects a number:</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> Model(threshold<span class="op">=</span><span class="st">"oops"</span>)  <span class="co"># passes static analysis, fails at runtime</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In dataclasses and Pydantic, the <code>__init__</code> signature is synthesized from the field declarations, so type checkers can validate constructor calls. Param does not yet generate a per-class <code>__init__</code> signature for static analysis. This is one of the key problems that the annotation-first approach in Param 3.0 (described below) is designed to solve.</p>
+</section>
+</section>
+<section id="future-direction" class="level2">
+<h2 class="anchored" data-anchor-id="future-direction">Future Direction</h2>
+<p>The typing approach in 2.4.0, inferring types from constructor arguments, is a significant improvement over the untyped state before it, but it has an inherent ceiling. The overload-based narrowing cannot express everything a developer might want to communicate.</p>
+<p>The next step is annotation-first parameter declarations, which is being prototyped in <a href="https://github.com/holoviz/param/pull/1133">PR #1133</a> and is planned for Param 3.0. The idea is to allow defining parameters using standard Python type annotations, similar to how dataclasses and Pydantic models work:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Future Param 3.0 style (prototype, not yet released)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Model(param.Model):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    mode: Literal[<span class="st">"train"</span>, <span class="st">"eval"</span>] <span class="op">=</span> param.Field(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"train"</span>, doc<span class="op">=</span><span class="st">"The current mode."</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    tags: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">=</span> []</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    threshold: <span class="bu">float</span> <span class="op">=</span> <span class="fl">3.5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In this model, the type annotation is the source of truth for static analysis, and Param uses it to configure the parameter’s runtime behavior. This eliminates the <code>Selector</code>/<code>Literal</code> workaround, removes the need for overloads in Param’s internals, and aligns Param with the conventions that Python developers already know from dataclasses and Pydantic.</p>
+<p>The migration path from the current style to this new style is designed to be straightforward, so existing code will continue to work.</p>
+</section>
+<section id="practical-recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="practical-recommendations">Practical Recommendations</h2>
+<p>If you are updating an existing Param-based codebase to take advantage of the new typing, here is what we recommend:</p>
+<ul>
+<li>Use specific Parameter subclasses (<code>Integer</code>, <code>String</code>, <code>ClassSelector</code>, etc.) instead of the base <code>Parameter</code> class wherever possible. The more specific the subclass, the better the inferred type.</li>
+<li>Set <code>allow_None</code> explicitly on parameters where nullability matters. This improves both runtime safety and the precision of the inferred type.</li>
+<li>For <code>List</code> parameters, provide <code>item_type</code> whenever the list is homogeneous. This is good practice regardless of typing, since it adds a free runtime validation.</li>
+<li>For <code>Selector</code> parameters with a known fixed set of values, add an explicit <code>Literal</code> annotation with <code>type: ignore[assignment]</code> for now. This is a temporary workaround until Param 3.0.</li>
+</ul>
+<p>Run pyright alongside your tests. It is the checker most likely to benefit your users if you are building a library on top of Param, and catching type errors at development time is meaningfully cheaper than catching them at runtime.</p>
+</section>
+<section id="changelog" class="level2">
+<h2 class="anchored" data-anchor-id="changelog">Changelog</h2>
+<p>For the full list of changes, see the <a href="https://github.com/holoviz/param/releases/tag/v2.4.0">Param 2.4.0 changelog</a>.</p>
+<section id="features" class="level3">
+<h3 class="anchored" data-anchor-id="features">🚀 Features</h3>
+<ul>
+<li>Make <code>Parameter</code> generic (<code>Parameter[_T]</code>) and add overloads for type narrowing</li>
+<li>Add <code>py.typed</code> PEP 561 marker to the <code>param</code> package</li>
+<li>Add type inference for <code>allow_None</code>, <code>item_type</code>, <code>class_</code>, and <code>bounds</code> constructor arguments</li>
+<li>Add <code>tests/assert_types.py</code> with <code>assert_type()</code> assertions verified in CI</li>
+<li>Add CI jobs for <code>mypy</code>, <code>pyright</code>, <code>pyrefly</code>, and <code>ty</code></li>
+</ul>
+</section>
+<section id="maintenance" class="level3">
+<h3 class="anchored" data-anchor-id="maintenance">🔧 Maintenance</h3>
+<ul>
+<li>Change <code>UndefinedType</code> sentinel from a custom class instance to an <code>enum.Enum</code> member for improved compatibility with type checkers</li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/blog\.holoviz\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Copyright 2023 Holoviz contributors</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/holoviz-dev/blog/edit/main/posts/param_release_2.4/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
