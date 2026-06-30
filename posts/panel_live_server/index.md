@@ -1,12 +1,22 @@
 ---
 title: "Introducing Panel Live Server: An MCP Server for Instant Python Visualization Rendering"
-date: "2026-06-05"
+date: "2026-06-30"
 description: "Panel Live Server is an MCP server and local web server that lets AI assistants like Claude, VS Code, and Cursor render Python visualizations as interactive web pages in real time, with a standalone browser mode for use without AI."
 author:
   - Sumaiya Islam
 categories: [announcement, panel, GSoC, panel-live-server, chatbot, MCP]
 image: "images/panel-live-server.png"
 ---
+
+<style>
+.quarto-title-meta-contents p:not(.date) {
+    font-weight: 700;
+}
+
+strong code, b code {
+    font-weight: 700;
+}
+</style>
 
 ## A Faster Path from Code to Visualization
 
@@ -24,10 +34,12 @@ It is designed for two distinct use cases:
 
 ### 1. MCP Server
 
-Give Claude, GitHub Copilot, Cursor, or any MCP-compatible AI assistant the ability to render visualizations directly in your IDE. Once connected, the assistant gains access to two tools:
+Give Claude, GitHub Copilot, Cursor, or any MCP-compatible AI assistant the ability to render visualizations directly in your IDE. Once connected, the assistant gains access to four tools, intended to be used in order:
 
-- **`validate`**: runs four static checks before rendering: syntax, security, package availability, and Panel extension declarations
-- **`show`**: executes the code and returns a live URL; reuses cached validation results to avoid redundant work
+- **`list_packages`**: lists the Python packages installed in the server environment. Called once at the start of a session so the AI knows exactly what libraries it can use before writing any code.
+- **`validate`**: validates code before rendering. Runs five checks in sequence: syntax, security, package availability, Panel extension declarations, and a runtime execution test. Returns a structured error with recovery hints on failure, or caches the result on success so `show` can reuse it at zero cost.
+- **`show`**: executes the code and renders it as a live, interactive visualization, returning a URL. The user gets a real interactive page, not a static image.
+- **`screenshot`**: captures a PNG of an already-rendered visualization and returns it to the AI. This lets the model answer visual questions ("which bar is tallest?", "what color is X?") from the actual rendered pixels, not just the source code.
 
 The video below shows the MCP server connected in a VS Code IDE, rendering a visualization directly in the chat:
 
@@ -230,7 +242,7 @@ Panel Live Server uses a two-process architecture:
 
 ![](images/architecture.png)
 
-- **MCP Server (`pls mcp`)**: hosts the `show` and `list_packages` MCP tools, starts the Standalone Server as a subprocess, and manages its lifecycle.
+- **MCP Server (`pls mcp`)**: hosts the `list_packages`, `validate`, `show`, and `screenshot` MCP tools, starts the Standalone Server as a subprocess, and manages its lifecycle.
 - **Standalone Server (`pls serve`)**: executes Python code and serves visualizations as web pages. Exposes a REST API and four browser-accessible pages.
 - **Browser**: displays visualizations and management interfaces.
 
@@ -262,6 +274,33 @@ The tool accepts:
 - **`description`**: one-sentence explanation
 - **`method`**: execution method: `"inline"` (default) or `"server"`
 - **`zoom`**: initial zoom level: 25, 50, 75, or 100
+
+### The `screenshot` Tool
+
+The `screenshot` tool lets the AI see how a visualization actually looks in the browser. When called:
+
+1. The AI passes the `snippet_id` returned by `show`
+2. A headless Chromium browser navigates to the snippet's `/view` page
+3. It waits for the content to mount and for Bokeh to finish painting
+4. A PNG image is captured and returned to the AI (not the user)
+
+```python
+screenshot(
+    snippet_id="abc123",
+    width=1200,
+    height=800,
+    full_page=False
+)
+```
+
+The tool accepts:
+
+- **`snippet_id`** (required): the ID of an already-rendered snippet from `show`
+- **`width`**: browser viewport width in pixels (default 1200)
+- **`height`**: browser viewport height in pixels (default 800)
+- **`full_page`**: if `True`, captures the full scrollable page instead of just the viewport
+
+The screenshot goes to the AI, not the user. The user already has the live interactive visualization. This tool exists so the model can answer visual questions ("which bar is tallest?", "what color is X?") from the actual rendered pixels rather than re-deriving answers from raw data.
 
 ### Why an Independent Panel Server?
 
