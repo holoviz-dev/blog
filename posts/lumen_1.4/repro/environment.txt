@@ -1,0 +1,13 @@
+# versions the post's code and charts were run with
+python 3.12
+lumen==1.4.0rc4.post1.dev6+g6b761ec87
+panel==1.9.4
+bokeh==3.9.2
+narwhals==2.27.1
+polars==2.0.0
+pandas==3.1.0
+duckdb==1.5.6
+geopandas==1.2.0
+xarray==2026.9.0
+vl-convert-python==1.9.0.post1
+# Lumen was main at 160f2979 (after #2235). Charts used the Claude Code provider; claude CLI 2.x.

@@ -1,0 +1,3 @@
+Run snippet_usage.py once and it prints the token counts and cost, for example:
+22 39 0.0
+(the token counts vary from call to call)
