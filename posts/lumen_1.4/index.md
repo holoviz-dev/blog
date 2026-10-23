@@ -13,9 +13,7 @@ image: "images/collage_1.4.png"
 
 [Lumen](https://lumen.holoviz.org/) is an open-source framework for **conversational data exploration and analysis**. You ask a question about your data, and an LLM proposes the SQL, the transformations and the chart. Every step stays visible, editable and re-runnable. Lumen is built on [Panel](https://panel.holoviz.org/) and the rest of the [HoloViz](https://holoviz.org) ecosystem, so the results are interactive tables, plots and dashboards. If you are new to it, the [Lumen 1.0 announcement](../lumen_1.0/index.md) explains the design.
 
-![A chat bubble with a robot avatar, joined by glowing lines to a world map, a line and bar chart, a grid heatmap and four database icons.](./images/pipeline.png)
-
-*One chat, many outputs: your question goes to your data sources and comes back as maps, charts and tables.*
+![One chat, many outputs: your question goes to your data sources and comes back as maps, charts and tables.](./images/pipeline.png){fig-alt="A chat bubble with a robot avatar, joined by glowing lines to a world map, a line and bar chart, a grid heatmap and four database icons."}
 
 ## New Release!
 
@@ -30,9 +28,9 @@ We are excited to announce the 1.4.0 release of Lumen! This release makes Lumen 
 
 Lumen 1.4 requires Python 3.11 or later, Panel 1.9 or later and Bokeh 3.9 or later.
 
-Many thanks to the contributors to this release: [@ghostiee-11](https://github.com/ghostiee-11), [@philippjfr](https://github.com/philippjfr), [@ahuang11](https://github.com/ahuang11), [@vignesh-chaturvedi](https://github.com/vignesh-chaturvedi), [@SajalDevX](https://github.com/SajalDevX), [@DevForge255](https://github.com/DevForge255), [@7487](https://github.com/7487), [@rimsha152007-dotcom](https://github.com/rimsha152007-dotcom), [@fly1d](https://github.com/fly1d), [@Vamshi1404](https://github.com/Vamshi1404), [@hoxbro](https://github.com/hoxbro), [@AmirF194](https://github.com/AmirF194), [@yiboban](https://github.com/yiboban), [@raashish1601](https://github.com/raashish1601), [@nightcityblade](https://github.com/nightcityblade), [@mayuriphad](https://github.com/mayuriphad), [@mahdibani](https://github.com/mahdibani), [@latent-9](https://github.com/latent-9), [@Zayn329](https://github.com/Zayn329), [@SuMayaBee](https://github.com/SuMayaBee), [@Mr-Neutr0n](https://github.com/Mr-Neutr0n), [@Coderambling](https://github.com/Coderambling), [@umi008](https://github.com/umi008).
+Many thanks to the contributors to this release: [@ghostiee-11](https://github.com/ghostiee-11), [@philippjfr](https://github.com/philippjfr), [@ahuang11](https://github.com/ahuang11), [@vignesh-chaturvedi](https://github.com/vignesh-chaturvedi), [@SajalDevX](https://github.com/SajalDevX), [@DevForge255](https://github.com/DevForge255), [@7487](https://github.com/7487), [@rimsha152007-dotcom](https://github.com/rimsha152007-dotcom), [@fly1d](https://github.com/fly1d), [@Vamshi1404](https://github.com/Vamshi1404), [@hoxbro](https://github.com/hoxbro), [@AmirF194](https://github.com/AmirF194), [@yiboban](https://github.com/yiboban), [@raashish1601](https://github.com/raashish1601), [@nightcityblade](https://github.com/nightcityblade), [@mayuriphad](https://github.com/mayuriphad), [@mahdibani](https://github.com/mahdibani), [@latent-9](https://github.com/latent-9), [@Zayn329](https://github.com/Zayn329), [@SuMayaBee](https://github.com/SuMayaBee), [@Mr-Neutr0n](https://github.com/Mr-Neutr0n), [@Coderambling](https://github.com/Coderambling), [@umi008](https://github.com/umi008), [@jadhavgaurav](https://github.com/jadhavgaurav).
 
-A special welcome to our new contributors: [@vignesh-chaturvedi](https://github.com/vignesh-chaturvedi), [@SajalDevX](https://github.com/SajalDevX), [@DevForge255](https://github.com/DevForge255), [@7487](https://github.com/7487), [@rimsha152007-dotcom](https://github.com/rimsha152007-dotcom), [@fly1d](https://github.com/fly1d), [@Vamshi1404](https://github.com/Vamshi1404), [@AmirF194](https://github.com/AmirF194), [@yiboban](https://github.com/yiboban), [@raashish1601](https://github.com/raashish1601), [@nightcityblade](https://github.com/nightcityblade), [@mayuriphad](https://github.com/mayuriphad), [@mahdibani](https://github.com/mahdibani), [@latent-9](https://github.com/latent-9), [@Zayn329](https://github.com/Zayn329), [@Mr-Neutr0n](https://github.com/Mr-Neutr0n), [@umi008](https://github.com/umi008).
+A special welcome to our new contributors: [@vignesh-chaturvedi](https://github.com/vignesh-chaturvedi), [@SajalDevX](https://github.com/SajalDevX), [@DevForge255](https://github.com/DevForge255), [@7487](https://github.com/7487), [@rimsha152007-dotcom](https://github.com/rimsha152007-dotcom), [@fly1d](https://github.com/fly1d), [@Vamshi1404](https://github.com/Vamshi1404), [@AmirF194](https://github.com/AmirF194), [@yiboban](https://github.com/yiboban), [@raashish1601](https://github.com/raashish1601), [@nightcityblade](https://github.com/nightcityblade), [@mayuriphad](https://github.com/mayuriphad), [@mahdibani](https://github.com/mahdibani), [@latent-9](https://github.com/latent-9), [@Zayn329](https://github.com/Zayn329), [@Mr-Neutr0n](https://github.com/Mr-Neutr0n), [@umi008](https://github.com/umi008), [@jadhavgaurav](https://github.com/jadhavgaurav).
 
 ## Run Lumen Without an API Key
 
@@ -78,10 +76,6 @@ Docs: https://lumen.holoviz.org/configuration/llm_providers/
 
 ## Maps and Geospatial Data
 
-![A chat bubble holding three bars, on a blue to teal gradient beside a world map with glowing points joined by thin arcs.](./images/network.png)
-
-*A table with geometry becomes a map.*
-
 A table that has a geometry column can now be drawn as a map directly. Start Lumen on a GeoJSON file, a WKT file or a zipped shapefile, and ask for the map:
 
 ```bash
@@ -90,11 +84,9 @@ lumen-ai serve countries.geojson --provider claude-code
 
 > Map each country's estimated population as a choropleth on a log colour scale using the Equal Earth projection, with a legend.
 
-![Lumen drawing a choropleth from the geometry column of a Natural Earth countries file. The chat is on the left, the Vega-Lite spec above and the map below on the right.](./images/lumen_ui_map.png)
+![A table with a geometry column becomes a choropleth: chat on the left, the Vega-Lite spec above and the map below.](./images/lumen_ui_map.png){fig-alt="Lumen drawing a choropleth from the geometry column of a Natural Earth countries file. The chat is on the left, the Vega-Lite spec above and the map below on the right."}
 
-The chart is a plain Vega-Lite spec, shown above the map. If something is off, edit the YAML or ask for the change. This is the world map the model drew from the table's own geometry, in a single pass:
-
-![A world map in the Equal Earth projection. Countries are shaded in blues on a log scale of estimated population, with China and India darkest.](./images/worldmap.png)
+The chart is a plain Vega-Lite spec, shown above the map. If something is off, edit the YAML or ask for the change.
 
 Around that feature, geospatial support got a round of fixes:
 
@@ -110,15 +102,27 @@ Maps are one case of a general ability: describe a chart and Lumen writes the SQ
 
 > For the ten most populous countries in 2005, draw a connected scatter plot of fertility against life expectancy from 1955 to 2005, with bubbles sized by population at each point and the country name at the 2005 end of each path.
 
-![A connected scatter plot. Each of ten countries is a coloured path from 1955 to 2005 through bubbles sized by population, running from high fertility and short life expectancy at the upper left to low fertility and long life expectancy at the lower right. Country names sit at the 2005 end of each path.](./images/gapminder.png)
+![Ten countries from 1955 to 2005: fertility falls as life expectancy rises, bubbles sized by population.](./images/gapminder.png){fig-alt="A connected scatter plot. Each of ten countries is a coloured path from 1955 to 2005 through bubbles sized by population, running from high fertility and short life expectancy at the upper left to low fertility and long life expectancy at the lower right. Country names sit at the 2005 end of each path."}
 
-A language model writes each chart, so a rerun gives a different one, and a first pass sometimes needs a follow-up. In this one, a few labels near the bottom right overlap. The specs and SQL behind both figures are in the `repro/` folder of this post.
+A language model writes each chart, so a rerun gives a different one, and a first pass sometimes needs a follow-up. In this one, a few labels near the bottom right overlap. The specs and SQL behind this figure are in the `repro/` folder of this post.
+
+Follow-ups work on the chart you already have. Here Lumen draws UK electricity per capita from fossil fuels, nuclear and renewables as a stacked area, then redraws it as a labelled line chart when asked to compare just fossil fuels and renewables:
+
+![A stacked area chart of UK electricity per capita from fossil fuels, nuclear and renewables.](./images/electricity_stacked.png){fig-alt="A Lumen chat and a stacked area chart in which fossil fuels shrink and renewables grow from 2003."}
+
+![The follow-up: the same data as a labelled line chart where renewables overtake fossil fuels.](./images/electricity_line.png){fig-alt="A Lumen chat with a labelled line chart of UK fossil fuel and renewable electricity per capita, the two lines crossing."}
+
+The Vega-Lite agent also got better at stacking and ordering: asked for Michael Phelps's Olympic medals, it draws a stacked bar by medal type ([#1992](https://github.com/holoviz/lumen/pull/1992)).
+
+![A stacked bar chart of Michael Phelps's Olympic medals by games and medal type.](./images/medals.png){fig-alt="A stacked bar chart with one bar per Olympic games, split into gold, silver and bronze medals."}
 
 ## Reports With a Story
 
 A Lumen report collects the tables and charts from your explorations. In 1.4 you can ask it to write the story around them. The **Annotate** button uses an LLM to write an overall summary at the top and a short note under each section. The narrative shows in the report and flows into the Notebook and HTML exports.
 
 A report can now also be exported as a Word document. The `.docx` carries the headings, the narrative, native tables and the charts as images, respects the section selection, and includes the story and notes ([#1924](https://github.com/holoviz/lumen/pull/1924)). The story's prose is editable with Panel's `TextEditor` ([#2017](https://github.com/holoviz/lumen/pull/2017)), so you can fix a sentence instead of regenerating the whole thing. The Word export needs `python-docx`, which Lumen now installs.
+
+![Lumen's AI-written story on a music streaming report, with the export menu open.](./images/report_story.png){fig-alt="A Lumen report titled Music Streaming Habits Report with an AI-written summary and sections, and the export menu listing Notebook, HTML and Word."}
 
 ## Answers You Can Check
 
@@ -266,6 +270,8 @@ The frame stays polars from the source to `pipeline.data`. Some things still con
 
 The planner got few-shot examples ([#2094](https://github.com/holoviz/lumen/pull/2094)), the validation agent stopped failing valid plans on stale context from earlier turns ([#2074](https://github.com/holoviz/lumen/pull/2074), [#2081](https://github.com/holoviz/lumen/pull/2081)), and `SQLAgent.revise()` recovers from unparsable SQL instead of crashing ([#2054](https://github.com/holoviz/lumen/pull/2054)). Prompts are shorter and cheaper, with tweaks that help small models ([#1986](https://github.com/holoviz/lumen/pull/1986), [#1989](https://github.com/holoviz/lumen/pull/1989)).
 
+Hover a derived column in a SQL result to see its expression and grouping ([#2124](https://github.com/holoviz/lumen/pull/2124)). Claude Code no longer runs in plan mode when Lumen drives it ([#2229](https://github.com/holoviz/lumen/pull/2229)), and Kilo falls back to JSON mode when its upstream rejects structured requests ([#2234](https://github.com/holoviz/lumen/pull/2234)).
+
 The theme toggle has a **Follow system** option ([#1970](https://github.com/holoviz/lumen/pull/1970)). The planner checklist, agent names and avatars, status icons and the navigation toggle were cleaned up, and the routing of `lumen serve <spec>.yaml` to the AI handler is fixed ([#2075](https://github.com/holoviz/lumen/pull/2075)).
 
 `gpt-5.6-luna` is the default OpenAI model ([#2007](https://github.com/holoviz/lumen/pull/2007)), the provider model lists were refreshed ([#2118](https://github.com/holoviz/lumen/pull/2118), [#2182](https://github.com/holoviz/lumen/pull/2182)), and Anthropic structured output works for modern Claude models ([#2196](https://github.com/holoviz/lumen/pull/2196)). `FunctionTool` can run synchronous functions in a thread with `run_in_thread` ([#2138](https://github.com/holoviz/lumen/pull/2138)).
@@ -291,6 +297,8 @@ The docs also got a truth pass: install and setup steps, CLI providers and flags
 * Fix Anthropic structured output for modern Claude models ([#2196](https://github.com/holoviz/lumen/pull/2196))
 * Run Claude Code CLI requests without its built-in tools, MCP servers or user settings, in a fresh directory ([#2214](https://github.com/holoviz/lumen/pull/2214))
 * Show which model answered in the chat message footer ([#2053](https://github.com/holoviz/lumen/pull/2053))
+* Run Claude Code CLI requests without plan mode ([#2229](https://github.com/holoviz/lumen/pull/2229))
+* Fall back to JSON mode when Kilo's upstream rejects structured requests ([#2234](https://github.com/holoviz/lumen/pull/2234))
 
 ### Agents, Tools & Observability
 
@@ -307,6 +315,8 @@ The docs also got a truth pass: install and setup steps, CLI providers and flags
 
 ### Validation & Reliability
 
+* Judge duplicate rows on whole rows, so the cleaning step no longer deduplicates records that only share the columns a query reads ([#2235](https://github.com/holoviz/lumen/pull/2235))
+* Skip the validation step for an empty plan ([#2236](https://github.com/holoviz/lumen/pull/2236))
 * Fix deterministic AI failures found by the evals ([#2103](https://github.com/holoviz/lumen/pull/2103))
 * ValidationAgent no longer fails valid plans on stale context, with a rule-based heuristic for previous keys ([#2074](https://github.com/holoviz/lumen/pull/2074), [#2081](https://github.com/holoviz/lumen/pull/2081), [#2065](https://github.com/holoviz/lumen/pull/2065))
 * Recover from unparsable SQL in `SQLAgent.revise()` instead of crashing ([#2054](https://github.com/holoviz/lumen/pull/2054))
@@ -330,6 +340,8 @@ The docs also got a truth pass: install and setup steps, CLI providers and flags
 * Skip `information_schema` when listing `SQLAlchemySource` tables ([#2142](https://github.com/holoviz/lumen/pull/2142))
 * Apply `Source.metadata` descriptions in `get_metadata` ([#2180](https://github.com/holoviz/lumen/pull/2180))
 * Keep source actions defined with postponed annotations ([#2141](https://github.com/holoviz/lumen/pull/2141))
+* Read table functions with keyword arguments, such as `read_csv(..., nullstr='NA')` ([#2233](https://github.com/holoviz/lumen/pull/2233))
+* Avoid passing `how` together with `thresh` in `DropNA` ([#2021](https://github.com/holoviz/lumen/pull/2021))
 * Fix three blockers for local and file-based sources, and handle non-default catalog indexes ([#1993](https://github.com/holoviz/lumen/pull/1993), [#2029](https://github.com/holoviz/lumen/pull/2029))
 
 ### Geospatial & Scientific Data
@@ -338,6 +350,7 @@ The docs also got a truth pass: install and setup steps, CLI providers and flags
 * Load GeoJSON uploads end to end and preserve GeoDataFrame CRS at DuckDB ingest ([#1996](https://github.com/holoviz/lumen/pull/1996), [#2077](https://github.com/holoviz/lumen/pull/2077))
 * Teach the DeckGL prompt `GeoJsonLayer` and data-driven colors, and serialize datetime columns in GeoJSON layers ([#1999](https://github.com/holoviz/lumen/pull/1999), [#1997](https://github.com/holoviz/lumen/pull/1997))
 * Feed the table to basemap point layers and fix blank choropleths for unregistered lookups ([#2151](https://github.com/holoviz/lumen/pull/2151), [#2001](https://github.com/holoviz/lumen/pull/2001))
+* Render geometry in Vega-Lite views, both from a table's own geometry and when a spec joins external boundaries ([#2232](https://github.com/holoviz/lumen/pull/2232))
 * Collapse cftime gridded dims on xarray-sql 0.6, and decline to grid a `to_dataset` result that is not a grid ([#2144](https://github.com/holoviz/lumen/pull/2144), [#2049](https://github.com/holoviz/lumen/pull/2049))
 
 ### Charts & Visualization
@@ -358,6 +371,8 @@ The docs also got a truth pass: install and setup steps, CLI providers and flags
 * Fix the Full data toggle overlap in explorations and let chat steps shrink with the column ([#2045](https://github.com/holoviz/lumen/pull/2045), [#2152](https://github.com/holoviz/lumen/pull/2152))
 * Fix `lumen serve <spec>.yaml` routing to the AI handler ([#2075](https://github.com/holoviz/lumen/pull/2075))
 * Correct the CLI version output and code execution ([#2166](https://github.com/holoviz/lumen/pull/2166))
+* Column-level lineage tooltips: hover a derived column in a SQL result to see its expression and grouping ([#2124](https://github.com/holoviz/lumen/pull/2124))
+* Fix `Filter` warning formatting and call the existing `_embed` instead of the undefined `_embed_actions` ([#2018](https://github.com/holoviz/lumen/pull/2018), [#2027](https://github.com/holoviz/lumen/pull/2027))
 * Keep each exploration's chat when switching explorations while a plan runs ([#2213](https://github.com/holoviz/lumen/pull/2213))
 * Center planner checklist status icons on the label's first line ([#2217](https://github.com/holoviz/lumen/pull/2217))
 * Keep the nav drawer toggle clear of chat avatars ([#2218](https://github.com/holoviz/lumen/pull/2218))
@@ -377,3 +392,4 @@ The docs also got a truth pass: install and setup steps, CLI providers and flags
 ### Documentation
 
 * A docs truth pass: install and setup steps, CLI providers and flags, model keys (Groq, Kilo), every agent and export format, geospatial files and GRIB, ChromaDB, missing API reference pages, cost-friendly example models, and fixed links ([#2158](https://github.com/holoviz/lumen/pull/2158), [#2160](https://github.com/holoviz/lumen/pull/2160), [#2162](https://github.com/holoviz/lumen/pull/2162), [#2164](https://github.com/holoviz/lumen/pull/2164), [#2168](https://github.com/holoviz/lumen/pull/2168), [#2170](https://github.com/holoviz/lumen/pull/2170), [#2172](https://github.com/holoviz/lumen/pull/2172), [#2176](https://github.com/holoviz/lumen/pull/2176), [#2178](https://github.com/holoviz/lumen/pull/2178), [#2186](https://github.com/holoviz/lumen/pull/2186), [#2191](https://github.com/holoviz/lumen/pull/2191), [#2203](https://github.com/holoviz/lumen/pull/2203), [#2037](https://github.com/holoviz/lumen/pull/2037))
+* Document table discovery in the embeddings guide, update the ingestion controls docs and add the spec tutorial to the navigation ([#2019](https://github.com/holoviz/lumen/pull/2019), [#2022](https://github.com/holoviz/lumen/pull/2022), [#2030](https://github.com/holoviz/lumen/pull/2030))
