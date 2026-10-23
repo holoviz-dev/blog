@@ -1,0 +1,14 @@
+name: panel-blog-1.10
+channels:
+  - pyviz/label/dev
+  - conda-forge
+dependencies:
+  - python=3.13
+  - panel=1.10.0rc0
+  - panel-material-ui=0.16.2
+  - bokeh=3.10.0
+  - polars
+  - pandas
+  - numpy
+  - ipykernel
+  - nbconvert
