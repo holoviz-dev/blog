@@ -13,6 +13,10 @@ image: "images/collage_1.4.png"
 
 [Lumen](https://lumen.holoviz.org/) is an open-source framework for **conversational data exploration and analysis**. You ask a question about your data, and an LLM proposes the SQL, the transformations and the chart. Every step stays visible, editable and re-runnable. Lumen is built on [Panel](https://panel.holoviz.org/) and the rest of the [HoloViz](https://holoviz.org) ecosystem, so the results are interactive tables, plots and dashboards. If you are new to it, the [Lumen 1.0 announcement](../lumen_1.0/index.md) explains the design.
 
+![A chat bubble with a robot avatar, joined by glowing lines to a world map, a line and bar chart, a grid heatmap and four database icons.](./images/pipeline.png)
+
+*One chat, many outputs: your question goes to your data sources and comes back as maps, charts and tables.*
+
 ## New Release!
 
 We are excited to announce the 1.4.0 release of Lumen! This release makes Lumen easier to start and cheaper to run well. You no longer need an API key to try it, answers rest on better table context, and a report can write its own story. Here's a high-level overview of the highlights:
@@ -73,6 +77,10 @@ Docs: https://lumen.holoviz.org/configuration/llm_providers/
 ```
 
 ## Maps and Geospatial Data
+
+![A chat bubble holding three bars, on a blue to teal gradient beside a world map with glowing points joined by thin arcs.](./images/network.png)
+
+*A table with geometry becomes a map.*
 
 A table that has a geometry column can now be drawn as a map directly. Start Lumen on a GeoJSON file, a WKT file or a zipped shapefile, and ask for the map:
 
