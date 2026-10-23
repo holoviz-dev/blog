@@ -88,6 +88,10 @@ lumen-ai serve countries.geojson --provider claude-code
 
 The chart is a plain Vega-Lite spec, shown above the map. If something is off, edit the YAML or ask for the change.
 
+Maps are interactive: hover a state to see its values, and the view follows the light or dark theme.
+
+![A choropleth of average PM2.5 by US state in dark mode, with a tooltip on Texas.](./images/dark_map.png){fig-alt="Lumen's dark theme showing the Vega-Lite spec above a US choropleth of average PM2.5 by state, with a tooltip on Texas showing 10.92."}
+
 Around that feature, geospatial support got a round of fixes:
 
 - GeoJSON uploads load end to end ([#1996](https://github.com/holoviz/lumen/pull/1996)), and the coordinate reference system of a GeoDataFrame survives ingest into DuckDB ([#2077](https://github.com/holoviz/lumen/pull/2077)).
@@ -115,6 +119,10 @@ Follow-ups work on the chart you already have. Here Lumen draws UK electricity p
 The Vega-Lite agent also got better at stacking and ordering: asked for Michael Phelps's Olympic medals, it draws a stacked bar by medal type ([#1992](https://github.com/holoviz/lumen/pull/1992)).
 
 ![A stacked bar chart of Michael Phelps's Olympic medals by games and medal type.](./images/medals.png){fig-alt="A stacked bar chart with one bar per Olympic games, split into gold, silver and bronze medals."}
+
+Two more prompts on data-centre electricity demand: a slope chart that highlights the United States in red, and a ranking bar chart that labels each bar with its value.
+
+![A slope chart and a ranking bar chart of data-centre share of electricity demand for the United States, China and the world.](./images/slope_ranking.png){fig-alt="Left, a slope chart from 2020 to 2025 with the United States line in red rising to 4.9 and China and the world in grey and light blue. Right, a bar chart ranking the United States at 4.94 above the world at 1.53 and China at 1.11."}
 
 ## Reports With a Story
 
