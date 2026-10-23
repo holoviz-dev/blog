@@ -110,11 +110,9 @@ Maps are one case of a general ability: describe a chart and Lumen writes the SQ
 
 A language model writes each chart, so a rerun gives a different one, and a first pass sometimes needs a follow-up. In this one, a few labels near the bottom right overlap. The specs and SQL behind this figure are in the `repro/` folder of this post.
 
-Follow-ups work on the chart you already have. Here Lumen draws UK electricity per capita from fossil fuels, nuclear and renewables as a stacked area, then redraws it as a labelled line chart when asked to compare just fossil fuels and renewables:
+Follow-ups work on the chart you already have. Here Lumen draws UK electricity per capita from fossil fuels, nuclear and renewables as a stacked area, and a follow-up can redraw it, for example as a line chart comparing just fossil fuels and renewables:
 
 ![A stacked area chart of UK electricity per capita from fossil fuels, nuclear and renewables.](./images/electricity_stacked.png){fig-alt="A Lumen chat and a stacked area chart in which fossil fuels shrink and renewables grow from 2003."}
-
-![The follow-up: the same data as a labelled line chart where renewables overtake fossil fuels.](./images/electricity_line.png){fig-alt="A Lumen chat with a labelled line chart of UK fossil fuel and renewable electricity per capita, the two lines crossing."}
 
 The Vega-Lite agent also got better at stacking and ordering: asked for Michael Phelps's Olympic medals, it draws a stacked bar by medal type ([#1992](https://github.com/holoviz/lumen/pull/1992)).
 
