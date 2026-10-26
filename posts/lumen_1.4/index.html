@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aman Kumar">
+<meta name="dcterms.date" content="2026-10-27">
+<meta name="description" content="Release announcement for Lumen 1.4: run it without an API key, maps from geometry columns, reports that write their own story, better table context, usage tracking and polars support.">
+
+<title>Lumen 1.4.0 Release – HoloViz Blog</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-11098932bb39e8ccbcedcb139d3d0c2d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d1558253e85eb5dd270a48b5d30a3924.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+    window.goatcounter = {
+        path: function(p) { return location.host + p }
+    }
+</script>
+<script data-goatcounter="https://holoviz.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+
+
+<link rel="stylesheet" href="../../custom.css">
+<meta property="og:title" content="Lumen 1.4.0 Release – HoloViz Blog">
+<meta property="og:description" content="Release announcement for Lumen 1.4: run it without an API key, maps from geometry columns, reports that write their own story, better table context, usage tracking and polars support.">
+<meta property="og:image" content="https://blog.holoviz.org/posts/lumen_1.4/images/collage_1.4.png">
+<meta property="og:site_name" content="HoloViz Blog">
+<meta property="og:image:height" content="1470">
+<meta property="og:image:width" content="2400">
+<meta name="twitter:title" content="Lumen 1.4.0 Release – HoloViz Blog">
+<meta name="twitter:description" content="Release announcement for Lumen 1.4: run it without an API key, maps from geometry columns, reports that write their own story, better table context, usage tracking and polars support.">
+<meta name="twitter:image" content="https://blog.holoviz.org/posts/lumen_1.4/images/collage_1.4.png">
+<meta name="twitter:site" content="@HoloViz_org">
+<meta name="twitter:image-height" content="1470">
+<meta name="twitter:image-width" content="2400">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="https://holoviz.org" class="navbar-brand navbar-brand-logo">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo light-content">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo dark-content">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-learn" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Learn</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-learn">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/presentations/index.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/background.html">
+ <span class="dropdown-text">Background</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/FAQ.html">
+ <span class="dropdown-text">FAQ</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/tutorial/index.html"> 
+<span class="menu-text">Tutorial</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://examples.holoviz.org/"> 
+<span class="menu-text">Examples</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/community.html"> 
+<span class="menu-text">Community</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/contribute.html"> 
+<span class="menu-text">Contribute</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-about">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/index.html">
+ <span class="dropdown-text">About Us</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/governance/index.html">
+ <span class="dropdown-text">Governance</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/heps/index.html">
+ <span class="dropdown-text">HEPs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/roadmap.html">
+ <span class="dropdown-text">Roadmap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/funding.html">
+ <span class="dropdown-text">Funding</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/holoviz" title="HoloViz Github" class="quarto-navigation-tool px-1" aria-label="HoloViz Github"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/holoviz_org" title="HoloViz Twitter" class="quarto-navigation-tool px-1" aria-label="HoloViz Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://discourse.holoviz.org" title="HoloViz Forum" class="quarto-navigation-tool px-1" aria-label="HoloViz Forum"><i class="bi bi-chat-text"></i></a>
+    <a href="https://discord.gg/UXdtYyGVQX" title="HoloViz Discord" class="quarto-navigation-tool px-1" aria-label="HoloViz Discord"><i class="bi bi-discord"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-lumen" id="toc-what-is-lumen" class="nav-link active" data-scroll-target="#what-is-lumen">What is Lumen?</a></li>
+  <li><a href="#new-release" id="toc-new-release" class="nav-link" data-scroll-target="#new-release">New Release!</a></li>
+  <li><a href="#run-lumen-without-an-api-key" id="toc-run-lumen-without-an-api-key" class="nav-link" data-scroll-target="#run-lumen-without-an-api-key">Run Lumen Without an API Key</a>
+  <ul class="collapse">
+  <li><a href="#coding-clis" id="toc-coding-clis" class="nav-link" data-scroll-target="#coding-clis">Coding CLIs</a></li>
+  <li><a href="#free-models-with-kilo" id="toc-free-models-with-kilo" class="nav-link" data-scroll-target="#free-models-with-kilo">Free models with Kilo</a></li>
+  </ul></li>
+  <li><a href="#maps-and-geospatial-data" id="toc-maps-and-geospatial-data" class="nav-link" data-scroll-target="#maps-and-geospatial-data">Maps and Geospatial Data</a></li>
+  <li><a href="#charts-from-a-sentence" id="toc-charts-from-a-sentence" class="nav-link" data-scroll-target="#charts-from-a-sentence">Charts From a Sentence</a></li>
+  <li><a href="#reports-with-a-story" id="toc-reports-with-a-story" class="nav-link" data-scroll-target="#reports-with-a-story">Reports With a Story</a></li>
+  <li><a href="#answers-you-can-check" id="toc-answers-you-can-check" class="nav-link" data-scroll-target="#answers-you-can-check">Answers You Can Check</a>
+  <ul class="collapse">
+  <li><a href="#a-compact-exact-view-of-your-tables" id="toc-a-compact-exact-view-of-your-tables" class="nav-link" data-scroll-target="#a-compact-exact-view-of-your-tables">A compact, exact view of your tables</a></li>
+  <li><a href="#tool-errors-go-back-to-the-model" id="toc-tool-errors-go-back-to-the-model" class="nav-link" data-scroll-target="#tool-errors-go-back-to-the-model">Tool errors go back to the model</a></li>
+  <li><a href="#data-quality-checks-on-every-result" id="toc-data-quality-checks-on-every-result" class="nav-link" data-scroll-target="#data-quality-checks-on-every-result">Data-quality checks on every result</a></li>
+  </ul></li>
+  <li><a href="#usage-and-cost-tracking" id="toc-usage-and-cost-tracking" class="nav-link" data-scroll-target="#usage-and-cost-tracking">Usage and Cost Tracking</a></li>
+  <li><a href="#polars-and-pyarrow" id="toc-polars-and-pyarrow" class="nav-link" data-scroll-target="#polars-and-pyarrow">Polars and PyArrow</a></li>
+  <li><a href="#other-highlights" id="toc-other-highlights" class="nav-link" data-scroll-target="#other-highlights">Other Highlights</a></li>
+  <li><a href="#deprecations-and-removals" id="toc-deprecations-and-removals" class="nav-link" data-scroll-target="#deprecations-and-removals">Deprecations and Removals</a></li>
+  <li><a href="#changelog" id="toc-changelog" class="nav-link" data-scroll-target="#changelog">Changelog</a>
+  <ul class="collapse">
+  <li><a href="#llm-providers-models" id="toc-llm-providers-models" class="nav-link" data-scroll-target="#llm-providers-models">LLM Providers &amp; Models</a></li>
+  <li><a href="#agents-tools-observability" id="toc-agents-tools-observability" class="nav-link" data-scroll-target="#agents-tools-observability">Agents, Tools &amp; Observability</a></li>
+  <li><a href="#validation-reliability" id="toc-validation-reliability" class="nav-link" data-scroll-target="#validation-reliability">Validation &amp; Reliability</a></li>
+  <li><a href="#reports" id="toc-reports" class="nav-link" data-scroll-target="#reports">Reports</a></li>
+  <li><a href="#data-sources-performance" id="toc-data-sources-performance" class="nav-link" data-scroll-target="#data-sources-performance">Data Sources &amp; Performance</a></li>
+  <li><a href="#geospatial-scientific-data" id="toc-geospatial-scientific-data" class="nav-link" data-scroll-target="#geospatial-scientific-data">Geospatial &amp; Scientific Data</a></li>
+  <li><a href="#charts-visualization" id="toc-charts-visualization" class="nav-link" data-scroll-target="#charts-visualization">Charts &amp; Visualization</a></li>
+  <li><a href="#ux-cli" id="toc-ux-cli" class="nav-link" data-scroll-target="#ux-cli">UX &amp; CLI</a></li>
+  <li><a href="#deprecations" id="toc-deprecations" class="nav-link" data-scroll-target="#deprecations">Deprecations</a></li>
+  <li><a href="#dependencies-compatibility" id="toc-dependencies-compatibility" class="nav-link" data-scroll-target="#dependencies-compatibility">Dependencies &amp; Compatibility</a></li>
+  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/holoviz-dev/blog/edit/main/posts/lumen_1.4/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lumen 1.4.0 Release</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">release</div>
+    <div class="quarto-category">lumen</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Release announcement for Lumen 1.4: run it without an API key, maps from geometry columns, reports that write their own story, better table context, usage tracking and polars support.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Aman Kumar </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 27, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><img src="./images/collage_1.4.png" width="100%"></p>
+<section id="what-is-lumen" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-lumen">What is Lumen?</h2>
+<p><a href="https://lumen.holoviz.org/">Lumen</a> is an open-source framework for <strong>conversational data exploration and analysis</strong>. You ask a question about your data, and an LLM proposes the SQL, the transformations and the chart. Every step stays visible, editable and re-runnable. Lumen is built on <a href="https://panel.holoviz.org/">Panel</a> and the rest of the <a href="https://holoviz.org">HoloViz</a> ecosystem, so the results are interactive tables, plots and dashboards. If you are new to it, the <a href="../../posts/lumen_1.0/index.html">Lumen 1.0 announcement</a> explains the design.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="./images/pipeline.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="One chat, many outputs: your question goes to your data sources and comes back as maps, charts and tables."><img src="./images/pipeline.png" class="img-fluid figure-img" alt="A chat bubble with a robot avatar, joined by glowing lines to a world map, a line and bar chart, a grid heatmap and four data-source icons: a database, a cloud, a table and a file."></a></p>
+<figcaption>One chat, many outputs: your question goes to your data sources and comes back as maps, charts and tables.</figcaption>
+</figure>
+</div>
+</section>
+<section id="new-release" class="level2">
+<h2 class="anchored" data-anchor-id="new-release">New Release!</h2>
+<p>We are excited to announce the 1.4.0 release of Lumen! This release makes Lumen easier to start and cheaper to run well. You no longer need an API key to try it, answers rest on better table context, and a report can write its own story. Here’s a high-level overview of the highlights:</p>
+<ul>
+<li><a href="#run-lumen-without-an-api-key"><strong>Run it without an API key</strong></a>: <code>lumen-ai serve</code> works with the Claude Code, Codex and GitHub Copilot CLIs you are already signed in to, with Kilo’s free models, or with a local Ollama. With nothing set up, it tells you which of these to try.</li>
+<li><a href="#maps-and-geospatial-data"><strong>Maps from geometry columns</strong></a>: a table’s own geometry column now draws as a choropleth, and GeoJSON files load end to end.</li>
+<li><a href="#reports-with-a-story"><strong>Reports with a story</strong></a>: an Annotate button writes a summary and a note under each section, and a report exports to Word.</li>
+<li><a href="#answers-you-can-check"><strong>Answers you can check</strong></a>: agents get a compact, exact profile of each table, tool errors go back to the model instead of ending the attempt, and every SQL result is checked for data-quality problems.</li>
+<li><a href="#usage-and-cost-tracking"><strong>Usage and cost tracking</strong></a>: see tokens and dollars per call, and trace every model and tool call.</li>
+<li><a href="#polars-and-pyarrow"><strong>Polars and PyArrow</strong></a>: sources can return polars or pyarrow frames, and filters and most transforms run on them natively.</li>
+</ul>
+<p>Lumen 1.4 requires Python 3.11 or later, Panel 1.9 or later and Bokeh 3.9 or later.</p>
+<p>Many thanks to the contributors to this release: <a href="https://github.com/ghostiee-11"><span class="citation" data-cites="ghostiee-11">@ghostiee-11</span></a>, <a href="https://github.com/philippjfr"><span class="citation" data-cites="philippjfr">@philippjfr</span></a>, <a href="https://github.com/ahuang11"><span class="citation" data-cites="ahuang11">@ahuang11</span></a>, <a href="https://github.com/vignesh-chaturvedi"><span class="citation" data-cites="vignesh-chaturvedi">@vignesh-chaturvedi</span></a>, <a href="https://github.com/SajalDevX"><span class="citation" data-cites="SajalDevX">@SajalDevX</span></a>, <a href="https://github.com/DevForge255"><span class="citation" data-cites="DevForge255">@DevForge255</span></a>, <a href="https://github.com/7487"><span class="citation" data-cites="7487">@7487</span></a>, <a href="https://github.com/rimsha152007-dotcom"><span class="citation" data-cites="rimsha152007-dotcom">@rimsha152007-dotcom</span></a>, <a href="https://github.com/fly1d"><span class="citation" data-cites="fly1d">@fly1d</span></a>, <a href="https://github.com/Vamshi1404"><span class="citation" data-cites="Vamshi1404">@Vamshi1404</span></a>, <a href="https://github.com/hoxbro"><span class="citation" data-cites="hoxbro">@hoxbro</span></a>, <a href="https://github.com/AmirF194"><span class="citation" data-cites="AmirF194">@AmirF194</span></a>, <a href="https://github.com/yiboban"><span class="citation" data-cites="yiboban">@yiboban</span></a>, <a href="https://github.com/raashish1601"><span class="citation" data-cites="raashish1601">@raashish1601</span></a>, <a href="https://github.com/nightcityblade"><span class="citation" data-cites="nightcityblade">@nightcityblade</span></a>, <a href="https://github.com/mayuriphad"><span class="citation" data-cites="mayuriphad">@mayuriphad</span></a>, <a href="https://github.com/mahdibani"><span class="citation" data-cites="mahdibani">@mahdibani</span></a>, <a href="https://github.com/latent-9"><span class="citation" data-cites="latent-9">@latent-9</span></a>, <a href="https://github.com/Zayn329"><span class="citation" data-cites="Zayn329">@Zayn329</span></a>, <a href="https://github.com/SuMayaBee"><span class="citation" data-cites="SuMayaBee">@SuMayaBee</span></a>, <a href="https://github.com/Mr-Neutr0n"><span class="citation" data-cites="Mr-Neutr0n">@Mr-Neutr0n</span></a>, <a href="https://github.com/Coderambling"><span class="citation" data-cites="Coderambling">@Coderambling</span></a>, <a href="https://github.com/umi008"><span class="citation" data-cites="umi008">@umi008</span></a>, <a href="https://github.com/jadhavgaurav"><span class="citation" data-cites="jadhavgaurav">@jadhavgaurav</span></a>.</p>
+<p>A special welcome to our new contributors: <a href="https://github.com/vignesh-chaturvedi"><span class="citation" data-cites="vignesh-chaturvedi">@vignesh-chaturvedi</span></a>, <a href="https://github.com/SajalDevX"><span class="citation" data-cites="SajalDevX">@SajalDevX</span></a>, <a href="https://github.com/DevForge255"><span class="citation" data-cites="DevForge255">@DevForge255</span></a>, <a href="https://github.com/7487"><span class="citation" data-cites="7487">@7487</span></a>, <a href="https://github.com/rimsha152007-dotcom"><span class="citation" data-cites="rimsha152007-dotcom">@rimsha152007-dotcom</span></a>, <a href="https://github.com/fly1d"><span class="citation" data-cites="fly1d">@fly1d</span></a>, <a href="https://github.com/Vamshi1404"><span class="citation" data-cites="Vamshi1404">@Vamshi1404</span></a>, <a href="https://github.com/AmirF194"><span class="citation" data-cites="AmirF194">@AmirF194</span></a>, <a href="https://github.com/yiboban"><span class="citation" data-cites="yiboban">@yiboban</span></a>, <a href="https://github.com/raashish1601"><span class="citation" data-cites="raashish1601">@raashish1601</span></a>, <a href="https://github.com/nightcityblade"><span class="citation" data-cites="nightcityblade">@nightcityblade</span></a>, <a href="https://github.com/mayuriphad"><span class="citation" data-cites="mayuriphad">@mayuriphad</span></a>, <a href="https://github.com/mahdibani"><span class="citation" data-cites="mahdibani">@mahdibani</span></a>, <a href="https://github.com/latent-9"><span class="citation" data-cites="latent-9">@latent-9</span></a>, <a href="https://github.com/Zayn329"><span class="citation" data-cites="Zayn329">@Zayn329</span></a>, <a href="https://github.com/Mr-Neutr0n"><span class="citation" data-cites="Mr-Neutr0n">@Mr-Neutr0n</span></a>, <a href="https://github.com/umi008"><span class="citation" data-cites="umi008">@umi008</span></a>, <a href="https://github.com/jadhavgaurav"><span class="citation" data-cites="jadhavgaurav">@jadhavgaurav</span></a>.</p>
+</section>
+<section id="run-lumen-without-an-api-key" class="level2">
+<h2 class="anchored" data-anchor-id="run-lumen-without-an-api-key">Run Lumen Without an API Key</h2>
+<p>Without an API key, <code>lumen-ai serve</code> used to start against a provider that was not there. In 1.4 there are four ways to get going without one.</p>
+<section id="coding-clis" class="level3">
+<h3 class="anchored" data-anchor-id="coding-clis">Coding CLIs</h3>
+<p>If you are signed in to Claude Code, Codex or the GitHub Copilot CLI, Lumen can use it as its LLM:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lumen-ai</span> serve penguins.csv <span class="at">--provider</span> claude-code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The other values are <code>codex-cli</code> and <code>copilot-cli</code>, and <code>antigravity-cli</code> is available too. The Claude Code and Copilot providers run the CLI with its own tools switched off and in an empty temporary directory, so it answers Lumen’s prompts without reading the folder you launched from.</p>
+<p>One limit: Lumen’s own tools are not forwarded to these CLIs. An action that needs the model to call a tool, such as fetching a URL from the chat, cannot run, so pass your data on the command line.</p>
+</section>
+<section id="free-models-with-kilo" class="level3">
+<h3 class="anchored" data-anchor-id="free-models-with-kilo">Free models with Kilo</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lumen-ai</span> serve penguins.csv <span class="at">--provider</span> kilo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Kilo’s free tier needs no account. It is a shared service, so expect it to be slow and to have limits. In our tests a question that ended in a chart took five to six minutes, and after roughly 40 minutes of steady use it answered with a 429 that points to a free sign-up. The free router also changes which model it uses over time, and some of those models reject the structured requests the planner makes. When Kilo answers with an upstream error, Lumen now falls back to asking for JSON in plain text and keeps doing that for the session.</p>
+<p>For a local model, Lumen reads <code>OLLAMA_HOST</code>, and the local providers now default to a 9B model, which you can fetch with <code>ollama pull qwen3.5:9b</code>.</p>
+<p>If nothing is set up, Lumen no longer guesses. It picks a provider only when its API key is set, and otherwise prints what would work on your machine:</p>
+<pre class="text"><code>ERROR: No LLM provider found: no API key is set.
+Pick one of these to get started:
+
+- Free models, no signup: --provider kilo
+- Use a coding CLI you are signed in to: --provider claude-code
+- Sign in to one of these coding CLIs first: --provider copilot-cli, --provider antigravity-cli
+- Set an API key, e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY or GEMINI_API_KEY
+- Use an OpenAI-compatible server: --provider openai --provider-endpoint URL
+- Ollama is running with no models: `ollama pull qwen3.5:9b`
+
+Docs: https://lumen.holoviz.org/configuration/llm_providers/</code></pre>
+</section>
+</section>
+<section id="maps-and-geospatial-data" class="level2">
+<h2 class="anchored" data-anchor-id="maps-and-geospatial-data">Maps and Geospatial Data</h2>
+<p>A table that has a geometry column can now be drawn as a map directly. Start Lumen on a GeoJSON file, a WKT file or a zipped shapefile, and ask for the map:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lumen-ai</span> serve countries.geojson <span class="at">--provider</span> claude-code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>Map each country’s estimated population as a choropleth on a log colour scale using the Equal Earth projection, with a legend.</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="./images/lumen_ui_map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="A table with a geometry column becomes a choropleth: chat on the left, the Vega-Lite spec above and the map below."><img src="./images/lumen_ui_map.png" class="img-fluid figure-img" alt="Lumen drawing a choropleth from the geometry column of a Natural Earth countries file. The chat is on the left, the Vega-Lite spec above and the map below on the right."></a></p>
+<figcaption>A table with a geometry column becomes a choropleth: chat on the left, the Vega-Lite spec above and the map below.</figcaption>
+</figure>
+</div>
+<p>The chart is a plain Vega-Lite spec, shown above the map. If something is off, edit the YAML or ask for the change.</p>
+<p>Maps are interactive: hover a state to see its values, and the view follows the light or dark theme.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="./images/dark_map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="A choropleth of average PM2.5 by US state in dark mode, with a tooltip on Texas."><img src="./images/dark_map.png" class="img-fluid figure-img" alt="Lumen's dark theme showing the Vega-Lite spec above a US choropleth of average PM2.5 by state, with a tooltip on Texas showing 9.9."></a></p>
+<figcaption>A choropleth of average PM2.5 by US state in dark mode, with a tooltip on Texas.</figcaption>
+</figure>
+</div>
+<p>Around that feature, geospatial support got a round of fixes:</p>
+<ul>
+<li>GeoJSON uploads load end to end (<a href="https://github.com/holoviz/lumen/pull/1996">#1996</a>), and the coordinate reference system of a GeoDataFrame survives ingest into DuckDB (<a href="https://github.com/holoviz/lumen/pull/2077">#2077</a>).</li>
+<li>A choropleth whose lookup named an unregistered dataset no longer renders blank (<a href="https://github.com/holoviz/lumen/pull/2001">#2001</a>), and point layers on a basemap are fed the table (<a href="https://github.com/holoviz/lumen/pull/2151">#2151</a>).</li>
+<li>The DeckGL prompt knows <code>GeoJsonLayer</code> and data-driven colours (<a href="https://github.com/holoviz/lumen/pull/1999">#1999</a>), and datetime columns in GeoJSON layers serialize (<a href="https://github.com/holoviz/lumen/pull/1997">#1997</a>).</li>
+<li>Geometry now renders in Vega-Lite views, both from a table’s own geometry and when a spec joins external boundaries (<a href="https://github.com/holoviz/lumen/pull/2232">#2232</a>).</li>
+<li>Gridded data handles cftime dimensions on xarray-sql 0.6, and a <code>to_dataset</code> result that is not a grid is no longer gridded (<a href="https://github.com/holoviz/lumen/pull/2144">#2144</a>, <a href="https://github.com/holoviz/lumen/pull/2049">#2049</a>).</li>
+</ul>
+</section>
+<section id="charts-from-a-sentence" class="level2">
+<h2 class="anchored" data-anchor-id="charts-from-a-sentence">Charts From a Sentence</h2>
+<p>Maps are one case of a general ability: describe a chart and Lumen writes the SQL and the spec. Here is a prompt with several moving parts, run on the Gapminder data:</p>
+<blockquote class="blockquote">
+<p>For the ten most populous countries in 2005, draw a connected scatter plot of fertility against life expectancy from 1955 to 2005, with bubbles sized by population at each point and the country name at the 2005 end of each path.</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="./images/gapminder.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Ten countries from 1955 to 2005: fertility falls as life expectancy rises, bubbles sized by population."><img src="./images/gapminder.png" class="img-fluid figure-img" alt="A connected scatter plot. Each of ten countries is a coloured path from 1955 to 2005 through bubbles sized by population, running from high fertility and short life expectancy at the upper left to low fertility and long life expectancy at the lower right. Country names sit at the 2005 end of each path."></a></p>
+<figcaption>Ten countries from 1955 to 2005: fertility falls as life expectancy rises, bubbles sized by population.</figcaption>
+</figure>
+</div>
+<p>A language model writes each chart, so a rerun gives a different one, and a first pass sometimes needs a follow-up. In this one, a few labels near the bottom right overlap. The specs and SQL behind this figure are in the <code>repro/</code> folder of this post.</p>
+<p>Follow-ups work on the chart you already have. Here Lumen draws UK electricity per capita from fossil fuels, nuclear and renewables as a stacked area, and a follow-up can redraw it, for example as a line chart comparing just fossil fuels and renewables:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="./images/electricity_stacked.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="A stacked area chart of UK electricity per capita from fossil fuels, nuclear and renewables."><img src="./images/electricity_stacked.png" class="img-fluid figure-img" alt="A Lumen chat and a stacked area chart in which fossil fuels shrink and renewables grow from 2003."></a></p>
+<figcaption>A stacked area chart of UK electricity per capita from fossil fuels, nuclear and renewables.</figcaption>
+</figure>
+</div>
+<p>The Vega-Lite agent also got better at stacking and ordering: asked for the US athletes with the most Olympic medals, it draws a stacked bar by medal type (<a href="https://github.com/holoviz/lumen/pull/1992">#1992</a>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="./images/medals.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="A stacked bar chart of the ten US athletes with the most Olympic medals, led by Michael Phelps, split by medal type."><img src="./images/medals.png" class="img-fluid figure-img" alt="A horizontal stacked bar chart of ten US Olympians, with Michael Phelps on top at 16 medals, 13 of them gold, and each bar split into gold, silver and bronze."></a></p>
+<figcaption>A stacked bar chart of the ten US athletes with the most Olympic medals, led by Michael Phelps, split by medal type.</figcaption>
+</figure>
+</div>
+<p>Two more prompts on data-centre electricity demand: a slope chart that highlights the United States in red, and a ranking bar chart that labels each bar with its value.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="./images/slope_ranking.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="A slope chart and a ranking bar chart of data-centre share of electricity demand for the United States, China and the world."><img src="./images/slope_ranking.png" class="img-fluid figure-img" alt="Left, a slope chart from 2020 to 2025 with the United States line in red rising from about 2.6 to 4.9 and the World and China lines in two shades of grey. Right, a bar chart ranking the United States at 4.94 in red above the World at 1.53 and China at 1.11."></a></p>
+<figcaption>A slope chart and a ranking bar chart of data-centre share of electricity demand for the United States, China and the world.</figcaption>
+</figure>
+</div>
+</section>
+<section id="reports-with-a-story" class="level2">
+<h2 class="anchored" data-anchor-id="reports-with-a-story">Reports With a Story</h2>
+<p>A Lumen report collects the tables and charts from your explorations. In 1.4 you can ask it to write the story around them. The <strong>Annotate</strong> button uses an LLM to write an overall summary at the top and a short note under each section. The narrative shows in the report and flows into the Notebook and HTML exports.</p>
+<p>A report can now also be exported as a Word document. The <code>.docx</code> carries the headings, the narrative, native tables and the charts as images, respects the section selection, and includes the story and notes (<a href="https://github.com/holoviz/lumen/pull/1924">#1924</a>). The story’s prose is editable with Panel’s <code>TextEditor</code> (<a href="https://github.com/holoviz/lumen/pull/2017">#2017</a>), so you can fix a sentence instead of regenerating the whole thing. The Word export needs <code>python-docx</code>, which Lumen now installs.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="./images/report_story.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Lumen’s AI-written story on a report about the Palmer penguins, with the export menu open."><img src="./images/report_story.png" class="img-fluid figure-img" alt="Lumen's dark theme on the Story tab of a report titled Penguins Across Islands and Measurements, with an AI-written introduction above a dataset summary table, and the export menu listing Notebook, HTML and Word."></a></p>
+<figcaption>Lumen’s AI-written story on a report about the Palmer penguins, with the export menu open.</figcaption>
+</figure>
+</div>
+</section>
+<section id="answers-you-can-check" class="level2">
+<h2 class="anchored" data-anchor-id="answers-you-can-check">Answers You Can Check</h2>
+<p>Most of the engine work in this release is about giving the model better facts and catching mistakes cheaply.</p>
+<section id="a-compact-exact-view-of-your-tables" class="level3">
+<h3 class="anchored" data-anchor-id="a-compact-exact-view-of-your-tables">A compact, exact view of your tables</h3>
+<p>The table context agents see used to be built from a shuffled 100-row sample with no SQL types or keys. It could list wrong ranges and incomplete value lists, it dropped NULLs, and it changed on every run, which defeated prompt caching. It is now profiled with the cheapest accurate strategy for each source: engine metadata first, one exact pass for tables up to a million rows, and a seeded sample above that (<a href="https://github.com/holoviz/lumen/pull/2105">#2105</a>). This is what the model sees for the penguins data:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> asyncio</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lumen.ai.schemas <span class="im">import</span> get_metaset</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lumen.sources.duckdb <span class="im">import</span> DuckDBSource</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://datasets.holoviz.org/penguins/v1/penguins.csv"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> DuckDBSource(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    uri<span class="op">=</span><span class="st">":memory:"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    tables<span class="op">=</span>{<span class="st">"penguins"</span>: <span class="ss">f"read_csv('</span><span class="sc">{</span>url<span class="sc">}</span><span class="ss">', nullstr='NA')"</span>},</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(asyncio.run(get_metaset([source], [<span class="st">"penguins"</span>])).compact_context())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="text"><code>penguins (344 rows)
+  species VARCHAR {Adelie:152, Gentoo:124, Chinstrap:68}
+  island VARCHAR {Biscoe:168, Dream:124, Torgersen:52}
+  bill_length_mm DOUBLE 32.1..59.6 nulls &lt;1%
+  bill_depth_mm DOUBLE 13.1..21.5 nulls &lt;1%
+  flipper_length_mm BIGINT 172..231 nulls &lt;1%
+  body_mass_g BIGINT 2700..6300 nulls &lt;1%
+  sex VARCHAR {male:168, female:165} nulls 3%
+  year BIGINT 2007..2009</code></pre>
+<p>Types, value counts, ranges and null shares are in one line per column, and the output is the same on every run. On the 11 BIRD Mini-Dev databases, the rendered schema context shrank from 22.4k to 16.1k tokens while carrying more facts, according to the pull request that introduced it.</p>
+</section>
+<section id="tool-errors-go-back-to-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="tool-errors-go-back-to-the-model">Tool errors go back to the model</h3>
+<p>A tool call that failed, named a tool that does not exist, or sent invalid arguments used to end the attempt. It is now returned to the model as the tool’s result, so the model can correct itself in the same loop. Identical calls to read-only tools are answered from a cache, and <code>SQLAgent</code> submits its query as a tool call, so a rejected query is fixed inside the loop (<a href="https://github.com/holoviz/lumen/pull/2104">#2104</a>).</p>
+</section>
+<section id="data-quality-checks-on-every-result" class="level3">
+<h3 class="anchored" data-anchor-id="data-quality-checks-on-every-result">Data-quality checks on every result</h3>
+<p>Every SQL result is profiled for missing values, duplicate rows, placeholder numbers, untrimmed text, numbers stored as text and outliers. The profile needs no LLM call. Only when something is worth fixing does <code>SQLAgent</code> spend one more call rewriting the query (<a href="https://github.com/holoviz/lumen/pull/2000">#2000</a>).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lumen.ai.data_quality <span class="im">import</span> lint_data</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>readings <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"station"</span>: [<span class="st">"north "</span>, <span class="st">"south"</span>, <span class="st">"east"</span>, <span class="st">"west"</span>, <span class="st">"north "</span>, <span class="st">"south"</span>],</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"temp_c"</span>: [<span class="fl">12.5</span>, <span class="fl">13.0</span>, <span class="op">-</span><span class="dv">9999</span>, <span class="fl">14.0</span>, <span class="op">-</span><span class="dv">9999</span>, <span class="fl">15.0</span>],</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> finding <span class="kw">in</span> lint_data(readings):</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-"</span>, finding)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"mean with the placeholders:"</span>, readings[<span class="st">"temp_c"</span>].mean())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="text"><code>- Placeholder numbers [-9999.0] appear as data in "temp_c" (2 rows); they almost certainly encode missing values.
+- Untrimmed or empty text in "station" (2 padded, 0 empty).
+mean with the placeholders: -3323.9166666666665</code></pre>
+<p>Without the check, the placeholders would have gone straight into an average and a chart. Pass <code>SQLAgent(clean_data=False)</code> to turn the pass off.</p>
+</section>
+</section>
+<section id="usage-and-cost-tracking" class="level2">
+<h2 class="anchored" data-anchor-id="usage-and-cost-tracking">Usage and Cost Tracking</h2>
+<p>LLM providers now count the tokens they report, and, if you give them prices, what those tokens cost. This example needs no API key, because it uses a free model on Kilo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> asyncio</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lumen.ai.llm <span class="im">import</span> Kilo</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>MODEL <span class="op">=</span> <span class="st">"nvidia/nemotron-3-ultra-550b-a55b:free"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="kw">def</span> main():</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    llm <span class="op">=</span> Kilo(</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        model_kwargs<span class="op">=</span>{<span class="st">"default"</span>: {<span class="st">"model"</span>: MODEL}},</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        usage_pricing<span class="op">=</span>{MODEL: {<span class="st">"input"</span>: <span class="fl">0.0</span>, <span class="st">"output"</span>: <span class="fl">0.0</span>}},  <span class="co"># USD per million tokens</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> llm.capture_usage() <span class="im">as</span> usage:</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">await</span> llm.invoke([{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Name one penguin species."</span>}])</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(usage.input_tokens, usage.output_tokens, usage.cost_usd)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>asyncio.run(main())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="text"><code>22 39 0.0</code></pre>
+<p>The token counts vary from call to call. <code>usage_pricing</code> takes prices in USD per million tokens, keyed by the model name the provider returns. <code>capture_usage()</code> collects everything inside its scope, including tool rounds, retries and calls from child tasks, while <code>llm.usage</code> totals the lifetime of the instance (<a href="https://github.com/holoviz/lumen/pull/2100">#2100</a>).</p>
+<p>To see what happened inside a request, <code>with llm.trace() as events:</code> records every provider round trip and completed tool call in order, with arguments, responses, errors and durations (<a href="https://github.com/holoviz/lumen/pull/2101">#2101</a>).</p>
+<p>Two opt-in building blocks for spending less landed as well: model routing, where a <code>model_kwargs</code> entry with a <code>"routing"</code> key picks a model per call by task complexity (<a href="https://github.com/holoviz/lumen/pull/2015">#2015</a>), and a <code>DecisionModel</code> interface for closed-choice questions such as follow-up classification (<a href="https://github.com/holoviz/lumen/pull/2109">#2109</a>). Nothing in the coordinator uses the decision model yet.</p>
+</section>
+<section id="polars-and-pyarrow" class="level2">
+<h2 class="anchored" data-anchor-id="polars-and-pyarrow">Polars and PyArrow</h2>
+<p>A <code>Source</code> no longer has to return pandas. Any dataframe library that <a href="https://narwhals-dev.github.io/narwhals/">narwhals</a> supports is accepted, and schema generation, <code>Filter</code> and the common transforms run on it natively (<a href="https://github.com/holoviz/lumen/pull/2008">#2008</a>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lumen.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lumen.sources.base <span class="im">import</span> InMemorySource</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lumen.transforms <span class="im">import</span> Aggregate, Filter</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://datasets.holoviz.org/penguins/v1/penguins.csv"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> pl.read_csv(url, null_values<span class="op">=</span><span class="st">"NA"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    source<span class="op">=</span>InMemorySource(tables<span class="op">=</span>{<span class="st">"penguins"</span>: penguins}),</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    table<span class="op">=</span><span class="st">"penguins"</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    transforms<span class="op">=</span>[</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        Filter(conditions<span class="op">=</span>[(<span class="st">"island"</span>, <span class="st">"Biscoe"</span>)]),</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        Aggregate(method<span class="op">=</span><span class="st">"mean"</span>, by<span class="op">=</span>[<span class="st">"species"</span>], columns<span class="op">=</span>[<span class="st">"body_mass_g"</span>], with_index<span class="op">=</span><span class="va">False</span>),</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(pipeline.data))</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pipeline.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="text"><code>&lt;class 'polars.dataframe.frame.DataFrame'&gt;
+shape: (2, 2)
+┌─────────┬─────────────┐
+│ species ┆ body_mass_g │
+│ ---     ┆ ---         │
+│ str     ┆ f64         │
+╞═════════╪═════════════╡
+│ Adelie  ┆ 3709.659091 │
+│ Gentoo  ┆ 5076.01626  │
+└─────────┴─────────────┘</code></pre>
+<p>The frame stays polars from the source to <code>pipeline.data</code>. Some things still convert to pandas, and Lumen logs why each time: <code>Aggregate</code> converts unless <code>with_index=False</code>, as above, and anything that touches the pandas index always does. Views convert too, because hvPlot, Tabulator and Vega only read pandas. Set <code>dataframe_backend</code> on a <code>Pipeline</code> to pin what <code>pipeline.data</code> returns, and a lazy polars frame is collected once, after the last transform. The AI summary of a large frame now samples before converting, which took a 2M by 15 polars frame from 0.37 s to 0.09 s and its peak memory from 1.3 GB to 0.9 GB (<a href="https://github.com/holoviz/lumen/pull/2044">#2044</a>).</p>
+</section>
+<section id="other-highlights" class="level2">
+<h2 class="anchored" data-anchor-id="other-highlights">Other Highlights</h2>
+<p>The planner got few-shot examples (<a href="https://github.com/holoviz/lumen/pull/2094">#2094</a>), the validation agent stopped failing valid plans on stale context from earlier turns (<a href="https://github.com/holoviz/lumen/pull/2074">#2074</a>, <a href="https://github.com/holoviz/lumen/pull/2081">#2081</a>), and <code>SQLAgent.revise()</code> recovers from unparsable SQL instead of crashing (<a href="https://github.com/holoviz/lumen/pull/2054">#2054</a>). Prompts are shorter and cheaper, with tweaks that help small models (<a href="https://github.com/holoviz/lumen/pull/1986">#1986</a>, <a href="https://github.com/holoviz/lumen/pull/1989">#1989</a>).</p>
+<p>Hover a derived column in a SQL result to see its expression and grouping (<a href="https://github.com/holoviz/lumen/pull/2124">#2124</a>). Claude Code no longer runs in plan mode when Lumen drives it (<a href="https://github.com/holoviz/lumen/pull/2229">#2229</a>), and Kilo falls back to JSON mode when its upstream rejects structured requests (<a href="https://github.com/holoviz/lumen/pull/2234">#2234</a>).</p>
+<p>The theme toggle has a <strong>Follow system</strong> option (<a href="https://github.com/holoviz/lumen/pull/1970">#1970</a>). The planner checklist, agent names and avatars, status icons and the navigation toggle were cleaned up, and the routing of <code>lumen serve &lt;spec&gt;.yaml</code> to the AI handler is fixed (<a href="https://github.com/holoviz/lumen/pull/2075">#2075</a>).</p>
+<p><code>gpt-5.6-luna</code> is the default OpenAI model (<a href="https://github.com/holoviz/lumen/pull/2007">#2007</a>), the provider model lists were refreshed (<a href="https://github.com/holoviz/lumen/pull/2118">#2118</a>, <a href="https://github.com/holoviz/lumen/pull/2182">#2182</a>), and Anthropic structured output works for modern Claude models (<a href="https://github.com/holoviz/lumen/pull/2196">#2196</a>). <code>FunctionTool</code> can run synchronous functions in a thread with <code>run_in_thread</code> (<a href="https://github.com/holoviz/lumen/pull/2138">#2138</a>).</p>
+<p>The docs also got a truth pass: install and setup steps, CLI providers and flags, model keys, every agent and export format, geospatial files and the missing API reference pages are covered now.</p>
+</section>
+<section id="deprecations-and-removals" class="level2">
+<h2 class="anchored" data-anchor-id="deprecations-and-removals">Deprecations and Removals</h2>
+<p><code>HistoryTransform</code> is deprecated (<a href="https://github.com/holoviz/lumen/pull/2060">#2060</a>).</p>
+</section>
+<section id="changelog" class="level2">
+<h2 class="anchored" data-anchor-id="changelog">Changelog</h2>
+<section id="llm-providers-models" class="level3">
+<h3 class="anchored" data-anchor-id="llm-providers-models">LLM Providers &amp; Models</h3>
+<ul>
+<li>Kilo provider, including a keyless free tier that works end to end (<a href="https://github.com/holoviz/lumen/pull/1984">#1984</a>, <a href="https://github.com/holoviz/lumen/pull/2198">#2198</a>)</li>
+<li>Codex CLI, Claude Code, and GitHub Copilot CLI providers (<a href="https://github.com/holoviz/lumen/pull/2070">#2070</a>, <a href="https://github.com/holoviz/lumen/pull/2121">#2121</a>)</li>
+<li>Guide users without an API key to a working provider on first run (<a href="https://github.com/holoviz/lumen/pull/2198">#2198</a>)</li>
+<li>Opt-in model routing (<a href="https://github.com/holoviz/lumen/pull/2015">#2015</a>)</li>
+<li><code>DecisionModel</code> interface with Jev and OpenRouter providers for closed-choice decisions (<a href="https://github.com/holoviz/lumen/pull/2109">#2109</a>)</li>
+<li>Make <code>gpt-5.6-luna</code> the default OpenAI model and refresh provider model lists (<a href="https://github.com/holoviz/lumen/pull/2007">#2007</a>, <a href="https://github.com/holoviz/lumen/pull/2118">#2118</a>, <a href="https://github.com/holoviz/lumen/pull/2182">#2182</a>)</li>
+<li>Read <code>OLLAMA_HOST</code> and default local providers to a 9B model (<a href="https://github.com/holoviz/lumen/pull/2202">#2202</a>)</li>
+<li><code>--llm-model-url</code> now loads the GGUF model via llama-cpp (<a href="https://github.com/holoviz/lumen/pull/2201">#2201</a>)</li>
+<li>Fix Anthropic structured output for modern Claude models (<a href="https://github.com/holoviz/lumen/pull/2196">#2196</a>)</li>
+<li>Run Claude Code CLI requests without its built-in tools, MCP servers or user settings, in a fresh directory (<a href="https://github.com/holoviz/lumen/pull/2214">#2214</a>)</li>
+<li>Show which model answered in the chat message footer (<a href="https://github.com/holoviz/lumen/pull/2053">#2053</a>)</li>
+<li>Run Claude Code CLI requests without plan mode (<a href="https://github.com/holoviz/lumen/pull/2229">#2229</a>)</li>
+<li>Fall back to JSON mode when Kilo’s upstream rejects structured requests (<a href="https://github.com/holoviz/lumen/pull/2234">#2234</a>)</li>
+</ul>
+</section>
+<section id="agents-tools-observability" class="level3">
+<h3 class="anchored" data-anchor-id="agents-tools-observability">Agents, Tools &amp; Observability</h3>
+<ul>
+<li>Track LLM token usage and estimated costs (<a href="https://github.com/holoviz/lumen/pull/2100">#2100</a>)</li>
+<li>Capture scoped LLM model and tool traces, including streamed usage (<a href="https://github.com/holoviz/lumen/pull/2101">#2101</a>, <a href="https://github.com/holoviz/lumen/pull/2102">#2102</a>)</li>
+<li>Accurate, compact, and cache-friendly table context for AI agents (<a href="https://github.com/holoviz/lumen/pull/2105">#2105</a>, <a href="https://github.com/holoviz/lumen/pull/2116">#2116</a>)</li>
+<li>Return tool errors to the model and let SQLAgent answer inside the tool loop (<a href="https://github.com/holoviz/lumen/pull/2104">#2104</a>, <a href="https://github.com/holoviz/lumen/pull/2117">#2117</a>)</li>
+<li>Optional Monty Python sandbox tool for agents (<a href="https://github.com/holoviz/lumen/pull/2098">#2098</a>)</li>
+<li>Data cleaning mode for SQLAgent (<a href="https://github.com/holoviz/lumen/pull/2000">#2000</a>)</li>
+<li>Few-shot examples for the Planner (<a href="https://github.com/holoviz/lumen/pull/2094">#2094</a>)</li>
+<li><code>run_in_thread</code> option for sync <code>FunctionTool</code> functions, plus fixes for multiple <code>provides</code> keys and <code>step_title</code> forwarding (<a href="https://github.com/holoviz/lumen/pull/2138">#2138</a>, <a href="https://github.com/holoviz/lumen/pull/2137">#2137</a>, <a href="https://github.com/holoviz/lumen/pull/2135">#2135</a>)</li>
+<li>Shorter prompts and lower token usage, with tweaks that help small models (<a href="https://github.com/holoviz/lumen/pull/1986">#1986</a>, <a href="https://github.com/holoviz/lumen/pull/1989">#1989</a>, <a href="https://github.com/holoviz/lumen/pull/1991">#1991</a>)</li>
+<li>Unified agent names and avatars, and a polished planner checklist (<a href="https://github.com/holoviz/lumen/pull/2096">#2096</a>, <a href="https://github.com/holoviz/lumen/pull/2115">#2115</a>)</li>
+</ul>
+</section>
+<section id="validation-reliability" class="level3">
+<h3 class="anchored" data-anchor-id="validation-reliability">Validation &amp; Reliability</h3>
+<ul>
+<li>Judge duplicate rows on whole rows, so the cleaning step no longer deduplicates records that only share the columns a query reads (<a href="https://github.com/holoviz/lumen/pull/2235">#2235</a>)</li>
+<li>Skip the validation step for an empty plan (<a href="https://github.com/holoviz/lumen/pull/2236">#2236</a>)</li>
+<li>Fix deterministic AI failures found by the evals (<a href="https://github.com/holoviz/lumen/pull/2103">#2103</a>)</li>
+<li>ValidationAgent no longer fails valid plans on stale context, with a rule-based heuristic for previous keys (<a href="https://github.com/holoviz/lumen/pull/2074">#2074</a>, <a href="https://github.com/holoviz/lumen/pull/2081">#2081</a>, <a href="https://github.com/holoviz/lumen/pull/2065">#2065</a>)</li>
+<li>Recover from unparsable SQL in <code>SQLAgent.revise()</code> instead of crashing (<a href="https://github.com/holoviz/lumen/pull/2054">#2054</a>)</li>
+<li>Only flag placeholder numbers outside a column’s value range (<a href="https://github.com/holoviz/lumen/pull/2145">#2145</a>)</li>
+<li>Quote bare table names that sqlglot mis-parses (<a href="https://github.com/holoviz/lumen/pull/1995">#1995</a>)</li>
+<li><code>ViewOutputs.view</code> is now a required output key (<a href="https://github.com/holoviz/lumen/pull/2108">#2108</a>)</li>
+</ul>
+</section>
+<section id="reports" class="level3">
+<h3 class="anchored" data-anchor-id="reports">Reports</h3>
+<ul>
+<li>Annotate reports with an AI-written story, editable with Panel’s <code>TextEditor</code> (<a href="https://github.com/holoviz/lumen/pull/1923">#1923</a>, <a href="https://github.com/holoviz/lumen/pull/2017">#2017</a>)</li>
+<li>Export a report as Word (<code>.docx</code>) (<a href="https://github.com/holoviz/lumen/pull/1924">#1924</a>)</li>
+</ul>
+</section>
+<section id="data-sources-performance" class="level3">
+<h3 class="anchored" data-anchor-id="data-sources-performance">Data Sources &amp; Performance</h3>
+<ul>
+<li>Support polars and pyarrow frames via narwhals (<a href="https://github.com/holoviz/lumen/pull/2008">#2008</a>, <a href="https://github.com/holoviz/lumen/pull/2039">#2039</a>, <a href="https://github.com/holoviz/lumen/pull/2059">#2059</a>)</li>
+<li>Narrow queries to the columns the transforms need (<a href="https://github.com/holoviz/lumen/pull/2051">#2051</a>)</li>
+<li>Preview exploration results and build AI summaries without converting the whole frame (<a href="https://github.com/holoviz/lumen/pull/2058">#2058</a>, <a href="https://github.com/holoviz/lumen/pull/2044">#2044</a>)</li>
+<li>Keep integer and boolean dtypes across the pandas fallback (<a href="https://github.com/holoviz/lumen/pull/2046">#2046</a>)</li>
+<li>Skip row counts when generating auto filters and merging <code>JoinedSource</code> schemas (<a href="https://github.com/holoviz/lumen/pull/2140">#2140</a>, <a href="https://github.com/holoviz/lumen/pull/2119">#2119</a>)</li>
+<li>Support open-ended ranges and slices, and NumPy scalar values, in <code>SQLFilter</code> and <code>Filter</code> (<a href="https://github.com/holoviz/lumen/pull/2114">#2114</a>, <a href="https://github.com/holoviz/lumen/pull/2125">#2125</a>)</li>
+<li>Skip <code>information_schema</code> when listing <code>SQLAlchemySource</code> tables (<a href="https://github.com/holoviz/lumen/pull/2142">#2142</a>)</li>
+<li>Apply <code>Source.metadata</code> descriptions in <code>get_metadata</code> (<a href="https://github.com/holoviz/lumen/pull/2180">#2180</a>)</li>
+<li>Keep source actions defined with postponed annotations (<a href="https://github.com/holoviz/lumen/pull/2141">#2141</a>)</li>
+<li>Read table functions with keyword arguments, such as <code>read_csv(..., nullstr='NA')</code> (<a href="https://github.com/holoviz/lumen/pull/2233">#2233</a>)</li>
+<li>Avoid passing <code>how</code> together with <code>thresh</code> in <code>DropNA</code> (<a href="https://github.com/holoviz/lumen/pull/2021">#2021</a>)</li>
+<li>Fix three blockers for local and file-based sources, and handle non-default catalog indexes (<a href="https://github.com/holoviz/lumen/pull/1993">#1993</a>, <a href="https://github.com/holoviz/lumen/pull/2029">#2029</a>)</li>
+</ul>
+</section>
+<section id="geospatial-scientific-data" class="level3">
+<h3 class="anchored" data-anchor-id="geospatial-scientific-data">Geospatial &amp; Scientific Data</h3>
+<ul>
+<li>Render a table’s own geometry as a Vega-Lite geoshape (<a href="https://github.com/holoviz/lumen/pull/1998">#1998</a>)</li>
+<li>Load GeoJSON uploads end to end and preserve GeoDataFrame CRS at DuckDB ingest (<a href="https://github.com/holoviz/lumen/pull/1996">#1996</a>, <a href="https://github.com/holoviz/lumen/pull/2077">#2077</a>)</li>
+<li>Teach the DeckGL prompt <code>GeoJsonLayer</code> and data-driven colors, and serialize datetime columns in GeoJSON layers (<a href="https://github.com/holoviz/lumen/pull/1999">#1999</a>, <a href="https://github.com/holoviz/lumen/pull/1997">#1997</a>)</li>
+<li>Feed the table to basemap point layers and fix blank choropleths for unregistered lookups (<a href="https://github.com/holoviz/lumen/pull/2151">#2151</a>, <a href="https://github.com/holoviz/lumen/pull/2001">#2001</a>)</li>
+<li>Render geometry in Vega-Lite views, both from a table’s own geometry and when a spec joins external boundaries (<a href="https://github.com/holoviz/lumen/pull/2232">#2232</a>)</li>
+<li>Collapse cftime gridded dims on xarray-sql 0.6, and decline to grid a <code>to_dataset</code> result that is not a grid (<a href="https://github.com/holoviz/lumen/pull/2144">#2144</a>, <a href="https://github.com/holoviz/lumen/pull/2049">#2049</a>)</li>
+</ul>
+</section>
+<section id="charts-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="charts-visualization">Charts &amp; Visualization</h3>
+<ul>
+<li>Improved VegaLiteAgent (<a href="https://github.com/holoviz/lumen/pull/1992">#1992</a>)</li>
+<li>Datashader categorical blending on hvPlot views (<a href="https://github.com/holoviz/lumen/pull/2035">#2035</a>)</li>
+<li>Allow all tabular hvPlot kinds, and let the hvPlot agent generate a plot at all (<a href="https://github.com/holoviz/lumen/pull/2033">#2033</a>, <a href="https://github.com/holoviz/lumen/pull/2064">#2064</a>)</li>
+<li>Draw hvPlot glyphs in the chat UI, not just the axes (<a href="https://github.com/holoviz/lumen/pull/2071">#2071</a>)</li>
+<li>Coerce date fields to temporal encoding in <code>VegaLiteView</code> (<a href="https://github.com/holoviz/lumen/pull/2055">#2055</a>)</li>
+<li>Drop the unconditional multi-series split rule from the Vega-Lite prompt (<a href="https://github.com/holoviz/lumen/pull/2076">#2076</a>)</li>
+<li>Thin crowded heatmap axis labels, stop scientific notation in labels, and rewrite comma number formats (<a href="https://github.com/holoviz/lumen/pull/2148">#2148</a>, <a href="https://github.com/holoviz/lumen/pull/2154">#2154</a>, <a href="https://github.com/holoviz/lumen/pull/2188">#2188</a>)</li>
+<li>Stop awaiting the async generator that streams view specs (<a href="https://github.com/holoviz/lumen/pull/2034">#2034</a>)</li>
+<li>Escape dotted column names such as <code>nino3.4_anom</code> in Vega-Lite specs, which drew no series or a blank chart (<a href="https://github.com/holoviz/lumen/pull/2215">#2215</a>)</li>
+</ul>
+</section>
+<section id="ux-cli" class="level3">
+<h3 class="anchored" data-anchor-id="ux-cli">UX &amp; CLI</h3>
+<ul>
+<li>“Follow system” option for the light and dark theme toggle (<a href="https://github.com/holoviz/lumen/pull/1970">#1970</a>)</li>
+<li>Fix the Full data toggle overlap in explorations and let chat steps shrink with the column (<a href="https://github.com/holoviz/lumen/pull/2045">#2045</a>, <a href="https://github.com/holoviz/lumen/pull/2152">#2152</a>)</li>
+<li>Fix <code>lumen serve &lt;spec&gt;.yaml</code> routing to the AI handler (<a href="https://github.com/holoviz/lumen/pull/2075">#2075</a>)</li>
+<li>Correct the CLI version output and code execution (<a href="https://github.com/holoviz/lumen/pull/2166">#2166</a>)</li>
+<li>Column-level lineage tooltips: hover a derived column in a SQL result to see its expression and grouping (<a href="https://github.com/holoviz/lumen/pull/2124">#2124</a>)</li>
+<li>Fix <code>Filter</code> warning formatting and call the existing <code>_embed</code> instead of the undefined <code>_embed_actions</code> (<a href="https://github.com/holoviz/lumen/pull/2018">#2018</a>, <a href="https://github.com/holoviz/lumen/pull/2027">#2027</a>)</li>
+<li>Keep each exploration’s chat when switching explorations while a plan runs (<a href="https://github.com/holoviz/lumen/pull/2213">#2213</a>)</li>
+<li>Center planner checklist status icons on the label’s first line (<a href="https://github.com/holoviz/lumen/pull/2217">#2217</a>)</li>
+<li>Keep the nav drawer toggle clear of chat avatars (<a href="https://github.com/holoviz/lumen/pull/2218">#2218</a>)</li>
+<li>Size the code editor to match the body text (<a href="https://github.com/holoviz/lumen/pull/2219">#2219</a>)</li>
+</ul>
+</section>
+<section id="deprecations" class="level3">
+<h3 class="anchored" data-anchor-id="deprecations">Deprecations</h3>
+<ul>
+<li><code>HistoryTransform</code> is deprecated (<a href="https://github.com/holoviz/lumen/pull/2060">#2060</a>)</li>
+</ul>
+</section>
+<section id="dependencies-compatibility" class="level3">
+<h3 class="anchored" data-anchor-id="dependencies-compatibility">Dependencies &amp; Compatibility</h3>
+<ul>
+<li>Require panel 1.9.0+ and bokeh 3.9.0+, pin griffe below 2.0, and exclude param 2.5.0a0 (<a href="https://github.com/holoviz/lumen/pull/2079">#2079</a>, <a href="https://github.com/holoviz/lumen/pull/2087">#2087</a>)</li>
+<li>Exclude litellm 1.107.0, which was compromised on PyPI (<a href="https://github.com/holoviz/lumen/pull/2205">#2205</a>)</li>
+<li>Declare all top-level imports as direct dependencies and support metadata 2.5 in PyPI publishing (<a href="https://github.com/holoviz/lumen/pull/2092">#2092</a>, <a href="https://github.com/holoviz/lumen/pull/2095">#2095</a>)</li>
+<li>Test the full range of supported Python versions (<a href="https://github.com/holoviz/lumen/pull/2093">#2093</a>)</li>
+</ul>
+</section>
+<section id="documentation" class="level3">
+<h3 class="anchored" data-anchor-id="documentation">Documentation</h3>
+<ul>
+<li>A docs truth pass: install and setup steps, CLI providers and flags, model keys (Groq, Kilo), every agent and export format, geospatial files and GRIB, ChromaDB, missing API reference pages, cost-friendly example models, and fixed links (<a href="https://github.com/holoviz/lumen/pull/2158">#2158</a>, <a href="https://github.com/holoviz/lumen/pull/2160">#2160</a>, <a href="https://github.com/holoviz/lumen/pull/2162">#2162</a>, <a href="https://github.com/holoviz/lumen/pull/2164">#2164</a>, <a href="https://github.com/holoviz/lumen/pull/2168">#2168</a>, <a href="https://github.com/holoviz/lumen/pull/2170">#2170</a>, <a href="https://github.com/holoviz/lumen/pull/2172">#2172</a>, <a href="https://github.com/holoviz/lumen/pull/2176">#2176</a>, <a href="https://github.com/holoviz/lumen/pull/2178">#2178</a>, <a href="https://github.com/holoviz/lumen/pull/2186">#2186</a>, <a href="https://github.com/holoviz/lumen/pull/2191">#2191</a>, <a href="https://github.com/holoviz/lumen/pull/2203">#2203</a>, <a href="https://github.com/holoviz/lumen/pull/2037">#2037</a>)</li>
+<li>Document table discovery in the embeddings guide, update the ingestion controls docs and add the spec tutorial to the navigation (<a href="https://github.com/holoviz/lumen/pull/2019">#2019</a>, <a href="https://github.com/holoviz/lumen/pull/2022">#2022</a>, <a href="https://github.com/holoviz/lumen/pull/2030">#2030</a>)</li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/blog\.holoviz\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Copyright 2023 Holoviz contributors</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/holoviz-dev/blog/edit/main/posts/lumen_1.4/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

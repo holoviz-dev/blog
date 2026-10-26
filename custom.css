@@ -1,0 +1,15 @@
+/* css styles */
+
+/* Logo was too small in height */
+.navbar-logo {
+    max-height: 48px;
+}
+
+/* Shadow under the header as in the Pydata theme */
+#quarto-header {
+    box-shadow: 0 .125rem .25rem 0 #d8d8d8;
+}
+
+div.quarto-post .thumbnail img {
+    object-fit: contain;
+}
