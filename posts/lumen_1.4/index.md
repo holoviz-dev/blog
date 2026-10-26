@@ -1,6 +1,6 @@
 ---
 title: "Lumen 1.4.0 Release"
-date: "2026-10-23"
+date: "2026-10-27"
 description: "Release announcement for Lumen 1.4: run it without an API key, maps from geometry columns, reports that write their own story, better table context, usage tracking and polars support."
 author: "Aman Kumar"
 categories: [release, lumen]
