@@ -1,0 +1,35 @@
+$schema: https://vega.github.io/schema/vega-lite/v5.json
+config:
+  numberFormat: ',~r'
+  view:
+    stroke: null
+encoding:
+  color:
+    field: properties.POP_EST
+    legend:
+      format: ',~r'
+      title: Population (log scale)
+    scale:
+      scheme: blues
+      type: log
+    type: quantitative
+  tooltip:
+  - field: properties.NAME
+    title: Country
+    type: nominal
+  - field: properties.POP_EST
+    format: ',~r'
+    title: Population
+    type: quantitative
+height: container
+mark: geoshape
+projection:
+  type: equalEarth
+title:
+  anchor: start
+  fontSize: 18
+  subtitle: China and India lead with over a billion residents each
+  subtitleColor: '#666666'
+  subtitleFontSize: 14
+  text: Population Spans Six Orders of Magnitude Worldwide
+width: container
