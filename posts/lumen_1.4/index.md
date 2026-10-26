@@ -13,7 +13,7 @@ image: "images/collage_1.4.png"
 
 [Lumen](https://lumen.holoviz.org/) is an open-source framework for **conversational data exploration and analysis**. You ask a question about your data, and an LLM proposes the SQL, the transformations and the chart. Every step stays visible, editable and re-runnable. Lumen is built on [Panel](https://panel.holoviz.org/) and the rest of the [HoloViz](https://holoviz.org) ecosystem, so the results are interactive tables, plots and dashboards. If you are new to it, the [Lumen 1.0 announcement](../lumen_1.0/index.md) explains the design.
 
-![One chat, many outputs: your question goes to your data sources and comes back as maps, charts and tables.](./images/pipeline.png){fig-alt="A chat bubble with a robot avatar, joined by glowing lines to a world map, a line and bar chart, a grid heatmap and four database icons."}
+![One chat, many outputs: your question goes to your data sources and comes back as maps, charts and tables.](./images/pipeline.png){fig-alt="A chat bubble with a robot avatar, joined by glowing lines to a world map, a line and bar chart, a grid heatmap and four data-source icons: a database, a cloud, a table and a file."}
 
 ## New Release!
 
@@ -90,7 +90,7 @@ The chart is a plain Vega-Lite spec, shown above the map. If something is off, e
 
 Maps are interactive: hover a state to see its values, and the view follows the light or dark theme.
 
-![A choropleth of average PM2.5 by US state in dark mode, with a tooltip on Texas.](./images/dark_map.png){fig-alt="Lumen's dark theme showing the Vega-Lite spec above a US choropleth of average PM2.5 by state, with a tooltip on Texas showing 10.92."}
+![A choropleth of average PM2.5 by US state in dark mode, with a tooltip on Texas.](./images/dark_map.png){fig-alt="Lumen's dark theme showing the Vega-Lite spec above a US choropleth of average PM2.5 by state, with a tooltip on Texas showing 9.9."}
 
 Around that feature, geospatial support got a round of fixes:
 
@@ -114,13 +114,13 @@ Follow-ups work on the chart you already have. Here Lumen draws UK electricity p
 
 ![A stacked area chart of UK electricity per capita from fossil fuels, nuclear and renewables.](./images/electricity_stacked.png){fig-alt="A Lumen chat and a stacked area chart in which fossil fuels shrink and renewables grow from 2003."}
 
-The Vega-Lite agent also got better at stacking and ordering: asked for Michael Phelps's Olympic medals, it draws a stacked bar by medal type ([#1992](https://github.com/holoviz/lumen/pull/1992)).
+The Vega-Lite agent also got better at stacking and ordering: asked for the US athletes with the most Olympic medals, it draws a stacked bar by medal type ([#1992](https://github.com/holoviz/lumen/pull/1992)).
 
-![A stacked bar chart of Michael Phelps's Olympic medals by games and medal type.](./images/medals.png){fig-alt="A stacked bar chart with one bar per Olympic games, split into gold, silver and bronze medals."}
+![A stacked bar chart of the ten US athletes with the most Olympic medals, led by Michael Phelps, split by medal type.](./images/medals.png){fig-alt="A horizontal stacked bar chart of ten US Olympians, with Michael Phelps on top at 16 medals, 13 of them gold, and each bar split into gold, silver and bronze."}
 
 Two more prompts on data-centre electricity demand: a slope chart that highlights the United States in red, and a ranking bar chart that labels each bar with its value.
 
-![A slope chart and a ranking bar chart of data-centre share of electricity demand for the United States, China and the world.](./images/slope_ranking.png){fig-alt="Left, a slope chart from 2020 to 2025 with the United States line in red rising to 4.9 and China and the world in grey and light blue. Right, a bar chart ranking the United States at 4.94 above the world at 1.53 and China at 1.11."}
+![A slope chart and a ranking bar chart of data-centre share of electricity demand for the United States, China and the world.](./images/slope_ranking.png){fig-alt="Left, a slope chart from 2020 to 2025 with the United States line in red rising from about 2.6 to 4.9 and the World and China lines in two shades of grey. Right, a bar chart ranking the United States at 4.94 in red above the World at 1.53 and China at 1.11."}
 
 ## Reports With a Story
 
@@ -128,7 +128,7 @@ A Lumen report collects the tables and charts from your explorations. In 1.4 you
 
 A report can now also be exported as a Word document. The `.docx` carries the headings, the narrative, native tables and the charts as images, respects the section selection, and includes the story and notes ([#1924](https://github.com/holoviz/lumen/pull/1924)). The story's prose is editable with Panel's `TextEditor` ([#2017](https://github.com/holoviz/lumen/pull/2017)), so you can fix a sentence instead of regenerating the whole thing. The Word export needs `python-docx`, which Lumen now installs.
 
-![Lumen's AI-written story on a music streaming report, with the export menu open.](./images/report_story.png){fig-alt="A Lumen report titled Music Streaming Habits Report with an AI-written summary and sections, and the export menu listing Notebook, HTML and Word."}
+![Lumen's AI-written story on a report about the Palmer penguins, with the export menu open.](./images/report_story.png){fig-alt="Lumen's dark theme on the Story tab of a report titled Penguins Across Islands and Measurements, with an AI-written introduction above a dataset summary table, and the export menu listing Notebook, HTML and Word."}
 
 ## Answers You Can Check
 

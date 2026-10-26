@@ -1,0 +1,26 @@
+# The environment the post's snippets and images were made with.
+#   conda env create -f environment.yml && conda activate lumen-blog-1.4
+#   playwright install chromium        # for screenshots.py
+name: lumen-blog-1.4
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - panel=1.9.4
+  - bokeh=3.9.2
+  - narwhals=2.27.1
+  - polars=2.0.0
+  - pandas=3.1.0
+  - python-duckdb=1.5.6
+  - geopandas=1.2.0
+  - xarray=2026.9.0
+  - vl-convert-python=1.9.0.post1
+  - playwright=1.60.0
+  - openai=2.37.0
+  - pip
+  - pip:
+      # main at 160f2979 (after #2235). PyPI's 1.4.0rc4 predates #2232 and cannot
+      # draw maps from a geometry column, so install the commit itself.
+      - "lumen[ai-openai,geo] @ git+https://github.com/holoviz/lumen@160f2979"
+# The snippets and the first charts used the Claude Code provider (claude CLI 2.x). The images
+# were rebuilt on 2026-10-26 with screenshots.py and the OpenAI provider (gpt-6-luna, Lumen's default).

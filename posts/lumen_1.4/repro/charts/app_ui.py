@@ -3,18 +3,21 @@
 Each chart Lumen draws is written next to this folder's `ui/` output as a PNG
 (Lumen's own export, 2x), plus its Vega-Lite spec, named by session and order.
 """
+import os
 import re
+import sys
 import time
 from pathlib import Path
 
 import panel as pn
 
 from lumen.ai.editors import MultiChartEditor, VegaLiteEditor
-from lumen.ai.llm import ClaudeCode
+from lumen.ai.llm import ClaudeCode, OpenAI
 from lumen.ai.ui import ExplorerUI
 
-OUT = Path("ui")
-DATA = [
+OUT = Path(os.environ.get("LUMEN_BLOG_OUT", "ui"))
+# screenshots.py passes the files for each shot as `panel serve app_ui.py --args FILE ...`
+DATA = sys.argv[1:] or [
     "data/stocks.csv", "data/seattle-weather.csv", "data/gapminder.json",
     "data/countries.geojson", "data/airports.csv", "data/air.nc",
 ]
@@ -51,6 +54,8 @@ class BlogUI(ExplorerUI):
 
 
 tag = time.strftime("%H%M%S")
-ui = BlogUI(data=DATA, llm=ClaudeCode(), title="Lumen AI - Data Explorer")
+# LUMEN_BLOG_PROVIDER=openai uses OPENAI_API_KEY; the default is the Claude Code CLI
+llm = OpenAI() if os.environ.get("LUMEN_BLOG_PROVIDER") == "openai" else ClaudeCode()
+ui = BlogUI(data=DATA, llm=llm, title="Lumen AI - Data Explorer")
 ui._session_tag = tag
 ui.servable()
