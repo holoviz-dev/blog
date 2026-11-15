@@ -1,0 +1,10 @@
+{
+ "name": "worldmap",
+ "seconds": 34.2,
+ "error": null,
+ "charts": 1,
+ "model_calls": 5,
+ "prompts": [
+  "Map each country's estimated population as a choropleth on a log colour scale using the Equal Earth projection, with a legend."
+ ]
+}

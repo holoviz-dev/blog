@@ -1,0 +1,10 @@
+{
+ "name": "gapminder",
+ "seconds": 47.4,
+ "error": null,
+ "charts": 1,
+ "model_calls": 5,
+ "prompts": [
+  "For the ten most populous countries in 2005, draw a connected scatter plot of fertility against life expectancy from 1955 to 2005, with bubbles sized by population at each point and the country name at the 2005 end of each path."
+ ]
+}

@@ -1,0 +1,10 @@
+<class 'polars.dataframe.frame.DataFrame'>
+shape: (2, 2)
+┌─────────┬─────────────┐
+│ species ┆ body_mass_g │
+│ ---     ┆ ---         │
+│ str     ┆ f64         │
+╞═════════╪═════════════╡
+│ Adelie  ┆ 3709.659091 │
+│ Gentoo  ┆ 5076.01626  │
+└─────────┴─────────────┘

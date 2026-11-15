@@ -1,0 +1,136 @@
+$schema: https://vega.github.io/schema/vega-lite/v5.json
+config:
+  axis:
+    grid: false
+  numberFormat: ',~r'
+  range:
+    category:
+    - '#1f77b3'
+    - '#ff7e0e'
+    - '#2ba02b'
+    - '#d62628'
+    - '#9367bc'
+    - '#8c564b'
+    - '#e277c1'
+    - '#7e7e7e'
+    - '#bcbc21'
+    - '#16bdcf'
+    - '#3a0182'
+    - '#004201'
+    - '#0fffa8'
+    - '#5d003f'
+    - '#bcbcff'
+    - '#d8afa1'
+    - '#b80080'
+    - '#004d52'
+    - '#6b6400'
+    - '#7c0100'
+  view:
+    stroke: null
+data:
+  name: top10_countries_fertility_life_pop_trend
+height: container
+layer:
+- encoding:
+    color:
+      field: country
+      legend: null
+      type: nominal
+    detail:
+      field: country
+      type: nominal
+    order:
+      field: year
+      type: quantitative
+    x:
+      axis:
+        format: ',~r'
+      field: life_expect
+      title: Life Expectancy (years)
+      type: quantitative
+    y:
+      axis:
+        format: ',~r'
+      field: fertility
+      title: Fertility Rate
+      type: quantitative
+  mark:
+    opacity: 0.6
+    strokeWidth: 1.5
+    type: line
+- encoding:
+    color:
+      field: country
+      legend: null
+      type: nominal
+    detail:
+      field: country
+      type: nominal
+    size:
+      field: pop
+      legend:
+        format: ',~r'
+        title: Population
+      scale:
+        range:
+        - 20
+        - 800
+      type: quantitative
+    tooltip:
+    - field: country
+      type: nominal
+    - field: year
+      format: d
+      type: quantitative
+    - field: life_expect
+      title: Life Expectancy
+      type: quantitative
+    - field: fertility
+      title: Fertility
+      type: quantitative
+    - field: pop
+      format: ',~r'
+      title: Population
+      type: quantitative
+    x:
+      axis:
+        format: ',~r'
+      field: life_expect
+      type: quantitative
+    y:
+      axis:
+        format: ',~r'
+      field: fertility
+      type: quantitative
+  mark:
+    filled: true
+    opacity: 0.7
+    type: point
+- encoding:
+    color:
+      value: black
+    text:
+      field: country
+      type: nominal
+    x:
+      field: life_expect
+      type: quantitative
+    y:
+      field: fertility
+      type: quantitative
+  mark:
+    align: left
+    dx: 7
+    dy: -4
+    fontSize: 10
+    type: text
+  transform:
+  - filter: datum.year === 2005
+title:
+  anchor: start
+  fontSize: 18
+  subtitle: 1955-2005; bubble size shows population growth
+  subtitleColor: '#666666'
+  subtitleFontSize: 13
+  text: All Ten Nations Converged Toward Longer Life, Fewer Births
+width: container

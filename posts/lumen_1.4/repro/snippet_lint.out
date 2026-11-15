@@ -1,0 +1,3 @@
+- Placeholder numbers [-9999.0] appear as data in "temp_c" (2 rows); they almost certainly encode missing values.
+- Untrimmed or empty text in "station" (2 padded, 0 empty).
+mean with the placeholders: -3323.9166666666665

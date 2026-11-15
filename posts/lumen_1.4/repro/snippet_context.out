@@ -1,0 +1,9 @@
+penguins (344 rows)
+  species VARCHAR {Adelie:152, Gentoo:124, Chinstrap:68}
+  island VARCHAR {Biscoe:168, Dream:124, Torgersen:52}
+  bill_length_mm DOUBLE 32.1..59.6 nulls <1%
+  bill_depth_mm DOUBLE 13.1..21.5 nulls <1%
+  flipper_length_mm BIGINT 172..231 nulls <1%
+  body_mass_g BIGINT 2700..6300 nulls <1%
+  sex VARCHAR {male:168, female:165} nulls 3%
+  year BIGINT 2007..2009

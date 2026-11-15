@@ -12,3 +12,13 @@ posts/hvplot_release_0.8/index_files/figure-html/cell-6-output-1.png
 *.DS_store
 
 **/*.quarto_ipynb
+
+# data the holoviews_streams notebook downloads itself
+posts/holoviews_streams/air.2024.nc
+
+# lumen_1.4 screenshot rebuild: downloaded data and intermediate captures
+posts/lumen_1.4/repro/charts/data/
+posts/lumen_1.4/repro/charts/raw/
+posts/lumen_1.4/repro/charts/ui/
+posts/lumen_1.4/repro/charts/new/
+posts/lumen_1.4/repro/__pycache__/
