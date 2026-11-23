@@ -21,7 +21,7 @@ aliases:
 
 We are happy to announce the 1.11.0 release of Panel! Panel 1.10 changed how you build Panel apps with `pn.ui`. This release makes those apps, and the classic ones, faster. We spent a large part of the cycle profiling real applications and removing fixed costs from every page load, session, component and event, The same app, unchanged, now loads a fraction of the bytes, starts sessions faster and answers events in a third of the time or less. `Tabulator` and the other data components now also work with Polars, PyArrow and other DataFrame libraries, which let us make pandas an optional dependency, and the release fixes a long list of bugs, including several affecting authentication and apps deployed behind a reverse proxy.
 
-Many thanks to the contributors to this release: [@philippjfr](https://github.com/philippjfr), [@hoxbro](https://github.com/hoxbro), [@maximlt](https://github.com/maximlt), [@aarab-malik](https://github.com/aarab-malik), [@AaryanRS](https://github.com/AaryanRS), [@benjibunbun](https://github.com/benjibunbun), [@Cherith1222](https://github.com/Cherith1222), [@chiruu12](https://github.com/chiruu12), [@Jojoussef](https://github.com/Jojoussef), [@SAMARTHJAISWAL](https://github.com/SAMARTHJAISWAL), [@Web4everyone32](https://github.com/Web4everyone32), [@YashAnand69](https://github.com/YashAnand69), [@Adithya6721](https://github.com/Adithya6721), [@Adititodekar](https://github.com/Adititodekar), [@ahuang11](https://github.com/ahuang11), [@Alpenj](https://github.com/Alpenj), [@compiler-segfault](https://github.com/compiler-segfault), [@JoeyTan21](https://github.com/JoeyTan21), [@Kkkakania](https://github.com/Kkkakania), [@MarcSkovMadsen](https://github.com/MarcSkovMadsen), [@mmporong](https://github.com/mmporong), [@nightcityblade](https://github.com/nightcityblade), [@nojaf](https://github.com/nojaf), [@ryandesign](https://github.com/ryandesign), [@SuMayaBee](https://github.com/SuMayaBee), [@sushan5140](https://github.com/sushan5140) and [@tmichela](https://github.com/tmichela).
+Many thanks to @fizzbeom and @morgan-coded for responsibly reporting the security issues fixed in this release, and to the contributors to this release: @philippjfr, @hoxbro, @maximlt, @aarab-malik, @AaryanRS, @benjibunbun, @Cherith1222, @chiruu12, @Jojoussef, @SAMARTHJAISWAL, @Web4everyone32, @YashAnand69, @Adithya6721, @Adititodekar, @ahuang11, @Alpenj, @compiler-segfault, @danishkumar26, @JoeyTan21, @Kkkakania, @MarcSkovMadsen, @mmporong, @mvanhorn, @nightcityblade, @nojaf, @prabhushreyas, @ryandesign, @SuMayaBee, @sushan5140 and @tmichela.
 
 <hr>
 
@@ -33,37 +33,52 @@ If you're using [Anaconda](https://www.anaconda.com/downloads), you can install 
 
 Panel 1.11 removes a lot of fixed cost from serving an app: in the bytes a page loads, in the work done for each session and component, and in the overhead around each event. You get all of it without changing any code.
 
-To see what that means for a real app, we built the same dashboard twice, once from classic components in a `FastListTemplate` and once from Material components in a `pn.ui.Page`. Each has around 180 components: 40 widgets in the sidebar, a row of indicators, a Bokeh plot, a 1,000 row `Tabulator`, some Markdown and a card with 120 more widgets. We served both with Panel 1.10.0 and 1.11.0rc0 and measured them in headless Chromium, alongside a few Python-side scenarios around large layouts and tables.
+To see what that means for a real app, we built the same dashboard twice, once from classic components in a `FastListTemplate` and once from Material components in a `pn.ui.Page`. Each has around 180 components: 40 widgets in the sidebar, a row of indicators, a Bokeh plot, a 1,000 row `Tabulator`, some Markdown and a card with 120 more widgets. We served both with Panel 1.10.1 and 1.11.0 and measured them in headless Chromium, alongside a few Python-side scenarios around large layouts and tables. Panel 1.11 works with the current releases of param and panel-material-ui and with the upcoming param 2.5 and panel-material-ui 0.17, so the table shows it with both.
 
 <img src="./images/perf_1.11.png" width="100%"></img>
 
-| Scenario | 1.10.0 | 1.11.0rc0 | Change |
-|---|---|---|---|
-| Data transferred on first page load, classic | 5.5 MB | 1.0 MB | 5.4× less |
-| Data transferred on first page load, Material | 5.0 MB | 1.5 MB | 3.2× less |
-| First page load until rendered, classic | 748 ms | 624 ms | 1.2× |
-| First page load until rendered, Material | 977 ms | 647 ms | 1.5× |
-| Creating a session, classic | 311 ms | 224 ms | 1.4× |
-| Creating a session, Material | 333 ms | 114 ms | 2.9× |
-| Sessions per second with 8 concurrent requests, Material | 2.8 | 8.4 | 3.0× |
-| Browser to Python to browser round trip, classic | 79 ms | 28 ms | 2.9× |
-| Browser to Python to browser round trip, Material | 425 ms | 32 ms | 13× |
-| Appending to a `Column` of 2,000 items | 74 ms | 5.5 ms | 13× |
-| Changing the page of a 200,000 row `Tabulator` (remote pagination) | 8.8 ms | 0.36 ms | 24× |
-| Sorting a 200,000 row `Tabulator` | 65 ms | 19 ms | 3.4× |
-| Patching a cell of a sorted 200,000 row `Tabulator` | 65 ms | 18 ms | 3.6× |
+| Scenario | 1.10.1 | 1.11.0 | 1.11.0 with param 2.5 and panel-material-ui 0.17 | Change |
+|---|---|---|---|---|
+| Data transferred on first page load, classic | 5.5 MB | 1.0 MB | 1.0 MB | 5.4× less |
+| Data transferred on first page load, Material | 5.0 MB | 1.5 MB | 1.5 MB | 3.2× less |
+| First page load until rendered, classic | 846 ms | 696 ms | 683 ms | 1.2× |
+| First page load until rendered, Material | 1,118 ms | 825 ms | 730 ms | 1.5× |
+| Creating a session, classic | 363 ms | 245 ms | 237 ms | 1.5× |
+| Creating a session, Material | 375 ms | 135 ms | 121 ms | 3.1× |
+| Sessions per second with 8 concurrent requests, Material | 2.5 | 7.1 | 7.6 | 3.0× |
+| Browser to Python to browser round trip, classic | 76 ms | 26 ms | 25 ms | 3.1× |
+| Browser to Python to browser round trip, Material | 468 ms | 44 ms | 31 ms | 15× |
+| Rendering a `pn.ui.Column` of 200 widgets | 384 ms | 121 ms | 106 ms | 3.6× |
+| Appending to a `Column` of 2,000 items | 79 ms | 6.6 ms | 6.9 ms | 11× |
+| Changing the page of a 200,000 row `Tabulator` (remote pagination) | 9.7 ms | 0.37 ms | 0.34 ms | 28× |
+| Sorting a 200,000 row `Tabulator` | 125 ms | 21 ms | 21 ms | 5.9× |
+| Patching a cell of a sorted 200,000 row `Tabulator` | 127 ms | 21 ms | 21 ms | 6.0× |
 
 The biggest change on page load is the amount of data. MathJax used to be loaded by every template page and is now only loaded when a page contains math, templates no longer load their resources twice, and responses are gzipped ([#9058](https://github.com/holoviz/panel/pull/9058)). Our benchmark runs on localhost, so it barely shows in the load time, but over a real network the drop from 5.5 MB to 1 MB matters much more. Versioned resources also get long-lived cache headers, so the browser reuses them without asking the server again.
 
 Creating a session is where every user waits before seeing anything, and it also limits how many users a single server process can handle. Caching the per-request resource bookkeeping ([#9068](https://github.com/holoviz/panel/pull/9068)), cheaper Bokeh model creation ([#9064](https://github.com/holoviz/panel/pull/9064)) and cheaper component construction ([#9069](https://github.com/holoviz/panel/pull/9069)) speed up every app. Material components benefit most, because `JSComponent` and `ReactComponent` now compute their per-class information once instead of for every instance and skip properties that are still at their defaults ([#9067](https://github.com/holoviz/panel/pull/9067), [#9095](https://github.com/holoviz/panel/pull/9095)). That roughly triples how many Material sessions a server can create per second.
 
-The round trip measures how long it takes from a change in the browser until the update made by a Python callback arrives back. In 1.10 every event on the Material page cost more than 400 ms; in 1.11 it costs about the same as on the classic page. Busy-state bookkeeping and in-place pane updates got much cheaper, and Panel now waits 20 ms instead of 50 ms for further changes before processing an event from the browser ([#9066](https://github.com/holoviz/panel/pull/9066)). Appending to or replacing children of a large layout, which chat apps and logs do all the time, no longer scales with the number of children already there ([#9057](https://github.com/holoviz/panel/pull/9057)), and `Tabulator` updates on large tables no longer reprocess or resend the whole table ([#9071](https://github.com/holoviz/panel/pull/9071)). In the browser, `Tabulator` now applies `stream`, `patch` and selection changes to the existing table instead of rebuilding it ([#9065](https://github.com/holoviz/panel/pull/9065)).
+The round trip measures how long it takes from a change in the browser until the update made by a Python callback arrives back. In 1.10 every event on the Material page took more than 450 ms; in 1.11 it takes 44 ms, and 31 ms with panel-material-ui 0.17, close to the 25 ms of the classic page. Busy-state bookkeeping and in-place pane updates got much cheaper, and Panel now waits 20 ms instead of 50 ms for further changes before processing an event from the browser ([#9066](https://github.com/holoviz/panel/pull/9066)). Appending to or replacing children of a large layout, which chat apps and logs do all the time, no longer scales with the number of children already there ([#9057](https://github.com/holoviz/panel/pull/9057)), and `Tabulator` updates on large tables no longer reprocess or resend the whole table ([#9071](https://github.com/holoviz/panel/pull/9071)). In the browser, `Tabulator` now applies `stream`, `patch` and selection changes to the existing table instead of rebuilding it ([#9065](https://github.com/holoviz/panel/pull/9065)).
 
 A few other improvements are not in the table: `pn.cache` hits are more than ten times cheaper ([#9063](https://github.com/holoviz/panel/pull/9063)), `Vega` and `Plotly` panes avoid redundant re-renders ([#9061](https://github.com/holoviz/panel/pull/9061)), and Documents cleaned up without a session, such as those created by health checks, no longer stay in memory forever ([#9059](https://github.com/holoviz/panel/pull/9059)).
 
-All numbers are medians over 5 runs of the served benchmarks (each on a fresh server, with the 40 round trips in each run also reduced to their median) and 7 runs of the Python-side ones. We ran them on an Apple M5 Pro with Python 3.14.4 and Bokeh 3.10.2, comparing Panel 1.10.0 with panel-material-ui 0.16.7 against Panel 1.11.0rc0 with panel-material-ui 0.17.0rc0. Most of the Material gains come from Panel itself: with the older panel-material-ui, 1.11 still creates the Material session in 124 ms and completes the round trip in 45 ms. The scripts are in the [`benchmarks`](https://github.com/holoviz-dev/blog/tree/main/posts/panel_release_1.11/benchmarks) folder next to this post if you want to reproduce them.
+All numbers are medians over 5 runs of the served benchmarks (each on a fresh server, with the 40 round trips in each run also reduced to their median) and 7 runs of the Python-side ones. We ran them on an Apple M5 Pro with Python 3.14.4 and Bokeh 3.10.2, comparing Panel 1.10.1 with param 2.4.2 and panel-material-ui 0.16.7 against Panel 1.11.0, once with the same param and panel-material-ui and once with the last pre-releases of param 2.5.0 and panel-material-ui 0.17.0. The scripts are in the [`benchmarks`](https://github.com/holoviz-dev/blog/tree/main/posts/panel_release_1.11/benchmarks) folder next to this post if you want to reproduce them.
 
-<!-- EDITOR: Check the benchmarks link above points at where this post's folder ends up in the blog repo. Re-run the benchmarks against 1.11.0 final if anything performance-related lands after rc0. -->
+## Coming soon: param 2.5 and panel-material-ui 0.17
+
+Two releases coming out alongside Panel 1.11 add to these gains. You get everything above with the param and panel-material-ui you have installed today, and more once you upgrade them.
+
+[param 2.5.0](https://param.holoviz.org/releases.html), the library underneath every Panel component, makes the hot paths of parameters cheaper. Reading a `Number` parameter is about 2.4× faster and setting one that triggers watchers about 2.2× faster ([param#1167](https://github.com/holoviz/param/pull/1167)), and old and new values are compared once per event instead of once per watcher ([param#1234](https://github.com/holoviz/param/pull/1234)). Every widget value, layout change and pane update goes through these paths, so the whole of Panel benefits. The release also adds `param.Model`, which builds parameters from type annotations, and a `DataFrameLike` parameter for any DataFrame supported by Narwhals.
+
+[panel-material-ui 0.17.0](https://panel-material-ui.holoviz.org/releases.html) focuses on what Material components cost under load:
+
+* Streaming into `ChatMessage` and `ChatFeed` no longer re-syncs the whole page on every token. Streaming 500 tokens into the last message of a 500 message feed went from about 20 s to 0.2 s.
+* Widgets are constructed up to twice as fast, and setting `TextInput.value` on a rendered widget is twice as fast.
+* `Select`, `MultiChoice`, `CrossSelector` and `AutocompleteInput` process their options in linear time, so re-rendering a `Select` with 50,000 options went from about 2.7 s to 30 ms.
+* Switching the active tab of a dynamic `Tabs` or `Accordion` is four to five times faster, and switching dark mode takes a single message instead of a round trip per component.
+* `Page` and the notification area no longer leak, which also made every callback slower the more pages had been created.
+
+In our benchmarks the two releases together bring the Material round trip from 44 ms down to 31 ms, Material session creation from 135 ms to 121 ms and rendering a `pn.ui.Column` of 200 widgets from 121 ms to 106 ms. Classic apps change little, as you would expect.
 
 ## Any DataFrame, and optional pandas
 
@@ -109,11 +124,10 @@ Since these frames have no index, rows are addressed by position, and `Styler` b
 
 This release contains around a hundred bug fixes. Two groups deserve a mention because they affect how apps are deployed.
 
-Authentication got several fixes. The login redirect validation now rejects `next` values such as `///evil.com`, which browsers resolve to another site, closing an open redirect in both the basic auth and OAuth login flows ([#8938](https://github.com/holoviz/panel/pull/8938)); we recommend upgrading if you use authentication. OAuth behind a reverse proxy or with `--prefix` used to need a hand-written `--oauth-redirect-uri`, and some setups did not work at all. Panel now derives the external URL from the request, `--root-path`, `--prefix` and, with `--use-xheaders`, the `X-Forwarded-Host` and `X-Forwarded-Prefix` headers, and uses it for the redirect URI and every login and logout redirect ([#9072](https://github.com/holoviz/panel/pull/9072), building on [#8211](https://github.com/holoviz/panel/pull/8211) by [@TheoMathurin](https://github.com/TheoMathurin)). `--oauth-guest-endpoints` entries ending in `/*` now cover the paths below them, so a branded login page can load its assets ([#9033](https://github.com/holoviz/panel/pull/9033)), and Panel warns when the session token gets close to the 8 KB header limit of common proxies, which otherwise surfaced only as "Could not open websocket" in the browser ([#8638](https://github.com/holoviz/panel/pull/8638)).
+Authentication got several fixes. The login redirect validation now rejects `next` values such as `///evil.com`, which browsers resolve to another site, closing an open redirect in both the basic auth and OAuth login flows ([#8938](https://github.com/holoviz/panel/pull/8938)); we recommend upgrading if you use authentication. 1.11 also includes the two security fixes released in 1.10.1 and 1.9.5: the server no longer imports the module named in a `/components/` resource URL, which let any client stop the server with a single request ([GHSA-wfhv-r23p-8x9w](https://github.com/holoviz/panel/security/advisories/GHSA-wfhv-r23p-8x9w)), and `authorize_callback` now also applies to `autoload.js` and websocket connections, so a user denied access to an app can no longer open a session of it ([GHSA-9cgh-cwhr-4rhg](https://github.com/holoviz/panel/security/advisories/GHSA-9cgh-cwhr-4rhg)). OAuth behind a reverse proxy or with `--prefix` used to need a hand-written `--oauth-redirect-uri`, and some setups did not work at all. Panel now derives the external URL from the request, `--root-path`, `--prefix` and, with `--use-xheaders`, the `X-Forwarded-Host` and `X-Forwarded-Prefix` headers, and uses it for the redirect URI and every login and logout redirect ([#9072](https://github.com/holoviz/panel/pull/9072), building on [#8211](https://github.com/holoviz/panel/pull/8211) by [@TheoMathurin](https://github.com/TheoMathurin)). `--oauth-guest-endpoints` entries ending in `/*` now cover the paths below them, so a branded login page can load its assets ([#9033](https://github.com/holoviz/panel/pull/9033)), and Panel warns when the session token gets close to the 8 KB header limit of common proxies, which otherwise surfaced only as "Could not open websocket" in the browser ([#8638](https://github.com/holoviz/panel/pull/8638)).
 
 Resource loading behind proxies and on nested routes is also fixed. Stylesheets defined relative to a design or theme were cached with the URL of whichever route rendered them first, so a page on a nested route such as `/dash/<id>` requested them from the wrong place and got a 404. Lazily loaded resources had the same problem after navigating within an app under `panel serve`. Both now resolve against the route the session is on, including behind a proxy that strips its prefix ([#9109](https://github.com/holoviz/panel/pull/9109)). Hosts that rewrite or do not serve Panel's `static/extensions/` routes, such as Shiny, now load components too, falling back to the CDN when a resource request fails ([#9020](https://github.com/holoviz/panel/pull/9020)).
 
-<!-- EDITOR: #9109 was merged after v1.11.0rc0 and has no entry in the release notes yet; drop the paragraph above to its last sentence if it does not ship in 1.11.0. -->
 
 Beyond those, threaded apps no longer hit races on the document lock, updates made inside a long running synchronous callback reach the browser while it runs again, notebooks sync every change of a message, and `Tabulator`, `Plotly`, `FloatPanel`, `Tabs` and the classic templates received many smaller fixes. The changelog below has the full list.
 
@@ -133,14 +147,13 @@ We now have benchmarks for page loads, sessions, components, layouts, `Tabulator
 
 For the full list of changes, see the [Panel 1.11.0 changelog](https://github.com/holoviz/panel/releases/tag/v1.11.0).
 
-<!-- EDITOR: The list below is the 1.11.0 section of doc/about/releases.md as of v1.11.0rc0; refresh it from the final release notes. -->
-
 ### 🚀 Features
 
 * Accept Polars, PyArrow and any other eager DataFrame supported by Narwhals in `Tabulator`, the `DataFrame` widget, `Perspective` and `Vizzu` without converting it to pandas. Filtering, sorting, remote pagination, selection, edits, `stream()` and `patch()` all work on these frames, with rows addressed by position since they have no index, and PyArrow tables keep `large_string` and other large column types when they are edited, patched or streamed into ([#8841](https://github.com/holoviz/panel/pull/8841), [#9086](https://github.com/holoviz/panel/pull/9086))
 
 ### ✨ Enhancements
 
+* Accept positional arguments to the cached function in `pn.state.as_cached` ([#9123](https://github.com/holoviz/panel/pull/9123))
 * Show a default `Filter by <column>...` placeholder in `Tabulator` header filters ([#8452](https://github.com/holoviz/panel/pull/8452))
 * Add a `widget_placeholder` parameter to `ChatInterface` that sets, and later updates, the placeholder of its default input widget ([#9040](https://github.com/holoviz/panel/pull/9040))
 * Add `max_completions` to `AutocompleteInput` to limit the number of suggestions shown ([#9031](https://github.com/holoviz/panel/pull/9031))
@@ -149,6 +162,8 @@ For the full list of changes, see the [Panel 1.11.0 changelog](https://github.co
 * Let `--oauth-guest-endpoints` entries ending in `/*` or `/` cover the paths below them, so e.g. a branded login page can load its logo from `--static-dirs`; plain entries now match the path without the query string but still do not cover sub-paths ([#9033](https://github.com/holoviz/panel/pull/9033))
 * Log a one-time warning per app when the Bokeh session token approaches the 8 KB request header limit of common proxies, which otherwise fails with an unexplained "Could not open websocket" ([#8638](https://github.com/holoviz/panel/pull/8638))
 * Load the `TextEditor` (Quill) resources from the CDN configured with `PANEL_NPM_CDN` instead of always from jsDelivr ([#7826](https://github.com/holoviz/panel/pull/7826))
+* Add `keyboard_accessible` and `soft_wrap` parameters to `CodeEditor`, so keyboard users can move focus out of the editor and long lines can wrap ([#9120](https://github.com/holoviz/panel/pull/9120))
+* Add a `markers` parameter to `CodeEditor` to highlight lines, and style its read-only tooltip ([#9139](https://github.com/holoviz/panel/pull/9139))
 
 ### ⚡ Performance
 
@@ -176,6 +191,9 @@ This release removes much of the fixed cost of serving a Panel app, from the byt
 ### 🔒 Security
 
 * Reject `next_url` values such as `///evil.com` or ones containing control characters, which browsers resolve to another site, in the basic auth and OAuth login redirects ([#8938](https://github.com/holoviz/panel/pull/8938))
+* Stop importing the module named in `/components/` resource URLs, which let any client, including when authentication is enabled, make the server import installed modules and shut it down with a single request ([GHSA-wfhv-r23p-8x9w](https://github.com/holoviz/panel/security/advisories/GHSA-wfhv-r23p-8x9w))
+* Apply `authorize_callback` to `autoload.js` and websocket connections, which previously let a logged-in user open a session of an app they were denied access to ([GHSA-9cgh-cwhr-4rhg](https://github.com/holoviz/panel/security/advisories/GHSA-9cgh-cwhr-4rhg))
+* Stop `FileSelector` from navigating into sibling directories whose name starts with the name of `root_directory`, such as `/app/data2` for a root of `/app/data` ([#9149](https://github.com/holoviz/panel/pull/9149))
 
 ### 🐛 Bug Fixes
 
@@ -277,13 +295,33 @@ This release removes much of the fixed cost of serving a Panel app, from the byt
 * Fix `pn.cache` returning the result for a different float with the same hash, such as `-1.0` for `-2.0` ([#8922](https://github.com/holoviz/panel/pull/8922))
 * Avoid a `RecursionError` when passing self-referential containers to a `pn.cache` function ([#8923](https://github.com/holoviz/panel/pull/8923))
 * Fix typos in `panel compile` messages ([#8880](https://github.com/holoviz/panel/pull/8880))
+* Drop held changes to models the client has not been sent yet, which made the browser reject the whole patch with `reference ... isn't known` ([#8906](https://github.com/holoviz/panel/pull/8906))
+* Resize the container of ESM components, including the `panel-material-ui` ones, when their size changes after they rendered ([#9108](https://github.com/holoviz/panel/pull/9108))
+* Resolve relative stylesheet urls against the route a session is on, so apps on nested routes load all their stylesheets ([#9109](https://github.com/holoviz/panel/pull/9109))
+* Fix serving a Bokeh figure under a global template, which failed with `unexpected attribute 'design' to figure` ([#9110](https://github.com/holoviz/panel/pull/9110))
+* Stream into a paginated `Tabulator` without "Scroll Error - Row not visible" errors or stale pages ([#9111](https://github.com/holoviz/panel/pull/9111))
+* Stop a `hold()` running on the event loop from leaving the Document in `collect` mode when a callback on a worker thread released the same hold ([#9117](https://github.com/holoviz/panel/pull/9117))
+* Stop a `hold()` released before the session loaded from writing the held Python changes back into their parameters ([#9126](https://github.com/holoviz/panel/pull/9126))
+* Render Bokeh figures with a `SizeBar` annotation inside React based layouts such as the `panel-material-ui` ones ([#9119](https://github.com/holoviz/panel/pull/9119))
+* Keep apps converted with `panel convert` working when the CDN does not have the wheel of the locally installed Bokeh version ([#9121](https://github.com/holoviz/panel/pull/9121))
+* Keep the basemap of a `DeckGL` pane with a Carto `mapStyle` aligned with the deck.gl layers when the pane is created and when its `initialViewState` changes ([#9122](https://github.com/holoviz/panel/pull/9122), [#9129](https://github.com/holoviz/panel/pull/9129))
+* Fix a race in `CodeEditor` with `on_keyup=True` where a stale `value_input` could overwrite a newer one ([#9127](https://github.com/holoviz/panel/pull/9127))
+* Fire `Tabulator.on_edit` callbacks when the edit event arrives after the data patch ([#9128](https://github.com/holoviz/panel/pull/9128))
+* Allow creating a `DatetimeRangeInput` without a `value` and without both `start` and `end` ([#9132](https://github.com/holoviz/panel/pull/9132))
+* Keep an explicitly set `min_width` or `min_height` on a layout instead of replacing it with one inferred from its children ([#9133](https://github.com/holoviz/panel/pull/9133))
+* Hash `datetime.time` and `datetime.timedelta` arguments by value in `pn.cache`, which could return the result for a different argument ([#9137](https://github.com/holoviz/panel/pull/9137))
+* Resize a container-sized `Vega` chart whenever its container changes size ([#9138](https://github.com/holoviz/panel/pull/9138))
+* Keep other query parameters unchanged when updating the URL query, so e.g. `02134` no longer becomes `2134` ([#9141](https://github.com/holoviz/panel/pull/9141))
+* Select the matching option when a `Select` is created with a `None` value ([#9143](https://github.com/holoviz/panel/pull/9143))
 
 ### ⚙️ Compatibility
 
+* **Behaviour change:** `pn.state.as_cached` now requires `ttl` to be passed by keyword ([#9123](https://github.com/holoviz/panel/pull/9123))
 * **Behaviour change:** pandas is no longer a required dependency and moves to the `recommended` extra, as announced in the 1.9.0 release notes. `Tabulator`, the `DataFrame` widget, `Perspective`, `Vizzu` and `ChatMessage` work without it; the admin dashboard still requires pandas and raises a clear error without it ([#8841](https://github.com/holoviz/panel/pull/8841))
 * Add compatibility with Bokeh 3.10.2, which clamps slider values to their range; editable sliders now widen their range in Python, and changing `fixed_start` or `fixed_end` clamps the value into the new bounds ([#8927](https://github.com/holoviz/panel/pull/8927))
 * Stop passing the `HTTPServerRequest` arguments that Tornado 6.7 removed ([#9046](https://github.com/holoviz/panel/pull/9046))
 * Bump `dompurify` to 3.4.17 ([#8908](https://github.com/holoviz/panel/pull/8908))
+* Export the `Fullscreen` wrapper added in `panel-material-ui` 0.17 from `panel.ui` ([#9144](https://github.com/holoviz/panel/pull/9144))
 
 ### ⚠️ Deprecations and Removals
 
@@ -302,3 +340,5 @@ This release removes much of the fixed cost of serving a Panel app, from the byt
 * Correct the `Tabulator` reference, which stated that hierarchical index levels default to the `sum` aggregator ([#9011](https://github.com/holoviz/panel/pull/9011))
 * Restore the Architecture and Styling sections in the Explanation navigation ([#8977](https://github.com/holoviz/panel/pull/8977))
 * Remove nonexistent parameters from the `on_msg` and `show_server` docstrings ([#8926](https://github.com/holoviz/panel/pull/8926))
+* Show which library version Panel loads in the reference pages of JavaScript-backed panes ([#9134](https://github.com/holoviz/panel/pull/9134))
+* Note that templates are trusted code that runs on the server and that values passed with `Template.add_variable` are not escaped ([#9148](https://github.com/holoviz/panel/pull/9148))
