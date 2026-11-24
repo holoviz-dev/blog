@@ -1,6 +1,6 @@
 ---
 title: "Panel 1.11.0 Release"
-date: "YYYY-MM-DD"
+date: "2026-11-24"
 description: "Release announcement for Panel 1.11"
 author: "Philipp Rudiger"
 categories: [release, panel]
@@ -8,8 +8,6 @@ image: "images/collage_1.11.png"
 aliases:
   - ../../panel_1.11.html
 ---
-
-<!-- EDITOR: Set the date above. images/collage_1.11.png is a placeholder made by tiling example screenshots; replace it with a proper collage. -->
 
 <img src="./images/collage_1.11.png" width="100%"></img>
 
