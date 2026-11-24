@@ -41,24 +41,24 @@ To see what that means for a real app, we built the same dashboard twice, once f
 |---|---|---|---|---|
 | Data transferred on first page load, classic | 5.5 MB | 1.0 MB | 1.0 MB | 5.4× less |
 | Data transferred on first page load, Material | 5.0 MB | 1.5 MB | 1.5 MB | 3.2× less |
-| First page load until rendered, classic | 846 ms | 696 ms | 683 ms | 1.2× |
-| First page load until rendered, Material | 1,118 ms | 825 ms | 730 ms | 1.5× |
-| Creating a session, classic | 363 ms | 245 ms | 237 ms | 1.5× |
-| Creating a session, Material | 375 ms | 135 ms | 121 ms | 3.1× |
-| Sessions per second with 8 concurrent requests, Material | 2.5 | 7.1 | 7.6 | 3.0× |
-| Browser to Python to browser round trip, classic | 76 ms | 26 ms | 25 ms | 3.1× |
-| Browser to Python to browser round trip, Material | 468 ms | 44 ms | 31 ms | 15× |
-| Rendering a `pn.ui.Column` of 200 widgets | 384 ms | 121 ms | 106 ms | 3.6× |
-| Appending to a `Column` of 2,000 items | 79 ms | 6.6 ms | 6.9 ms | 11× |
-| Changing the page of a 200,000 row `Tabulator` (remote pagination) | 9.7 ms | 0.37 ms | 0.34 ms | 28× |
-| Sorting a 200,000 row `Tabulator` | 125 ms | 21 ms | 21 ms | 5.9× |
-| Patching a cell of a sorted 200,000 row `Tabulator` | 127 ms | 21 ms | 21 ms | 6.0× |
+| First page load until rendered, classic | 782 ms | 662 ms | 655 ms | 1.2× |
+| First page load until rendered, Material | 964 ms | 718 ms | 643 ms | 1.5× |
+| Creating a session, classic | 318 ms | 223 ms | 218 ms | 1.5× |
+| Creating a session, Material | 337 ms | 120 ms | 106 ms | 3.2× |
+| Sessions per second with 8 concurrent requests, Material | 2.9 | 8.0 | 9.1 | 3.2× |
+| Browser to Python to browser round trip, classic | 77 ms | 27 ms | 26 ms | 2.9× |
+| Browser to Python to browser round trip, Material | 408 ms | 24 ms | 30 ms | 13× |
+| Rendering a `pn.ui.Column` of 200 widgets | 348 ms | 104 ms | 91 ms | 3.8× |
+| Appending to a `Column` of 2,000 items | 73 ms | 3.8 ms | 3.7 ms | 20× |
+| Changing the page of a 200,000 row `Tabulator` (remote pagination) | 8.9 ms | 0.34 ms | 0.31 ms | 29× |
+| Sorting a 200,000 row `Tabulator` | 115 ms | 18 ms | 18 ms | 6.3× |
+| Patching a cell of a sorted 200,000 row `Tabulator` | 116 ms | 18 ms | 18 ms | 6.4× |
 
 The biggest change on page load is the amount of data. MathJax used to be loaded by every template page and is now only loaded when a page contains math, templates no longer load their resources twice, and responses are gzipped ([#9058](https://github.com/holoviz/panel/pull/9058)). Our benchmark runs on localhost, so it barely shows in the load time, but over a real network the drop from 5.5 MB to 1 MB matters much more. Versioned resources also get long-lived cache headers, so the browser reuses them without asking the server again.
 
 Creating a session is where every user waits before seeing anything, and it also limits how many users a single server process can handle. Caching the per-request resource bookkeeping ([#9068](https://github.com/holoviz/panel/pull/9068)), cheaper Bokeh model creation ([#9064](https://github.com/holoviz/panel/pull/9064)) and cheaper component construction ([#9069](https://github.com/holoviz/panel/pull/9069)) speed up every app. Material components benefit most, because `JSComponent` and `ReactComponent` now compute their per-class information once instead of for every instance and skip properties that are still at their defaults ([#9067](https://github.com/holoviz/panel/pull/9067), [#9095](https://github.com/holoviz/panel/pull/9095)). That roughly triples how many Material sessions a server can create per second.
 
-The round trip measures how long it takes from a change in the browser until the update made by a Python callback arrives back. In 1.10 every event on the Material page took more than 450 ms; in 1.11 it takes 44 ms, and 31 ms with panel-material-ui 0.17, close to the 25 ms of the classic page. Busy-state bookkeeping and in-place pane updates got much cheaper, and Panel now waits 20 ms instead of 50 ms for further changes before processing an event from the browser ([#9066](https://github.com/holoviz/panel/pull/9066)). Appending to or replacing children of a large layout, which chat apps and logs do all the time, no longer scales with the number of children already there ([#9057](https://github.com/holoviz/panel/pull/9057)), and `Tabulator` updates on large tables no longer reprocess or resend the whole table ([#9071](https://github.com/holoviz/panel/pull/9071)). In the browser, `Tabulator` now applies `stream`, `patch` and selection changes to the existing table instead of rebuilding it ([#9065](https://github.com/holoviz/panel/pull/9065)).
+The round trip measures how long it takes from a change in the browser until the update made by a Python callback arrives back. In 1.10 every event on the Material page took more than 400 ms; in 1.11 it takes 24 ms, the same as on the classic page. Busy-state bookkeeping and in-place pane updates got much cheaper, a widget value change no longer unlocks and relocks every parameter of the widget ([#9158](https://github.com/holoviz/panel/pull/9158)), and Panel now waits 20 ms instead of 50 ms for further changes before processing an event from the browser ([#9066](https://github.com/holoviz/panel/pull/9066)). Appending to or replacing children of a large layout, which chat apps and logs do all the time, no longer scales with the number of children already there ([#9057](https://github.com/holoviz/panel/pull/9057), [#9160](https://github.com/holoviz/panel/pull/9160), [#9162](https://github.com/holoviz/panel/pull/9162)), and `Tabulator` updates on large tables no longer reprocess or resend the whole table ([#9071](https://github.com/holoviz/panel/pull/9071)). In the browser, `Tabulator` now applies `stream`, `patch` and selection changes to the existing table instead of rebuilding it ([#9065](https://github.com/holoviz/panel/pull/9065)).
 
 A few other improvements are not in the table: `pn.cache` hits are more than ten times cheaper ([#9063](https://github.com/holoviz/panel/pull/9063)), `Vega` and `Plotly` panes avoid redundant re-renders ([#9061](https://github.com/holoviz/panel/pull/9061)), and Documents cleaned up without a session, such as those created by health checks, no longer stay in memory forever ([#9059](https://github.com/holoviz/panel/pull/9059)).
 
@@ -78,7 +78,7 @@ Two releases coming out alongside Panel 1.11 add to these gains. You get everyth
 * Switching the active tab of a dynamic `Tabs` or `Accordion` is four to five times faster, and switching dark mode takes a single message instead of a round trip per component.
 * `Page` and the notification area no longer leak, which also made every callback slower the more pages had been created.
 
-In our benchmarks the two releases together bring the Material round trip from 44 ms down to 31 ms, Material session creation from 135 ms to 121 ms and rendering a `pn.ui.Column` of 200 widgets from 121 ms to 106 ms. Classic apps change little, as you would expect.
+In our benchmarks the two releases together bring Material session creation from 120 ms to 106 ms, raise the number of Material sessions a server creates per second from 8.0 to 9.1, cut rendering a `pn.ui.Column` of 200 widgets from 104 ms to 91 ms and the first Material page load from 718 ms to 643 ms. Classic apps change little, as you would expect.
 
 ## Any DataFrame, and optional pandas
 
