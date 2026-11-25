@@ -9,7 +9,8 @@ and the browser -> Python -> browser round trip.
 Each --env is the Python of an environment with the Panel version to test;
 it is only used to run serve.py. This script itself needs playwright (with
 Chromium installed) and tornado. Versions are interleaved within each
-repetition, and every repetition starts a fresh server.
+repetition, and every repetition starts a fresh server. --browser-only skips
+the HTTP session benchmarks and only measures page loads and round trips.
 """
 import argparse
 import asyncio
@@ -160,6 +161,7 @@ def main():
     parser.add_argument('--apps', default='classic,ui')
     parser.add_argument('--reps', type=int, default=5)
     parser.add_argument('--out', default='results_server.json')
+    parser.add_argument('--browser-only', action='store_true')
     args = parser.parse_args()
     envs = dict(e.split('=', 1) for e in args.env)
 
@@ -172,9 +174,10 @@ def main():
                     server = Server(python, app)
                     try:
                         row = {'rep': rep, 'app': app, 'version': label}
-                        # The sync Playwright API owns an event loop on this thread.
-                        with ThreadPoolExecutor(1) as ex:
-                            row.update(ex.submit(asyncio.run, http_bench(server.url)).result())
+                        if not args.browser_only:
+                            # The sync Playwright API owns an event loop on this thread.
+                            with ThreadPoolExecutor(1) as ex:
+                                row.update(ex.submit(asyncio.run, http_bench(server.url)).result())
                         row.update(browser_bench(browser, server.url))
                     finally:
                         server.stop()

@@ -17,13 +17,13 @@ aliases:
 
 ## New Release!
 
-We are happy to announce the 1.11.0 release of Panel! Panel 1.10 changed how you build Panel apps with `pn.ui`. This release makes those apps, and the classic ones, faster. We spent a large part of the cycle profiling real applications and removing fixed costs from every page load, session, component and event, The same app, unchanged, now loads a fraction of the bytes, starts sessions faster and answers events in a third of the time or less. `Tabulator` and the other data components now also work with Polars, PyArrow and other DataFrame libraries, which let us make pandas an optional dependency, and the release fixes a long list of bugs, including several affecting authentication and apps deployed behind a reverse proxy.
+We are happy to announce the 1.11.0 release of Panel! Panel 1.10 changed how you build Panel apps with `pn.ui`. This release makes those apps, and the classic ones, faster. We spent a large part of the cycle profiling real applications and removing fixed costs from every page load, session, component and event. The same app, unchanged, now loads a fraction of the bytes, starts sessions faster and answers events in less than half the time, and param 2.5 and panel-material-ui 0.17, released alongside it, add to these gains. `Tabulator` and the other data components now also work with Polars, PyArrow and other DataFrame libraries, which let us make pandas an optional dependency, and the release fixes a long list of bugs, including several affecting authentication and apps deployed behind a reverse proxy.
 
 Many thanks to @fizzbeom and @morgan-coded for responsibly reporting the security issues fixed in this release, and to the contributors to this release: @philippjfr, @hoxbro, @maximlt, @aarab-malik, @AaryanRS, @benjibunbun, @Cherith1222, @chiruu12, @Jojoussef, @SAMARTHJAISWAL, @Web4everyone32, @YashAnand69, @Adithya6721, @Adititodekar, @ahuang11, @Alpenj, @compiler-segfault, @danishkumar26, @JoeyTan21, @Kkkakania, @MarcSkovMadsen, @mmporong, @mvanhorn, @nightcityblade, @nojaf, @prabhushreyas, @ryandesign, @SuMayaBee, @sushan5140 and @tmichela.
 
 <hr>
 
-If you're using [Anaconda](https://www.anaconda.com/downloads), you can install the latest version of Panel with `conda install panel`. If you prefer pip, use `pip install panel`. Note that pip no longer installs pandas for you; use `pip install "panel[recommended]"` if you want it.
+If you're using [Anaconda](https://www.anaconda.com/downloads), you can install the latest version of Panel with `conda install panel`. If you prefer pip, use `pip install panel`. Note that pip no longer installs pandas for you; use `pip install "panel[recommended]"` if you want it. To also get the new param and panel-material-ui releases, upgrade them together, e.g. `pip install -U panel param panel-material-ui`.
 
 <hr>
 
@@ -31,40 +31,23 @@ If you're using [Anaconda](https://www.anaconda.com/downloads), you can install 
 
 Panel 1.11 removes a lot of fixed cost from serving an app: in the bytes a page loads, in the work done for each session and component, and in the overhead around each event. You get all of it without changing any code.
 
-To see what that means for a real app, we built the same dashboard twice, once from classic components in a `FastListTemplate` and once from Material components in a `pn.ui.Page`. Each has around 180 components: 40 widgets in the sidebar, a row of indicators, a Bokeh plot, a 1,000 row `Tabulator`, some Markdown and a card with 120 more widgets. We served both with Panel 1.10.1 and 1.11.0 and measured them in headless Chromium, alongside a few Python-side scenarios around large layouts and tables. Panel 1.11 works with the current releases of param and panel-material-ui and with the upcoming param 2.5 and panel-material-ui 0.17, so the table shows it with both.
+To see what that means for a real app, we built the same dashboard twice, once from classic components in a `FastListTemplate` and once from Material components in a `pn.ui.Page`. Each has around 180 components: 40 widgets in the sidebar, a row of indicators, a Bokeh plot, a 1,000 row `Tabulator`, some Markdown and a card with 120 more widgets. We served both with Panel 1.10.1 and 1.11.0 and measured them in headless Chromium, alongside a few Python-side scenarios around large layouts and tables. Panel 1.11 works with param 2.4 and panel-material-ui 0.16 as well as with the new param 2.5 and panel-material-ui 0.17, so the chart shows it with both. The measured times for every scenario are in the [appendix](#appendix-benchmark-results).
 
 <img src="./images/perf_1.11.png" width="100%"></img>
-
-| Scenario | 1.10.1 | 1.11.0 | 1.11.0 with param 2.5 and panel-material-ui 0.17 | Change |
-|---|---|---|---|---|
-| Data transferred on first page load, classic | 5.5 MB | 1.0 MB | 1.0 MB | 5.4× less |
-| Data transferred on first page load, Material | 5.0 MB | 1.5 MB | 1.5 MB | 3.2× less |
-| First page load until rendered, classic | 782 ms | 662 ms | 655 ms | 1.2× |
-| First page load until rendered, Material | 964 ms | 718 ms | 643 ms | 1.5× |
-| Creating a session, classic | 318 ms | 223 ms | 218 ms | 1.5× |
-| Creating a session, Material | 337 ms | 120 ms | 106 ms | 3.2× |
-| Sessions per second with 8 concurrent requests, Material | 2.9 | 8.0 | 9.1 | 3.2× |
-| Browser to Python to browser round trip, classic | 77 ms | 27 ms | 26 ms | 2.9× |
-| Browser to Python to browser round trip, Material | 408 ms | 24 ms | 30 ms | 13× |
-| Rendering a `pn.ui.Column` of 200 widgets | 348 ms | 104 ms | 91 ms | 3.8× |
-| Appending to a `Column` of 2,000 items | 73 ms | 3.8 ms | 3.7 ms | 20× |
-| Changing the page of a 200,000 row `Tabulator` (remote pagination) | 8.9 ms | 0.34 ms | 0.31 ms | 29× |
-| Sorting a 200,000 row `Tabulator` | 115 ms | 18 ms | 18 ms | 6.3× |
-| Patching a cell of a sorted 200,000 row `Tabulator` | 116 ms | 18 ms | 18 ms | 6.4× |
 
 The biggest change on page load is the amount of data. MathJax used to be loaded by every template page and is now only loaded when a page contains math, templates no longer load their resources twice, and responses are gzipped ([#9058](https://github.com/holoviz/panel/pull/9058)). Our benchmark runs on localhost, so it barely shows in the load time, but over a real network the drop from 5.5 MB to 1 MB matters much more. Versioned resources also get long-lived cache headers, so the browser reuses them without asking the server again.
 
 Creating a session is where every user waits before seeing anything, and it also limits how many users a single server process can handle. Caching the per-request resource bookkeeping ([#9068](https://github.com/holoviz/panel/pull/9068)), cheaper Bokeh model creation ([#9064](https://github.com/holoviz/panel/pull/9064)) and cheaper component construction ([#9069](https://github.com/holoviz/panel/pull/9069)) speed up every app. Material components benefit most, because `JSComponent` and `ReactComponent` now compute their per-class information once instead of for every instance and skip properties that are still at their defaults ([#9067](https://github.com/holoviz/panel/pull/9067), [#9095](https://github.com/holoviz/panel/pull/9095)). That roughly triples how many Material sessions a server can create per second.
 
-The round trip measures how long it takes from a change in the browser until the update made by a Python callback arrives back. In 1.10 every event on the Material page took more than 400 ms; in 1.11 it takes 24 ms, the same as on the classic page. Busy-state bookkeeping and in-place pane updates got much cheaper, a widget value change no longer unlocks and relocks every parameter of the widget ([#9158](https://github.com/holoviz/panel/pull/9158)), and Panel now waits 20 ms instead of 50 ms for further changes before processing an event from the browser ([#9066](https://github.com/holoviz/panel/pull/9066)). Appending to or replacing children of a large layout, which chat apps and logs do all the time, no longer scales with the number of children already there ([#9057](https://github.com/holoviz/panel/pull/9057), [#9160](https://github.com/holoviz/panel/pull/9160), [#9162](https://github.com/holoviz/panel/pull/9162)), and `Tabulator` updates on large tables no longer reprocess or resend the whole table ([#9071](https://github.com/holoviz/panel/pull/9071)). In the browser, `Tabulator` now applies `stream`, `patch` and selection changes to the existing table instead of rebuilding it ([#9065](https://github.com/holoviz/panel/pull/9065)).
+The round trip measures how long it takes from a change in the browser until the update made by a Python callback arrives back. On a fresh server it went from 54 ms to 23 ms on the classic page and from 67 ms to 23 ms on the Material page. 1.10 also got slower the longer a server ran: after the session benchmark had loaded the page 63 times without opening a websocket, as health checks and abandoned page loads do, every event on the Material page took more than 400 ms, while 1.11 stays at 23 ms. Busy-state bookkeeping and in-place pane updates got much cheaper, a widget value change no longer unlocks and relocks every parameter of the widget ([#9158](https://github.com/holoviz/panel/pull/9158)), and Panel now waits 20 ms instead of 50 ms for further changes before processing an event from the browser ([#9066](https://github.com/holoviz/panel/pull/9066)). Appending to or replacing children of a large layout, which chat apps and logs do all the time, no longer scales with the number of children already there ([#9057](https://github.com/holoviz/panel/pull/9057), [#9160](https://github.com/holoviz/panel/pull/9160), [#9162](https://github.com/holoviz/panel/pull/9162)), and `Tabulator` updates on large tables no longer reprocess or resend the whole table ([#9071](https://github.com/holoviz/panel/pull/9071)). In the browser, `Tabulator` now applies `stream`, `patch` and selection changes to the existing table instead of rebuilding it ([#9065](https://github.com/holoviz/panel/pull/9065)).
 
-A few other improvements are not in the table: `pn.cache` hits are more than ten times cheaper ([#9063](https://github.com/holoviz/panel/pull/9063)), `Vega` and `Plotly` panes avoid redundant re-renders ([#9061](https://github.com/holoviz/panel/pull/9061)), and Documents cleaned up without a session, such as those created by health checks, no longer stay in memory forever ([#9059](https://github.com/holoviz/panel/pull/9059)).
+A few other improvements are not in the benchmarks: `pn.cache` hits are more than ten times cheaper ([#9063](https://github.com/holoviz/panel/pull/9063)), `Vega` and `Plotly` panes avoid redundant re-renders ([#9061](https://github.com/holoviz/panel/pull/9061)), and Documents cleaned up without a session, such as those created by health checks, no longer stay in memory forever ([#9059](https://github.com/holoviz/panel/pull/9059)).
 
-All numbers are medians over 5 runs of the served benchmarks (each on a fresh server, with the 40 round trips in each run also reduced to their median) and 7 runs of the Python-side ones. We ran them on an Apple M5 Pro with Python 3.14.4 and Bokeh 3.10.2, comparing Panel 1.10.1 with param 2.4.2 and panel-material-ui 0.16.7 against Panel 1.11.0, once with the same param and panel-material-ui and once with the last pre-releases of param 2.5.0 and panel-material-ui 0.17.0. The scripts are in the [`benchmarks`](https://github.com/holoviz-dev/blog/tree/main/posts/panel_release_1.11/benchmarks) folder next to this post if you want to reproduce them.
+All numbers are medians over 5 runs of the served benchmarks (each on a fresh server, with the 40 round trips in each run also reduced to their median) and 7 runs of the Python-side ones. We ran them on an Apple M5 Pro with Python 3.14.4 and Bokeh 3.10.2, comparing Panel 1.10.1 with param 2.4.2 and panel-material-ui 0.16.7 against Panel 1.11.0, once with the same param and panel-material-ui and once with param 2.5 and panel-material-ui 0.17, measured with param 2.5.0rc0 and panel-material-ui 0.17.0rc4. The page loads and fresh-server round trips come from a separate run, without the session benchmark beforehand, with panel-material-ui built from its main branch shortly before the release, which includes the MUI 9.6 update. The scripts are in the [`benchmarks`](https://github.com/holoviz-dev/blog/tree/main/posts/panel_release_1.11/benchmarks) folder next to this post if you want to reproduce them.
 
-## Coming soon: param 2.5 and panel-material-ui 0.17
+## param 2.5 and panel-material-ui 0.17
 
-Two releases coming out alongside Panel 1.11 add to these gains. You get everything above with the param and panel-material-ui you have installed today, and more once you upgrade them.
+We are releasing param 2.5 and panel-material-ui 0.17 alongside Panel 1.11, and both add to these gains. You get everything above with the param and panel-material-ui you already have installed, and more once you upgrade them.
 
 [param 2.5.0](https://param.holoviz.org/releases.html), the library underneath every Panel component, makes the hot paths of parameters cheaper. Reading a `Number` parameter is about 2.4× faster and setting one that triggers watchers about 2.2× faster ([param#1167](https://github.com/holoviz/param/pull/1167)), and old and new values are compared once per event instead of once per watcher ([param#1234](https://github.com/holoviz/param/pull/1234)). Every widget value, layout change and pane update goes through these paths, so the whole of Panel benefits. The release also adds `param.Model`, which builds parameters from type annotations, and a `DataFrameLike` parameter for any DataFrame supported by Narwhals.
 
@@ -76,7 +59,7 @@ Two releases coming out alongside Panel 1.11 add to these gains. You get everyth
 * Switching the active tab of a dynamic `Tabs` or `Accordion` is four to five times faster, and switching dark mode takes a single message instead of a round trip per component.
 * `Page` and the notification area no longer leak, which also made every callback slower the more pages had been created.
 
-In our benchmarks the two releases together bring Material session creation from 120 ms to 106 ms, raise the number of Material sessions a server creates per second from 8.0 to 9.1, cut rendering a `pn.ui.Column` of 200 widgets from 104 ms to 91 ms and the first Material page load from 718 ms to 643 ms. Classic apps change little, as you would expect.
+In our benchmarks the two releases together bring Material session creation from 127 ms to 112 ms, raise the number of Material sessions a server creates per second from 7.6 to 8.3, cut rendering a `pn.ui.Column` of 200 widgets from 106 ms to 94 ms and the first Material page load from 834 ms to 707 ms. Classic apps change little, as you would expect.
 
 ## Any DataFrame, and optional pandas
 
@@ -347,3 +330,26 @@ This release removes much of the fixed cost of serving a Panel app, from the byt
 * Remove nonexistent parameters from the `on_msg` and `show_server` docstrings ([#8926](https://github.com/holoviz/panel/pull/8926))
 * Show which library version Panel loads in the reference pages of JavaScript-backed panes ([#9134](https://github.com/holoviz/panel/pull/9134))
 * Note that templates are trusted code that runs on the server and that values passed with `Template.add_variable` are not escaped ([#9148](https://github.com/holoviz/panel/pull/9148))
+
+## Appendix: Benchmark results
+
+Medians for each scenario, measured as described in the [Performance](#performance) section.
+
+| Scenario | 1.10.1 | 1.11.0 with param 2.4 and panel-material-ui 0.16 | 1.11.0 with param 2.5 and panel-material-ui 0.17 | Change |
+|---|---|---|---|---|
+| Data transferred on first page load, classic | 5.5 MB | 1.0 MB | 1.0 MB | 5.4× less |
+| Data transferred on first page load, Material | 5.0 MB | 1.5 MB | 1.5 MB | 3.2× less |
+| First page load until rendered, classic | 805 ms | 673 ms | 663 ms | 1.2× |
+| First page load until rendered, Material | 1,115 ms | 834 ms | 707 ms | 1.6× |
+| Creating a session, classic | 339 ms | 232 ms | 230 ms | 1.5× |
+| Creating a session, Material | 355 ms | 127 ms | 112 ms | 3.2× |
+| Sessions per second with 8 concurrent requests, Material | 2.7 | 7.6 | 8.3 | 3.1× |
+| Browser to Python to browser round trip, classic | 54 ms | 23 ms | 23 ms | 2.3× |
+| Browser to Python to browser round trip, Material | 67 ms | 23 ms | 24 ms | 2.8× |
+| Round trip after 63 page loads without a websocket, classic | 76 ms | 26 ms | 25 ms | 3.0× |
+| Round trip after 63 page loads without a websocket, Material | 442 ms | 23 ms | 29 ms | 15× |
+| Rendering a `pn.ui.Column` of 200 widgets | 376 ms | 106 ms | 94 ms | 4.0× |
+| Appending to a `Column` of 2,000 items | 77 ms | 4.1 ms | 4.3 ms | 18× |
+| Changing the page of a 200,000 row `Tabulator` (remote pagination) | 9.5 ms | 0.35 ms | 0.33 ms | 29× |
+| Sorting a 200,000 row `Tabulator` | 120 ms | 20 ms | 20 ms | 6.1× |
+| Patching a cell of a sorted 200,000 row `Tabulator` | 120 ms | 20 ms | 20 ms | 5.9× |

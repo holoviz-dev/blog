@@ -3,6 +3,10 @@ Summarise the results and draw the chart used in the post.
 
     python report.py   # reads results_*.json, writes ../images/perf_1.11.png
 
+The page load and round trip numbers come from results_browser.json
+(bench_server.py --browser-only) when it exists, the session numbers
+from results_server.json.
+
 Three environments are compared: Panel 1.10 ("1.10", with param 2.4 and
 panel-material-ui 0.16), Panel 1.11 with the same param and
 panel-material-ui ("1.11-base") and Panel 1.11 with param 2.5 and
@@ -17,7 +21,8 @@ import matplotlib.pyplot as plt
 HERE = pathlib.Path(__file__).parent
 
 SERVER = [
-    # (app, key, label, higher_is_better)
+    # (app, key, label, higher_is_better); round_trip_after_sessions_ms is the
+    # round trip measured after the session benchmark in results_server.json
     ('classic', 'cold_wire_kb', 'Page load, bytes on the wire (FastListTemplate)', False),
     ('ui', 'cold_wire_kb', 'Page load, bytes on the wire (pn.ui.Page)', False),
     ('classic', 'cold_idle_ms', 'Page load to rendered (FastListTemplate)', False),
@@ -28,6 +33,8 @@ SERVER = [
     ('ui', 'throughput_rps', 'Sessions per second, 8 concurrent (pn.ui.Page)', True),
     ('classic', 'round_trip_ms', 'Browser to Python to browser (FastListTemplate)', False),
     ('ui', 'round_trip_ms', 'Browser to Python to browser (pn.ui.Page)', False),
+    ('classic', 'round_trip_after_sessions_ms', 'Browser to Python to browser after 63 sessions (FastListTemplate)', False),
+    ('ui', 'round_trip_after_sessions_ms', 'Browser to Python to browser after 63 sessions (pn.ui.Page)', False),
 ]
 
 PYTHON = [
@@ -45,14 +52,21 @@ PYTHON = [
 
 VERSIONS = [('1.10', '110'), ('1.11-base', '111base'), ('1.11', '111')]
 
+BROWSER_KEYS = {'cold_wire_kb', 'cold_idle_ms', 'round_trip_ms'}
+
 
 def main():
     rows = json.loads((HERE / 'results_server.json').read_text())
+    browser_path = HERE / 'results_browser.json'
+    browser_rows = json.loads(browser_path.read_text()) if browser_path.exists() else rows
     py = {tag: json.loads((HERE / f'results_python_{tag}.json').read_text())['medians_ms'] for _, tag in VERSIONS}
     table = []
     for app, key, label, higher in SERVER:
+        source = browser_rows if key in BROWSER_KEYS else rows
+        if key == 'round_trip_after_sessions_ms':
+            key = 'round_trip_ms'
         values = [
-            statistics.median(r[key] for r in rows if r['app'] == app and r['version'] == version)
+            statistics.median(r[key] for r in source if r['app'] == app and r['version'] == version)
             for version, _ in VERSIONS
         ]
         table.append((label, values, higher))
