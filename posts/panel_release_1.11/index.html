@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Philipp Rudiger">
+<meta name="dcterms.date" content="2026-11-24">
+<meta name="description" content="Release announcement for Panel 1.11">
+
+<title>Panel 1.11.0 Release – HoloViz Blog</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-85f7a32731ed2b609fa7be27e34d4366.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-75fe79ad89ac7e3b32c3fea675f21851.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+    window.goatcounter = {
+        path: function(p) { return location.host + p }
+    }
+</script>
+<script data-goatcounter="https://holoviz.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+
+
+<link rel="stylesheet" href="../../custom.css">
+<meta property="og:title" content="Panel 1.11.0 Release – HoloViz Blog">
+<meta property="og:description" content="Release announcement for Panel 1.11">
+<meta property="og:image" content="https://blog.holoviz.org/posts/panel_release_1.11/images/collage_1.11.png">
+<meta property="og:site_name" content="HoloViz Blog">
+<meta property="og:image:height" content="1350">
+<meta property="og:image:width" content="2400">
+<meta name="twitter:title" content="Panel 1.11.0 Release – HoloViz Blog">
+<meta name="twitter:description" content="Release announcement for Panel 1.11">
+<meta name="twitter:image" content="https://blog.holoviz.org/posts/panel_release_1.11/images/collage_1.11.png">
+<meta name="twitter:site" content="@HoloViz_org">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="https://holoviz.org" class="navbar-brand navbar-brand-logo">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo light-content">
+    <img src="../../holoviz-logo-unstacked.svg" alt="HoloViz logo." class="navbar-logo dark-content">
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-learn" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Learn</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-learn">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/presentations/index.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/background.html">
+ <span class="dropdown-text">Background</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/learn/FAQ.html">
+ <span class="dropdown-text">FAQ</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/tutorial/index.html"> 
+<span class="menu-text">Tutorial</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://examples.holoviz.org/"> 
+<span class="menu-text">Examples</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/community.html"> 
+<span class="menu-text">Community</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://holoviz.org/contribute.html"> 
+<span class="menu-text">Contribute</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-about">    
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/index.html">
+ <span class="dropdown-text">About Us</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/governance/index.html">
+ <span class="dropdown-text">Governance</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/heps/index.html">
+ <span class="dropdown-text">HEPs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/roadmap.html">
+ <span class="dropdown-text">Roadmap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://holoviz.org/about/funding.html">
+ <span class="dropdown-text">Funding</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/holoviz" title="HoloViz Github" class="quarto-navigation-tool px-1" aria-label="HoloViz Github"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/holoviz_org" title="HoloViz Twitter" class="quarto-navigation-tool px-1" aria-label="HoloViz Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://discourse.holoviz.org" title="HoloViz Forum" class="quarto-navigation-tool px-1" aria-label="HoloViz Forum"><i class="bi bi-chat-text"></i></a>
+    <a href="https://discord.gg/UXdtYyGVQX" title="HoloViz Discord" class="quarto-navigation-tool px-1" aria-label="HoloViz Discord"><i class="bi bi-discord"></i></a>
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-panel" id="toc-what-is-panel" class="nav-link active" data-scroll-target="#what-is-panel">What is Panel?</a></li>
+  <li><a href="#new-release" id="toc-new-release" class="nav-link" data-scroll-target="#new-release">New Release!</a></li>
+  <li><a href="#performance" id="toc-performance" class="nav-link" data-scroll-target="#performance">Performance</a></li>
+  <li><a href="#param-2.5-and-panel-material-ui-0.17" id="toc-param-2.5-and-panel-material-ui-0.17" class="nav-link" data-scroll-target="#param-2.5-and-panel-material-ui-0.17">param 2.5 and panel-material-ui 0.17</a></li>
+  <li><a href="#any-dataframe-and-optional-pandas" id="toc-any-dataframe-and-optional-pandas" class="nav-link" data-scroll-target="#any-dataframe-and-optional-pandas">Any DataFrame, and optional pandas</a></li>
+  <li><a href="#bug-fixes" id="toc-bug-fixes" class="nav-link" data-scroll-target="#bug-fixes">Bug fixes</a></li>
+  <li><a href="#upgrading" id="toc-upgrading" class="nav-link" data-scroll-target="#upgrading">Upgrading</a></li>
+  <li><a href="#panel-and-ai" id="toc-panel-and-ai" class="nav-link" data-scroll-target="#panel-and-ai">Panel and AI</a></li>
+  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next">What comes next</a></li>
+  <li><a href="#changelog" id="toc-changelog" class="nav-link" data-scroll-target="#changelog">Changelog</a>
+  <ul class="collapse">
+  <li><a href="#features" id="toc-features" class="nav-link" data-scroll-target="#features">🚀 Features</a></li>
+  <li><a href="#enhancements" id="toc-enhancements" class="nav-link" data-scroll-target="#enhancements">✨ Enhancements</a></li>
+  <li><a href="#performance-1" id="toc-performance-1" class="nav-link" data-scroll-target="#performance-1">⚡ Performance</a></li>
+  <li><a href="#security" id="toc-security" class="nav-link" data-scroll-target="#security">🔒 Security</a></li>
+  <li><a href="#bug-fixes-1" id="toc-bug-fixes-1" class="nav-link" data-scroll-target="#bug-fixes-1">🐛 Bug Fixes</a></li>
+  <li><a href="#compatibility" id="toc-compatibility" class="nav-link" data-scroll-target="#compatibility">⚙️ Compatibility</a></li>
+  <li><a href="#deprecations-and-removals" id="toc-deprecations-and-removals" class="nav-link" data-scroll-target="#deprecations-and-removals">⚠️ Deprecations and Removals</a></li>
+  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">📚 Documentation</a></li>
+  </ul></li>
+  <li><a href="#appendix-benchmark-results" id="toc-appendix-benchmark-results" class="nav-link" data-scroll-target="#appendix-benchmark-results">Appendix: Benchmark results</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/holoviz-dev/blog/edit/main/posts/panel_release_1.11/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Panel 1.11.0 Release</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">release</div>
+    <div class="quarto-category">panel</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Release announcement for Panel 1.11
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Philipp Rudiger </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 24, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><img src="./images/collage_1.11.png" width="100%"></p>
+<section id="what-is-panel" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-panel">What is Panel?</h2>
+<p><a href="https://panel.holoviz.org/">Panel</a> is an open-source Python library for building tools, dashboards and complex applications entirely in Python. It comes with the PyData ecosystem, advanced data tables and much more built in, and offers both high-level reactive APIs and lower-level callback-based APIs, so you can put together an exploratory app in a few lines or develop a multi-page application with rich interactivity. Panel is a member of the <a href="https://holoviz.org">HoloViz</a> ecosystem, alongside a suite of tools designed for data exploration.</p>
+</section>
+<section id="new-release" class="level2">
+<h2 class="anchored" data-anchor-id="new-release">New Release!</h2>
+<p>We are happy to announce the 1.11.0 release of Panel! Panel 1.10 changed how you build Panel apps with <code>pn.ui</code>. This release makes those apps, and the classic ones, faster. We spent a large part of the cycle profiling real applications and removing fixed costs from every page load, session, component and event. The same app, unchanged, now loads a fraction of the bytes, starts sessions faster and answers events in less than half the time, and param 2.5 and panel-material-ui 0.17, released alongside it, add to these gains. <code>Tabulator</code> and the other data components now also work with Polars, PyArrow and other DataFrame libraries, which let us make pandas an optional dependency, and the release fixes a long list of bugs, including several affecting authentication and apps deployed behind a reverse proxy.</p>
+<p>Many thanks to <span class="citation" data-cites="fizzbeom">@fizzbeom</span> and <span class="citation" data-cites="morgan-coded">@morgan-coded</span> for responsibly reporting the security issues fixed in this release, and to the contributors to this release: <span class="citation" data-cites="philippjfr">@philippjfr</span>, <span class="citation" data-cites="hoxbro">@hoxbro</span>, <span class="citation" data-cites="maximlt">@maximlt</span>, <span class="citation" data-cites="aarab-malik">@aarab-malik</span>, <span class="citation" data-cites="AaryanRS">@AaryanRS</span>, <span class="citation" data-cites="benjibunbun">@benjibunbun</span>, <span class="citation" data-cites="Cherith1222">@Cherith1222</span>, <span class="citation" data-cites="chiruu12">@chiruu12</span>, <span class="citation" data-cites="Jojoussef">@Jojoussef</span>, <span class="citation" data-cites="SAMARTHJAISWAL">@SAMARTHJAISWAL</span>, <span class="citation" data-cites="Web4everyone32">@Web4everyone32</span>, <span class="citation" data-cites="YashAnand69">@YashAnand69</span>, <span class="citation" data-cites="Adithya6721">@Adithya6721</span>, <span class="citation" data-cites="Adititodekar">@Adititodekar</span>, <span class="citation" data-cites="ahuang11">@ahuang11</span>, <span class="citation" data-cites="Alpenj">@Alpenj</span>, <span class="citation" data-cites="compiler-segfault">@compiler-segfault</span>, <span class="citation" data-cites="danishkumar26">@danishkumar26</span>, <span class="citation" data-cites="JoeyTan21">@JoeyTan21</span>, <span class="citation" data-cites="Kkkakania">@Kkkakania</span>, <span class="citation" data-cites="MarcSkovMadsen">@MarcSkovMadsen</span>, <span class="citation" data-cites="mmporong">@mmporong</span>, <span class="citation" data-cites="mvanhorn">@mvanhorn</span>, <span class="citation" data-cites="nightcityblade">@nightcityblade</span>, <span class="citation" data-cites="nojaf">@nojaf</span>, <span class="citation" data-cites="prabhushreyas">@prabhushreyas</span>, <span class="citation" data-cites="ryandesign">@ryandesign</span>, <span class="citation" data-cites="SuMayaBee">@SuMayaBee</span>, <span class="citation" data-cites="sushan5140">@sushan5140</span> and <span class="citation" data-cites="tmichela">@tmichela</span>.</p>
+<hr>
+<p>If you’re using <a href="https://www.anaconda.com/downloads">Anaconda</a>, you can install the latest version of Panel with <code>conda install panel</code>. If you prefer pip, use <code>pip install panel</code>. Note that pip no longer installs pandas for you; use <code>pip install "panel[recommended]"</code> if you want it. To also get the new param and panel-material-ui releases, upgrade them together, e.g.&nbsp;<code>pip install -U panel param panel-material-ui</code>.</p>
+<hr>
+</section>
+<section id="performance" class="level2">
+<h2 class="anchored" data-anchor-id="performance">Performance</h2>
+<p>Panel 1.11 removes a lot of fixed cost from serving an app: in the bytes a page loads, in the work done for each session and component, and in the overhead around each event. You get all of it without changing any code.</p>
+<p>To see what that means for a real app, we built the same dashboard twice, once from classic components in a <code>FastListTemplate</code> and once from Material components in a <code>pn.ui.Page</code>. Each has around 180 components: 40 widgets in the sidebar, a row of indicators, a Bokeh plot, a 1,000 row <code>Tabulator</code>, some Markdown and a card with 120 more widgets. We served both with Panel 1.10.1 and 1.11.0 and measured them in headless Chromium, alongside a few Python-side scenarios around large layouts and tables. Panel 1.11 works with param 2.4 and panel-material-ui 0.16 as well as with the new param 2.5 and panel-material-ui 0.17, so the chart shows it with both. The measured times for every scenario are in the <a href="#appendix-benchmark-results">appendix</a>.</p>
+<p><img src="./images/perf_1.11.png" width="100%"></p>
+<p>The biggest change on page load is the amount of data. MathJax used to be loaded by every template page and is now only loaded when a page contains math, templates no longer load their resources twice, and responses are gzipped (<a href="https://github.com/holoviz/panel/pull/9058">#9058</a>). Our benchmark runs on localhost, so it barely shows in the load time, but over a real network the drop from 5.5 MB to 1 MB matters much more. Versioned resources also get long-lived cache headers, so the browser reuses them without asking the server again.</p>
+<p>Creating a session is where every user waits before seeing anything, and it also limits how many users a single server process can handle. Caching the per-request resource bookkeeping (<a href="https://github.com/holoviz/panel/pull/9068">#9068</a>), cheaper Bokeh model creation (<a href="https://github.com/holoviz/panel/pull/9064">#9064</a>) and cheaper component construction (<a href="https://github.com/holoviz/panel/pull/9069">#9069</a>) speed up every app. Material components benefit most, because <code>JSComponent</code> and <code>ReactComponent</code> now compute their per-class information once instead of for every instance and skip properties that are still at their defaults (<a href="https://github.com/holoviz/panel/pull/9067">#9067</a>, <a href="https://github.com/holoviz/panel/pull/9095">#9095</a>). That roughly triples how many Material sessions a server can create per second.</p>
+<p>The round trip measures how long it takes from a change in the browser until the update made by a Python callback arrives back. On a fresh server it went from 54 ms to 23 ms on the classic page and from 67 ms to 23 ms on the Material page. 1.10 also got slower the longer a server ran: after the session benchmark had loaded the page 63 times without opening a websocket, as health checks and abandoned page loads do, every event on the Material page took more than 400 ms, while 1.11 stays at 23 ms. Busy-state bookkeeping and in-place pane updates got much cheaper, a widget value change no longer unlocks and relocks every parameter of the widget (<a href="https://github.com/holoviz/panel/pull/9158">#9158</a>), and Panel now waits 20 ms instead of 50 ms for further changes before processing an event from the browser (<a href="https://github.com/holoviz/panel/pull/9066">#9066</a>). Appending to or replacing children of a large layout, which chat apps and logs do all the time, no longer scales with the number of children already there (<a href="https://github.com/holoviz/panel/pull/9057">#9057</a>, <a href="https://github.com/holoviz/panel/pull/9160">#9160</a>, <a href="https://github.com/holoviz/panel/pull/9162">#9162</a>), and <code>Tabulator</code> updates on large tables no longer reprocess or resend the whole table (<a href="https://github.com/holoviz/panel/pull/9071">#9071</a>). In the browser, <code>Tabulator</code> now applies <code>stream</code>, <code>patch</code> and selection changes to the existing table instead of rebuilding it (<a href="https://github.com/holoviz/panel/pull/9065">#9065</a>).</p>
+<p>A few other improvements are not in the benchmarks: <code>pn.cache</code> hits are more than ten times cheaper (<a href="https://github.com/holoviz/panel/pull/9063">#9063</a>), <code>Vega</code> and <code>Plotly</code> panes avoid redundant re-renders (<a href="https://github.com/holoviz/panel/pull/9061">#9061</a>), and Documents cleaned up without a session, such as those created by health checks, no longer stay in memory forever (<a href="https://github.com/holoviz/panel/pull/9059">#9059</a>).</p>
+<p>All numbers are medians over 5 runs of the served benchmarks (each on a fresh server, with the 40 round trips in each run also reduced to their median) and 7 runs of the Python-side ones. We ran them on an Apple M5 Pro with Python 3.14.4 and Bokeh 3.10.2, comparing Panel 1.10.1 with param 2.4.2 and panel-material-ui 0.16.7 against Panel 1.11.0, once with the same param and panel-material-ui and once with param 2.5 and panel-material-ui 0.17, measured with param 2.5.0rc0 and panel-material-ui 0.17.0rc4. The page loads and fresh-server round trips come from a separate run, without the session benchmark beforehand, with panel-material-ui built from its main branch shortly before the release, which includes the MUI 9.6 update. The scripts are in the <a href="https://github.com/holoviz-dev/blog/tree/main/posts/panel_release_1.11/benchmarks"><code>benchmarks</code></a> folder next to this post if you want to reproduce them.</p>
+</section>
+<section id="param-2.5-and-panel-material-ui-0.17" class="level2">
+<h2 class="anchored" data-anchor-id="param-2.5-and-panel-material-ui-0.17">param 2.5 and panel-material-ui 0.17</h2>
+<p>We are releasing param 2.5 and panel-material-ui 0.17 alongside Panel 1.11, and both add to these gains. You get everything above with the param and panel-material-ui you already have installed, and more once you upgrade them.</p>
+<p><a href="https://param.holoviz.org/releases.html">param 2.5.0</a>, the library underneath every Panel component, makes the hot paths of parameters cheaper. Reading a <code>Number</code> parameter is about 2.4× faster and setting one that triggers watchers about 2.2× faster (<a href="https://github.com/holoviz/param/pull/1167">param#1167</a>), and old and new values are compared once per event instead of once per watcher (<a href="https://github.com/holoviz/param/pull/1234">param#1234</a>). Every widget value, layout change and pane update goes through these paths, so the whole of Panel benefits. The release also adds <code>param.Model</code>, which builds parameters from type annotations, and a <code>DataFrameLike</code> parameter for any DataFrame supported by Narwhals.</p>
+<p><a href="https://panel-material-ui.holoviz.org/releases.html">panel-material-ui 0.17.0</a> focuses on what Material components cost under load:</p>
+<ul>
+<li>Streaming into <code>ChatMessage</code> and <code>ChatFeed</code> no longer re-syncs the whole page on every token. Streaming 500 tokens into the last message of a 500 message feed went from about 20 s to 0.2 s.</li>
+<li>Widgets are constructed up to twice as fast, and setting <code>TextInput.value</code> on a rendered widget is twice as fast.</li>
+<li><code>Select</code>, <code>MultiChoice</code>, <code>CrossSelector</code> and <code>AutocompleteInput</code> process their options in linear time, so re-rendering a <code>Select</code> with 50,000 options went from about 2.7 s to 30 ms.</li>
+<li>Switching the active tab of a dynamic <code>Tabs</code> or <code>Accordion</code> is four to five times faster, and switching dark mode takes a single message instead of a round trip per component.</li>
+<li><code>Page</code> and the notification area no longer leak, which also made every callback slower the more pages had been created.</li>
+</ul>
+<p>In our benchmarks the two releases together bring Material session creation from 127 ms to 112 ms, raise the number of Material sessions a server creates per second from 7.6 to 8.3, cut rendering a <code>pn.ui.Column</code> of 200 widgets from 106 ms to 94 ms and the first Material page load from 834 ms to 707 ms. Classic apps change little, as you would expect.</p>
+</section>
+<section id="any-dataframe-and-optional-pandas" class="level2">
+<h2 class="anchored" data-anchor-id="any-dataframe-and-optional-pandas">Any DataFrame, and optional pandas</h2>
+<p>Panel 1.10 taught the <code>DataFrame</code> pane to render any DataFrame supported by <a href="https://narwhals-dev.github.io/narwhals/">Narwhals</a>. In 1.11 the interactive data components follow: <code>Tabulator</code>, the <code>DataFrame</code> widget, <code>Perspective</code> and <code>Vizzu</code> accept Polars, PyArrow and any other eager DataFrame Narwhals supports, without converting it to pandas (<a href="https://github.com/holoviz/panel/pull/8841">#8841</a>). Filtering, sorting, remote pagination, selection, edits, <code>stream()</code> and <code>patch()</code> all work, and <code>.value</code> stays the type you passed in:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> panel <span class="im">as</span> pn</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pl.DataFrame({</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'station'</span>: [<span class="st">'Alpha'</span>, <span class="st">'Bravo'</span>, <span class="st">'Charlie'</span>, <span class="st">'Delta'</span>, <span class="st">'Echo'</span>, <span class="st">'Foxtrot'</span>],</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'region'</span>: [<span class="st">'North'</span>, <span class="st">'South'</span>, <span class="st">'North'</span>, <span class="st">'East'</span>, <span class="st">'West'</span>, <span class="st">'South'</span>],</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'output_mw'</span>: [<span class="fl">12.4</span>, <span class="fl">8.1</span>, <span class="fl">15.0</span>, <span class="fl">9.7</span>, <span class="fl">11.2</span>, <span class="fl">6.3</span>],</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'online'</span>: [<span class="va">True</span>, <span class="va">True</span>, <span class="va">False</span>, <span class="va">True</span>, <span class="va">True</span>, <span class="va">False</span>],</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> pn.ui.Tabulator(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    header_filters<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    sorters<span class="op">=</span>[{<span class="st">'field'</span>: <span class="st">'output_mw'</span>, <span class="st">'dir'</span>: <span class="st">'desc'</span>}],</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    layout<span class="op">=</span><span class="st">'fit_columns'</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    sizing_mode<span class="op">=</span><span class="st">'stretch_width'</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> pn.ui.Typography(variant<span class="op">=</span><span class="st">'h6'</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_total(event<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    total.<span class="bu">object</span> <span class="op">=</span> <span class="ss">f"Total output: </span><span class="sc">{</span>table<span class="sc">.</span>value[<span class="st">'output_mw'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.1f}</span><span class="ss"> MW (</span><span class="sc">{</span><span class="bu">type</span>(table.value)<span class="sc">.</span>__module__<span class="sc">.</span>split(<span class="st">'.'</span>)[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>table.on_edit(update_total)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>update_total()</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>pn.ui.Page(title<span class="op">=</span><span class="st">'Polars in Tabulator'</span>, main<span class="op">=</span>[total, table]).servable()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/polars_tabulator.png" width="80%"></p>
+<p><em>After editing Alpha’s output to 20, the total is recomputed from the Polars frame.</em></p>
+<p>Since these frames have no index, rows are addressed by position, and <code>Styler</code> based styling remains pandas-only; the <a href="https://panel.holoviz.org/en/docs/latest/reference/widgets/Tabulator.html">Tabulator reference</a> has the details. With nothing in Panel’s core depending on pandas any more, it has moved to the <code>recommended</code> extra, as announced in the 1.9 release notes. If your app uses pandas, make sure it is in your own requirements.</p>
+</section>
+<section id="bug-fixes" class="level2">
+<h2 class="anchored" data-anchor-id="bug-fixes">Bug fixes</h2>
+<p>This release contains around a hundred bug fixes. Two groups deserve a mention because they affect how apps are deployed.</p>
+<p>Authentication got several fixes. The login redirect validation now rejects <code>next</code> values such as <code>///evil.com</code>, which browsers resolve to another site, closing an open redirect in both the basic auth and OAuth login flows (<a href="https://github.com/holoviz/panel/pull/8938">#8938</a>); we recommend upgrading if you use authentication. 1.11 also includes the two security fixes released in 1.10.1 and 1.9.5: the server no longer imports the module named in a <code>/components/</code> resource URL, which let any client stop the server with a single request (<a href="https://github.com/holoviz/panel/security/advisories/GHSA-wfhv-r23p-8x9w">GHSA-wfhv-r23p-8x9w</a>), and <code>authorize_callback</code> now also applies to <code>autoload.js</code> and websocket connections, so a user denied access to an app can no longer open a session of it (<a href="https://github.com/holoviz/panel/security/advisories/GHSA-9cgh-cwhr-4rhg">GHSA-9cgh-cwhr-4rhg</a>). OAuth behind a reverse proxy or with <code>--prefix</code> used to need a hand-written <code>--oauth-redirect-uri</code>, and some setups did not work at all. Panel now derives the external URL from the request, <code>--root-path</code>, <code>--prefix</code> and, with <code>--use-xheaders</code>, the <code>X-Forwarded-Host</code> and <code>X-Forwarded-Prefix</code> headers, and uses it for the redirect URI and every login and logout redirect (<a href="https://github.com/holoviz/panel/pull/9072">#9072</a>, building on <a href="https://github.com/holoviz/panel/pull/8211">#8211</a> by <a href="https://github.com/TheoMathurin"><span class="citation" data-cites="TheoMathurin">@TheoMathurin</span></a>). <code>--oauth-guest-endpoints</code> entries ending in <code>/*</code> now cover the paths below them, so a branded login page can load its assets (<a href="https://github.com/holoviz/panel/pull/9033">#9033</a>), and Panel warns when the session token gets close to the 8 KB header limit of common proxies, which otherwise surfaced only as “Could not open websocket” in the browser (<a href="https://github.com/holoviz/panel/pull/8638">#8638</a>).</p>
+<p>Resource loading behind proxies and on nested routes is also fixed. Stylesheets defined relative to a design or theme were cached with the URL of whichever route rendered them first, so a page on a nested route such as <code>/dash/&lt;id&gt;</code> requested them from the wrong place and got a 404. Lazily loaded resources had the same problem after navigating within an app under <code>panel serve</code>. Both now resolve against the route the session is on, including behind a proxy that strips its prefix (<a href="https://github.com/holoviz/panel/pull/9109">#9109</a>). Hosts that rewrite or do not serve Panel’s <code>static/extensions/</code> routes, such as Shiny, now load components too, falling back to the CDN when a resource request fails (<a href="https://github.com/holoviz/panel/pull/9020">#9020</a>).</p>
+<p>Beyond those, threaded apps no longer hit races on the document lock, updates made inside a long running synchronous callback reach the browser while it runs again, notebooks sync every change of a message, and <code>Tabulator</code>, <code>Plotly</code>, <code>FloatPanel</code>, <code>Tabs</code> and the classic templates received many smaller fixes. The changelog below has the full list.</p>
+</section>
+<section id="upgrading" class="level2">
+<h2 class="anchored" data-anchor-id="upgrading">Upgrading</h2>
+<p>A few changes may need your attention. <code>pip install panel</code> no longer installs pandas. The default OAuth redirect URI now includes <code>--prefix</code> and follows the forwarded headers with <code>--use-xheaders</code>, so you may have to register the new URI with your provider or pass the old one with <code>--oauth-redirect-uri</code>. Responses are now gzipped (turn it off with <code>pn.serve(..., compress=False)</code> if your proxy already compresses), and changes from the browser are debounced for 20 ms instead of 50 ms. The <a href="https://panel.holoviz.org/en/docs/latest/upgrade.html">upgrade guide</a> and the behaviour change markers in the changelog cover the rest.</p>
+</section>
+<section id="panel-and-ai" class="level2">
+<h2 class="anchored" data-anchor-id="panel-and-ai">Panel and AI</h2>
+<p>The chat components benefit from the performance work, and streaming text with math into a <code>Markdown</code> pane now typesets only the blocks that changed (<a href="https://github.com/holoviz/panel/pull/9061">#9061</a>). <code>ChatInterface</code> gained a <code>widget_placeholder</code> parameter (<a href="https://github.com/holoviz/panel/pull/9040">#9040</a>). If you use an AI coding assistant to write Panel code, point it at our <a href="https://panel.holoviz.org/en/docs/latest/llms.txt"><code>llms.txt</code></a>, which indexes Markdown versions of every documentation page, or install the <a href="https://skills.holoviz.org/">HoloViz Agent Skills</a> with <code>uvx holoviz-skills@latest install</code>. The guide on <a href="https://panel.holoviz.org/en/docs/latest/how_to/use_llms.html">using Panel with an AI assistant</a> covers both.</p>
+</section>
+<section id="what-comes-next" class="level2">
+<h2 class="anchored" data-anchor-id="what-comes-next">What comes next</h2>
+<p>We now have benchmarks for page loads, sessions, components, layouts, <code>Tabulator</code> and caching, so we can keep measuring as we go, and we will keep chipping away at the remaining costs. Panel 2.0, where the Material components become the default, stays the larger goal. If you have questions or want to share what you built, join us on <a href="https://discourse.holoviz.org/">Discourse</a> or <a href="https://discord.gg/AXRHnJU6sP">Discord</a>, and please report bugs and ideas on <a href="https://github.com/holoviz/panel/issues">GitHub</a>.</p>
+</section>
+<section id="changelog" class="level2">
+<h2 class="anchored" data-anchor-id="changelog">Changelog</h2>
+<p>For the full list of changes, see the <a href="https://github.com/holoviz/panel/releases/tag/v1.11.0">Panel 1.11.0 changelog</a>.</p>
+<section id="features" class="level3">
+<h3 class="anchored" data-anchor-id="features">🚀 Features</h3>
+<ul>
+<li>Accept Polars, PyArrow and any other eager DataFrame supported by Narwhals in <code>Tabulator</code>, the <code>DataFrame</code> widget, <code>Perspective</code> and <code>Vizzu</code> without converting it to pandas. Filtering, sorting, remote pagination, selection, edits, <code>stream()</code> and <code>patch()</code> all work on these frames, with rows addressed by position since they have no index, and PyArrow tables keep <code>large_string</code> and other large column types when they are edited, patched or streamed into (<a href="https://github.com/holoviz/panel/pull/8841">#8841</a>, <a href="https://github.com/holoviz/panel/pull/9086">#9086</a>)</li>
+</ul>
+</section>
+<section id="enhancements" class="level3">
+<h3 class="anchored" data-anchor-id="enhancements">✨ Enhancements</h3>
+<ul>
+<li>Accept positional arguments to the cached function in <code>pn.state.as_cached</code> (<a href="https://github.com/holoviz/panel/pull/9123">#9123</a>)</li>
+<li>Show a default <code>Filter by &lt;column&gt;...</code> placeholder in <code>Tabulator</code> header filters (<a href="https://github.com/holoviz/panel/pull/8452">#8452</a>)</li>
+<li>Add a <code>widget_placeholder</code> parameter to <code>ChatInterface</code> that sets, and later updates, the placeholder of its default input widget (<a href="https://github.com/holoviz/panel/pull/9040">#9040</a>)</li>
+<li>Add <code>max_completions</code> to <code>AutocompleteInput</code> to limit the number of suggestions shown (<a href="https://github.com/holoviz/panel/pull/9031">#9031</a>)</li>
+<li>Let <code>save</code> export PNGs with Bokeh’s Playwright backend, selected with the new <code>backend</code> argument (e.g.&nbsp;<code>.save('x.png', backend='playwright')</code>) or <code>BOKEH_EXPORT_BACKEND</code>, and apply Panel’s page template and idle wait to screenshots again on Bokeh 3.10 (<a href="https://github.com/holoviz/panel/pull/8918">#8918</a>)</li>
+<li>Add a <code>compress</code> option to <code>pn.serve</code> and <code>get_server</code> (default <code>True</code>) to turn off response compression, for example behind a proxy that already compresses (<a href="https://github.com/holoviz/panel/pull/9058">#9058</a>)</li>
+<li>Let <code>--oauth-guest-endpoints</code> entries ending in <code>/*</code> or <code>/</code> cover the paths below them, so e.g.&nbsp;a branded login page can load its logo from <code>--static-dirs</code>; plain entries now match the path without the query string but still do not cover sub-paths (<a href="https://github.com/holoviz/panel/pull/9033">#9033</a>)</li>
+<li>Log a one-time warning per app when the Bokeh session token approaches the 8 KB request header limit of common proxies, which otherwise fails with an unexplained “Could not open websocket” (<a href="https://github.com/holoviz/panel/pull/8638">#8638</a>)</li>
+<li>Load the <code>TextEditor</code> (Quill) resources from the CDN configured with <code>PANEL_NPM_CDN</code> instead of always from jsDelivr (<a href="https://github.com/holoviz/panel/pull/7826">#7826</a>)</li>
+<li>Add <code>keyboard_accessible</code> and <code>soft_wrap</code> parameters to <code>CodeEditor</code>, so keyboard users can move focus out of the editor and long lines can wrap (<a href="https://github.com/holoviz/panel/pull/9120">#9120</a>)</li>
+<li>Add a <code>markers</code> parameter to <code>CodeEditor</code> to highlight lines, and style its read-only tooltip (<a href="https://github.com/holoviz/panel/pull/9139">#9139</a>)</li>
+</ul>
+</section>
+<section id="performance-1" class="level3">
+<h3 class="anchored" data-anchor-id="performance-1">⚡ Performance</h3>
+<p>This release removes much of the fixed cost of serving a Panel app, from the bytes a page loads to the work done per session, per component and per event. The numbers below are the ones measured in each pull request.</p>
+<ul>
+<li>Load fewer resources per page and serve them compressed and cached. MathJax is only loaded on pages that contain math, template resources are no longer loaded twice, responses are gzipped, static files are compressed once and versioned resources get long-lived cache headers. A <code>FastListTemplate</code> page went from 5831 KB to 3143 KB of local resources, 830 KB on the wire (<a href="https://github.com/holoviz/panel/pull/9058">#9058</a>)</li>
+<li>Cache the per-request resource bookkeeping, apply a template’s design once and stop streaming log records into the admin dashboard when nobody is looking; generating the page for a 200-widget app went from 16.1 ms to 1.3 ms (<a href="https://github.com/holoviz/panel/pull/9068">#9068</a>)</li>
+<li>Speed up Bokeh model creation in <code>server_doc</code>; a <code>Column</code> of 200 widgets went from 173 ms to 104 ms (<a href="https://github.com/holoviz/panel/pull/9064">#9064</a>)</li>
+<li>Cut the cost of constructing Panel components and of <code>pn.panel</code> dispatch; a <code>Column</code> of 20 sliders is 47% cheaper to create and <code>pn.panel('text')</code> 42% cheaper (<a href="https://github.com/holoviz/panel/pull/9069">#9069</a>)</li>
+<li>Make <code>JSComponent</code> and <code>ReactComponent</code>, and with them every <code>panel-material-ui</code> component, cheap to render and update; <code>server_doc</code> of a <code>ui.Column</code> of 200 widgets went from 534 ms to 335 ms and appending to a <code>ui.Column(2000)</code> from 167 ms to 13.7 ms (<a href="https://github.com/holoviz/panel/pull/9067">#9067</a>, <a href="https://github.com/holoviz/panel/pull/9099">#9099</a>)</li>
+<li>Further reduce the cost of creating <code>ReactiveESM</code> models, such as those of <code>panel-material-ui</code> components, by dropping default-valued properties when constructing the model and its DataModel, narrowing the reference scan of DataModel properties, registering event callbacks without a per-callback signature inspection and reusing the Document’s shared stylesheets instead of building a throwaway per component; <code>server_doc</code> of a <code>ui.Column</code> of 200 components went from 124 ms to 86 ms with an unchanged serialized Document (<a href="https://github.com/holoviz/panel/pull/9095">#9095</a>)</li>
+<li>Send a compiled inline ESM bundle once per document instead of once per component, so ten <code>panel-material-ui</code> buttons in a notebook or exported HTML file go from 15 MB to 1.7 MB (<a href="https://github.com/holoviz/panel/pull/9104">#9104</a>)</li>
+<li>Make mutations of large layouts cheap; appending to a <code>Column</code> with 2000 children went from 89.1 ms to 10.9 ms (<a href="https://github.com/holoviz/panel/pull/9057">#9057</a>)</li>
+<li>Share the loading indicator CSS across all models on a Document instead of sending a copy per model, shrinking the initial document of a <code>Column</code> of 200 widgets from 126.7 KB to 74.5 KB (-41%) (<a href="https://github.com/holoviz/panel/pull/9056">#9056</a>)</li>
+<li><strong>Behaviour change:</strong> Cut the per-event overhead in the server and notebook update paths and lower the default debounce of frontend changes from 50 ms to 20 ms; the browser to Python to browser round trip on the benchmark app dropped from a median of ~64 ms to ~34 ms. <code>pn.reactive.Syncable._debounce</code> can still be raised globally or per component (<a href="https://github.com/holoviz/panel/pull/9066">#9066</a>)</li>
+<li>Batch model updates scheduled from worker threads into one message and combine held events in linear time; a 1 ms periodic callback with <code>PANEL_NUM_THREADS=4</code> went from 299–390 to 603–682 ticks/s, and setting <code>TextInput.value</code> sends one message instead of two (<a href="https://github.com/holoviz/panel/pull/9070">#9070</a>)</li>
+<li>Process events that arrive while changes are still pending on a worker thread with the document lock, so a synchronous callback no longer blocks the event loop and its updates reach the browser while it runs (<a href="https://github.com/holoviz/panel/pull/9075">#9075</a>)</li>
+<li>Avoid redundant work on <code>Vega</code>, <code>HTML</code>, <code>Markdown</code> and <code>Plotly</code> pane updates: Vega data updates no longer re-embed the chart (mean latency 46.5 ms -&gt; 22 ms), streaming 200 chunks containing math into <code>Markdown</code> went from 3665 ms to 465 ms of JS time, and a Plotly layout change made in the browser from 269 ms to 6 ms (<a href="https://github.com/holoviz/panel/pull/9061">#9061</a>)</li>
+<li>Update <code>Tabulator</code> incrementally in the browser on <code>stream</code>, <code>patch</code> and selection instead of rebuilding the table; a one-cell <code>patch</code> on 10k rows went from 15.3 ms to 0.4 ms of JS handler time (<a href="https://github.com/holoviz/panel/pull/9065">#9065</a>)</li>
+<li>Cut the Python-side cost of <code>Tabulator</code> updates on large tables; on 200k rows a remote pagination page change went from 13.9 ms to 1.2 ms and a one-cell <code>patch()</code> with a sorter active from 27.6 ms and a 6.3 MB message to 2.1 ms and a 1 KB message. Also fixes <code>patch()</code> with remote pagination (<a href="https://github.com/holoviz/panel/pull/9071">#9071</a>)</li>
+<li>Stop rebuilding every <code>Tabulator</code> column on each edit when column names are not strings (e.g.&nbsp;years after a pivot), which also closed the editor when tabbing to the next cell (<a href="https://github.com/holoviz/panel/pull/9054">#9054</a>)</li>
+<li><strong>Behaviour change:</strong> Reduce <code>pn.cache</code> per-call overhead (a hit on <code>f(1)</code> went from 22.5 µs to 1.4 µs), give decorations with different settings separate caches and let an exact type in <code>hash_funcs</code> take precedence over the defaults. Hashes of flat containers change, so existing <code>to_disk=True</code> caches are recomputed once (<a href="https://github.com/holoviz/panel/pull/9063">#9063</a>)</li>
+<li>Release Documents cleaned up without a session (liveness checks, warm-up, the ASGI server) and cut references from models to their Document when it is destroyed, so they no longer stay alive forever (<a href="https://github.com/holoviz/panel/pull/9059">#9059</a>)</li>
+<li>Only unlock the parameters that are actually readonly or constant when syncing a widget value, instead of toggling every parameter of the widget; setting a value from Python is 2.9× faster for a classic <code>IntSlider</code> and 1.7× for <code>pn.ui.IntSlider</code>, and a value change from the browser about 1.9× faster. Also stops a constant parameter from staying writable on an instance after it was set inside <code>edit_readonly</code> (<a href="https://github.com/holoviz/panel/pull/9158">#9158</a>)</li>
+<li>Read the sizing properties of a layout’s children without Bokeh’s theme lookup, making the sizing inference on each layout change about 2.7× cheaper (<a href="https://github.com/holoviz/panel/pull/9160">#9160</a>)</li>
+<li>Skip the full-tree preprocessing walks on layout changes that do not add the components they handle (HoloViews, ECharts, param methods); appending to a <code>Column</code> of 500 items is 13 to 14% faster (<a href="https://github.com/holoviz/panel/pull/9162">#9162</a>)</li>
+</ul>
+</section>
+<section id="security" class="level3">
+<h3 class="anchored" data-anchor-id="security">🔒 Security</h3>
+<ul>
+<li>Reject <code>next_url</code> values such as <code>///evil.com</code> or ones containing control characters, which browsers resolve to another site, in the basic auth and OAuth login redirects (<a href="https://github.com/holoviz/panel/pull/8938">#8938</a>)</li>
+<li>Stop importing the module named in <code>/components/</code> resource URLs, which let any client, including when authentication is enabled, make the server import installed modules and shut it down with a single request (<a href="https://github.com/holoviz/panel/security/advisories/GHSA-wfhv-r23p-8x9w">GHSA-wfhv-r23p-8x9w</a>)</li>
+<li>Apply <code>authorize_callback</code> to <code>autoload.js</code> and websocket connections, which previously let a logged-in user open a session of an app they were denied access to (<a href="https://github.com/holoviz/panel/security/advisories/GHSA-9cgh-cwhr-4rhg">GHSA-9cgh-cwhr-4rhg</a>, <a href="https://github.com/holoviz/panel/pull/9152">#9152</a>)</li>
+<li>Stop <code>FileSelector</code> from navigating into sibling directories whose name starts with the name of <code>root_directory</code>, such as <code>/app/data2</code> for a root of <code>/app/data</code> (<a href="https://github.com/holoviz/panel/pull/9149">#9149</a>)</li>
+</ul>
+</section>
+<section id="bug-fixes-1" class="level3">
+<h3 class="anchored" data-anchor-id="bug-fixes-1">🐛 Bug Fixes</h3>
+<ul>
+<li>Send updates made inside a long running synchronous callback to the browser while it runs instead of only once it returns, so e.g.&nbsp;a loading spinner toggled in the callback shows again, on Tornado as well as the ASGI servers (<a href="https://github.com/holoviz/panel/pull/8937">#8937</a>, <a href="https://github.com/holoviz/panel/pull/9082">#9082</a>)</li>
+<li>Only treat the document lock as held by the thread that acquired it, fixing <code>RuntimeError: _pending_writes should be non-None</code> and concurrent document writes in threaded apps (<code>--num-threads</code>), including on free-threaded Python 3.14, and only let the lock owner write updates directly from a worker thread (<a href="https://github.com/holoviz/panel/pull/9008">#9008</a>, <a href="https://github.com/holoviz/panel/pull/9009">#9009</a>, <a href="https://github.com/holoviz/panel/pull/9024">#9024</a>)</li>
+<li>Keep a script that ends right after <code>pn.serve(..., threaded=True)</code> serving, which since 1.10.0 answered every request with a 500 error (<a href="https://github.com/holoviz/panel/pull/9073">#9073</a>)</li>
+<li>Fix several timing issues: Plotly clicks and hovers right after render being dropped, quick <code>Tabs</code> switches leaving broken views, timers scheduled from worker threads firing late, a <code>Tabulator</code> scroll right after render being reset, <code>PeriodicCallback.start()</code> busy looping, and threaded servers leaking sockets on Windows (<a href="https://github.com/holoviz/panel/pull/8869">#8869</a>)</li>
+<li>Sync every property change of a message sent from the browser in notebooks, where only the first one reached Python, so e.g.&nbsp;<code>pn.state.browser_info</code> and <code>FileInput</code> <code>filename</code> and <code>mime_type</code> are populated (<a href="https://github.com/holoviz/panel/pull/9045">#9045</a>)</li>
+<li>Stop notebooks from echoing changes made in Python back to Python, which caused <code>BokehUserWarning: reference already known</code> warnings (<a href="https://github.com/holoviz/panel/pull/9055">#9055</a>)</li>
+<li>Stop sending a change made in the browser back to that browser when it arrives while the Document is held, e.g.&nbsp;by a callback running on a worker thread, which on high-latency deployments reset text inputs to stale text and lost the characters typed since (<a href="https://github.com/holoviz/panel/pull/9101">#9101</a>)</li>
+<li>Write changes from unlocked callbacks, such as an async task streaming into a chat message, after the changes of a callback holding the document lock when they refer to models that callback has not sent yet, instead of writing them first so the browser dropped them with <code>reference ... isn't known</code>; unrelated changes are still written immediately (<a href="https://github.com/holoviz/panel/pull/9105">#9105</a>, <a href="https://github.com/holoviz/panel/pull/9107">#9107</a>)</li>
+<li>Write the changes of a locked callback that are handed to Bokeh, e.g.&nbsp;when a <code>hold()</code> block exits while the socket is busy, as one message instead of one per change, so the browser no longer renders them in steps (<a href="https://github.com/holoviz/panel/pull/9106">#9106</a>)</li>
+<li>Keep every view of a notebook output responsive when the output is shown more than once, e.g.&nbsp;with JupyterLab’s “Create New View for Cell Output” (<a href="https://github.com/holoviz/panel/pull/9062">#9062</a>)</li>
+<li>Fix <code>MultipleInstanceError</code> from <code>Kernel.instance()</code> (e.g.&nbsp;in ipyleaflet) after loading the <code>ipywidgets</code> extension, while still resolving the per-session kernel when serving ipywidgets from a notebook or the Jupyter preview, and render the first ipywidget of a served app reliably (<a href="https://github.com/holoviz/panel/pull/8949">#8949</a>, <a href="https://github.com/holoviz/panel/pull/9025">#9025</a>, <a href="https://github.com/holoviz/panel/pull/9074">#9074</a>)</li>
+<li><strong>Behaviour change:</strong> Make OAuth and login redirects work behind a reverse proxy or with <code>--prefix</code> without <code>--oauth-redirect-uri</code>, honouring <code>X-Forwarded-Host</code> and <code>X-Forwarded-Prefix</code> with <code>--use-xheaders</code>. The default OAuth redirect URI now includes <code>--prefix</code> and follows those headers, so re-register it with your provider or pass <code>--oauth-redirect-uri</code> (<a href="https://github.com/holoviz/panel/pull/9072">#9072</a>, building on <a href="https://github.com/holoviz/panel/pull/8211">#8211</a> by <span class="citation" data-cites="TheoMathurin">@TheoMathurin</span>)</li>
+<li><strong>Behaviour change:</strong> Leave hierarchical <code>Tabulator</code> group rows blank for index levels without an aggregator instead of summing every column (and concatenating strings). Pass <code>aggregators</code> explicitly, e.g.&nbsp;<code>aggregators={'grp': 'sum'}</code>, to keep the previous sums (<a href="https://github.com/holoviz/panel/pull/9004">#9004</a>, <a href="https://github.com/holoviz/panel/pull/9011">#9011</a>)</li>
+<li>Fix <code>Tabulator.stream</code> on a table whose index is a <code>DatetimeIndex</code> or another non-numeric index, preserving the streamed index labels so repeated streams and subsequent patches work (<a href="https://github.com/holoviz/panel/pull/8858">#8858</a>, <a href="https://github.com/holoviz/panel/pull/9023">#9023</a>)</li>
+<li>Convert <code>datetime</code>, <code>pd.Timestamp</code> and <code>np.datetime64</code> values in <code>Tabulator.patch</code>, which previously raised or wrote the wrong value (<a href="https://github.com/holoviz/panel/pull/9000">#9000</a>)</li>
+<li>Support clearing a cell in a nullable integer (<code>Int64</code>) <code>Tabulator</code> column, which now stores <code>&lt;NA&gt;</code> and keeps the dtype (<a href="https://github.com/holoviz/panel/pull/8994">#8994</a>)</li>
+<li>Re-fit <code>Tabulator</code> columns with a <code>fit_data</code> layout after a cell edit or a new <code>value</code>, so longer content no longer clips; columns the user resized keep their width (<a href="https://github.com/holoviz/panel/pull/8968">#8968</a>)</li>
+<li>Let a <code>Tabulator</code> date header filter with <code>func='like'</code> match the timestamp text instead of raising, with remote pagination and in <code>current_view</code> (<a href="https://github.com/holoviz/panel/pull/8857">#8857</a>)</li>
+<li>Apply <code>Tabulator.style</code> cell styles to the right column when <code>groups</code> are set (<a href="https://github.com/holoviz/panel/pull/8966">#8966</a>)</li>
+<li><strong>Behaviour change:</strong> Ignore the <code>width</code> that a pandas <code>Styler</code> (e.g.&nbsp;<code>Styler.bar</code>) sets on <code>Tabulator</code> cells, which made the column wider than its header; use <code>Tabulator.widths</code> to size columns (<a href="https://github.com/holoviz/panel/pull/8988">#8988</a>)</li>
+<li>Stop highlighting rows on hover when <code>Tabulator</code> has <code>selectable=False</code> (<a href="https://github.com/holoviz/panel/pull/8955">#8955</a>)</li>
+<li>Support <code>Tabulator.jscallback(selection=...)</code> and raise a clear error when a <code>jscallback</code> targets a parameter that only exists in Python (<a href="https://github.com/holoviz/panel/pull/8953">#8953</a>)</li>
+<li>Stop a <code>Tabulator</code> in an inactive tab from keeping the browser’s main thread busy (<a href="https://github.com/holoviz/panel/pull/8936">#8936</a>)</li>
+<li>Fix <code>Perspective.stream()</code> duplicating rows in the browser, make dict patches to <code>Perspective</code> update <code>.object</code>, and stop truncating edited Polars string values (<a href="https://github.com/holoviz/panel/pull/8841">#8841</a>)</li>
+<li>Keep datetime axes of a <code>Plotly</code> pane as dates after <code>update_traces</code> or <code>batch_update</code> (<a href="https://github.com/holoviz/panel/pull/8952">#8952</a>)</li>
+<li>Fix the serialization error that dropped <code>Plotly</code> updates made inside <code>fig.batch_update()</code> (<a href="https://github.com/holoviz/panel/pull/8943">#8943</a>)</li>
+<li>Include multicategory <code>x</code> values and heatmap and image <code>pointNumber</code>/<code>pointIndex</code> in <code>Plotly</code> click, hover and selection data (<a href="https://github.com/holoviz/panel/pull/8954">#8954</a>)</li>
+<li>Play animated <code>Plotly</code> figures by keeping their frames, also when the figure is given as a dict (<a href="https://github.com/holoviz/panel/pull/9043">#9043</a>)</li>
+<li><strong>Behaviour change:</strong> Render <code>Matplotlib</code> PNGs at twice the <code>dpi</code> when <code>high_dpi=True</code> (the default), as before Panel 1.0, so they are sharp on high-DPI screens at the same displayed size; PNGs are about 2-3x larger and <code>high_dpi=False</code> restores the previous output (<a href="https://github.com/holoviz/panel/pull/9047">#9047</a>)</li>
+<li>Render Matplotlib plots in a <code>HoloViews</code> pane, e.g.&nbsp;of a <code>HoloMap</code> or <code>DynamicMap</code>, at the DPI of the HoloViews renderer, so they are no longer twice the size of the same plot rendered by HoloViews directly (<a href="https://github.com/holoviz/panel/pull/9049">#9049</a>)</li>
+<li><strong>Behaviour change:</strong> Apply the <code>theme</code> of a <code>Bokeh</code> pane in served apps, notebooks and saved files by setting it on the document, as <code>HoloViews.theme</code> does, so it now applies to the whole document (<a href="https://github.com/holoviz/panel/pull/8996">#8996</a>)</li>
+<li>Style <code>Segment</code> glyphs, such as box plot whiskers, in the dark Bokeh themes so they are visible (<a href="https://github.com/holoviz/panel/pull/8980">#8980</a>)</li>
+<li>Load the full KaTeX stylesheet and bundle its fonts for the <code>LaTeX</code> pane, so constructs such as <code>\hline</code> render correctly (<a href="https://github.com/holoviz/panel/pull/8965">#8965</a>)</li>
+<li>Stop the <code>Markdown</code> pane from parsing <code>*</code> inside <code>$$...$$</code> math as emphasis, including while streaming (<a href="https://github.com/holoviz/panel/pull/8970">#8970</a>, <a href="https://github.com/holoviz/panel/pull/9014">#9014</a>)</li>
+<li>Stop an <code>HTML</code> or <code>Markdown</code> pane from throwing when its visibility changes before it is rendered, e.g.&nbsp;inside a collapsed <code>panel-material-ui</code> <code>Card</code> (<a href="https://github.com/holoviz/panel/pull/9051">#9051</a>)</li>
+<li>Support Altair’s <code>vegafusion</code> data transformer in the <code>Vega</code> pane (<a href="https://github.com/holoviz/panel/pull/8939">#8939</a>)</li>
+<li>Render local PDF data in the <code>PDF</code> pane with <code>embed=False</code> in Chromium (<a href="https://github.com/holoviz/panel/pull/8995">#8995</a>)</li>
+<li>Keep the per-row structure of nested columns, such as <code>PathLayer</code> paths, in <code>DeckGL</code> data (<a href="https://github.com/holoviz/panel/pull/8982">#8982</a>)</li>
+<li>Generate Material UI widgets in <code>pn.ui.HoloViews</code>, and design-specific widgets in <code>pn.pane.HoloViews</code>, as intended (<a href="https://github.com/holoviz/panel/pull/8976">#8976</a>)</li>
+<li>Keep one <code>HoloViews</code> slider option per <code>HoloMap</code> key when formatted labels collide, so every frame can be selected (<a href="https://github.com/holoviz/panel/pull/8984">#8984</a>)</li>
+<li>Accept <code>pn.ui</code> layouts for <code>HoloViews.widget_layout</code> and <code>ChatReactionIcons.default_layout</code> (<a href="https://github.com/holoviz/panel/pull/8932">#8932</a>)</li>
+<li>Allow non-string values in <code>AutocompleteInput</code> with <code>restrict=False</code> (<a href="https://github.com/holoviz/panel/pull/8909">#8909</a>)</li>
+<li>Allow setting the <code>value</code> of <code>TextInput</code>, <code>TextAreaInput</code> and <code>PasswordInput</code> to <code>None</code> (<a href="https://github.com/holoviz/panel/pull/8917">#8917</a>)</li>
+<li>Show the default colour (<code>#000000</code>) when the <code>value</code> of a <code>ColorPicker</code> is set to <code>None</code>, instead of raising a validation error (<a href="https://github.com/holoviz/panel/pull/9098">#9098</a>)</li>
+<li>Allow <code>fixed_start</code> or <code>fixed_end</code> to be <code>None</code> on editable sliders, e.g.&nbsp;when generated by <code>pn.Param</code> for a parameter with one open bound, instead of raising a <code>TypeError</code> (<a href="https://github.com/holoviz/panel/pull/9103">#9103</a>)</li>
+<li>Select the right option in a <code>Select</code> with <code>groups</code> when the same label appears in several groups (<a href="https://github.com/holoviz/panel/pull/8956">#8956</a>)</li>
+<li>Select the right option when a <code>Select</code> synced to the URL has numeric-looking options such as <code>'02'</code> (<a href="https://github.com/holoviz/panel/pull/8960">#8960</a>)</li>
+<li>Fix validation of <code>DatetimeInput</code> when only <code>start</code> or <code>end</code> is set (<a href="https://github.com/holoviz/panel/pull/8910">#8910</a>)</li>
+<li>Show a rounded value (e.g.&nbsp;<code>0.1</code> instead of <code>0.10000000001</code>) in the <code>EditableFloatSlider</code> textbox when no <code>format</code> is given, and apply later <code>format</code> and <code>step</code> changes to it (<a href="https://github.com/holoviz/panel/pull/8990">#8990</a>)</li>
+<li><strong>Behaviour change:</strong> Round <code>interact</code> slider defaults that fall between steps to the nearest step instead of flooring them, so <code>(0, 4, 0.5, 1.3)</code> now starts at <code>1.5</code> (<a href="https://github.com/holoviz/panel/pull/8947">#8947</a>, <a href="https://github.com/holoviz/panel/pull/9013">#9013</a>)</li>
+<li>Render a <code>None</code> value in <code>LinearGauge</code> like <code>nan</code> instead of raising a <code>TypeError</code> (<a href="https://github.com/holoviz/panel/pull/9039">#9039</a>)</li>
+<li>Size the animated stripes of an active <code>Progress</code> bar to its height (<a href="https://github.com/holoviz/panel/pull/8981">#8981</a>)</li>
+<li>Respect <code>max_width</code> and <code>max_height</code> when sizing the <code>Dial</code> (<a href="https://github.com/holoviz/panel/pull/8958">#8958</a>)</li>
+<li>Accept any <code>os.PathLike</code>, such as an <code>os.DirEntry</code> from <code>os.scandir</code>, as the <code>file</code> of a <code>FileDownload</code> (<a href="https://github.com/holoviz/panel/pull/9090">#9090</a>)</li>
+<li>Render bounded <code>param.DateRange</code> and <code>param.CalendarDateRange</code> parameters without a default in <code>Param</code> instead of failing to load the page (<a href="https://github.com/holoviz/panel/pull/8859">#8859</a>)</li>
+<li>Use an input widget for bounded <code>param.Number</code> and <code>param.Integer</code> parameters whose value is <code>None</code>, which previously failed to render (<a href="https://github.com/holoviz/panel/pull/8983">#8983</a>)</li>
+<li>Fix updating the <code>objects</code> of a <code>param.Selector</code> holding <code>Parameterized</code> instances in <code>Param</code> (<a href="https://github.com/holoviz/panel/pull/8985">#8985</a>)</li>
+<li><strong>Behaviour change:</strong> <code>Widget.from_param</code> no longer wraps selectors of <code>Parameterized</code> objects in a <code>Row</code> with an expand toggle; pass <code>expand_button=True</code> to opt back in (<a href="https://github.com/holoviz/panel/pull/8991">#8991</a>)</li>
+<li>Hide a single unpacked <code>Param</code> widget when its parameter’s <code>precedence</code> drops below the display threshold (<a href="https://github.com/holoviz/panel/pull/8992">#8992</a>)</li>
+<li>Update the tab title when a <code>Tabs</code> entry is renamed but keeps the same pane (<a href="https://github.com/holoviz/panel/pull/8944">#8944</a>)</li>
+<li>Support param references for <code>objects</code> in <code>Tabs</code>, <code>Accordion</code> and <code>FloatPanel</code> (<a href="https://github.com/holoviz/panel/pull/8997">#8997</a>)</li>
+<li>Retain parameters such as <code>closable</code> and <code>tabs_location</code> when cloning <code>Tabs</code> and <code>Accordion</code>, clamping <code>active</code> to the new objects (<a href="https://github.com/holoviz/panel/pull/8999">#8999</a>, <a href="https://github.com/holoviz/panel/pull/9012">#9012</a>)</li>
+<li>Fix <code>clone</code> for components whose read-only parameters were edited with <code>param.edit_constant</code> (<a href="https://github.com/holoviz/panel/pull/8948">#8948</a>)</li>
+<li>Size a <code>FloatPanel</code> with <code>contained=False</code> to its content, while respecting a height set through <code>config={'panelSize': ...}</code> (<a href="https://github.com/holoviz/panel/pull/8987">#8987</a>, <a href="https://github.com/holoviz/panel/pull/9015">#9015</a>)</li>
+<li>Make <code>FloatPanel</code> children with stretching sizing modes fill the panel height (<a href="https://github.com/holoviz/panel/pull/9001">#9001</a>)</li>
+<li>Let a <code>pn.ui.Modal</code> grow to fit wide content and apply an explicit <code>width</code> to the dialog (<a href="https://github.com/holoviz/panel/pull/9030">#9030</a>)</li>
+<li>Let <code>VSpacer</code> fill the sidebar height in the Fast, Vanilla, React and Bootstrap templates (<a href="https://github.com/holoviz/panel/pull/8971">#8971</a>)</li>
+<li>Paint plots placed in the modal of the Fast templates in Chromium (<a href="https://github.com/holoviz/panel/pull/8972">#8972</a>)</li>
+<li>Size <code>scale_both</code> and <code>scale_height</code> content, such as responsive HoloViews plots with an <code>aspect</code>, in the Fast template (<a href="https://github.com/holoviz/panel/pull/8993">#8993</a>)</li>
+<li>Use the accent colour for the active Bokeh toolbar tool in the Fast templates (<a href="https://github.com/holoviz/panel/pull/9002">#9002</a>)</li>
+<li>Show the slides when <code>SlidesTemplate</code> has <code>main_max_width</code> set (<a href="https://github.com/holoviz/panel/pull/8978">#8978</a>)</li>
+<li>Show the configured disconnect and ready notifications for templates built outside a session, e.g.&nbsp;before <code>template.show()</code> (<a href="https://github.com/holoviz/panel/pull/8942">#8942</a>)</li>
+<li><strong>Behaviour change:</strong> Fix <code>ReactiveHTML</code> components with <code>'literal'</code> children failing to render the page, and render literal children as (sanitized) HTML markup rather than only their text content (<a href="https://github.com/holoviz/panel/pull/8989">#8989</a>)</li>
+<li>Detect <code>++</code> and <code>--</code> assignments to <code>data.*</code> in <code>ReactiveHTML</code> scripts and no longer mistake comparisons for assignments (<a href="https://github.com/holoviz/panel/pull/8998">#8998</a>)</li>
+<li>Report the correct <code>event.node</code> for <code>ReactiveHTML</code> callbacks shared between several nodes (<a href="https://github.com/holoviz/panel/pull/8962">#8962</a>)</li>
+<li>Stop a child from disappearing from <code>pn.ui</code> layouts when children are swapped in <code>ReactComponent</code> (<a href="https://github.com/holoviz/panel/pull/8935">#8935</a>)</li>
+<li><strong>Behaviour change:</strong> Stop <code>model.useState</code> in <code>ReactComponent</code> from writing a stale value back over a newer model change, which could e.g.&nbsp;leave a widget stuck loading after <code>loading = True</code> followed by <code>loading = False</code>. <code>setValue</code> now writes to the model synchronously, so a value set through it reaches the server before a <code>send_msg</code> sent in the same handler (<a href="https://github.com/holoviz/panel/pull/9100">#9100</a>)</li>
+<li>Set up <code>jslink</code> and <code>jscallback</code> links on children added to a <code>JSComponent</code> or <code>ReactComponent</code> layout, e.g.&nbsp;with <code>pn.ui.Column.extend</code> (<a href="https://github.com/holoviz/panel/pull/9028">#9028</a>)</li>
+<li>Fix <code>JSComponent</code> and <code>ReactComponent</code> views that are re-rendered or removed before they mount, which could abort the layout of the whole page (e.g.&nbsp;with <code>Cannot read properties of undefined (reading 'top_panel')</code> for a Bokeh figure) or leave every component rendered afterwards blank (<a href="https://github.com/holoviz/panel/pull/9081">#9081</a>)</li>
+<li>Warn instead of raising when <code>.controls()</code> cannot link a parameter to a missing model property (<a href="https://github.com/holoviz/panel/pull/8979">#8979</a>)</li>
+<li><strong>Behaviour change:</strong> Keep the loading indicator of an async <code>ParamFunction</code> or <code>ParamMethod</code> on until the function completes (<a href="https://github.com/holoviz/panel/pull/8946">#8946</a>)</li>
+<li><strong>Behaviour change:</strong> Only inherit <code>Pipeline</code> stage values from stages on the current route, so values from abandoned branches no longer leak into a stage (<a href="https://github.com/holoviz/panel/pull/8986">#8986</a>)</li>
+<li>Serve applications whose name or route contains non-ASCII characters, and show their decoded names on the index page (<a href="https://github.com/holoviz/panel/pull/8950">#8950</a>, <a href="https://github.com/holoviz/panel/pull/9017">#9017</a>)</li>
+<li>Honor <code>pn.config.admin_endpoint</code> and <code>PANEL_ADMIN_ENDPOINT</code> (<a href="https://github.com/holoviz/panel/pull/8945">#8945</a>)</li>
+<li>Open a single browser tab when serving with <code>num_procs &gt; 1</code> and <code>show=True</code> (<a href="https://github.com/holoviz/panel/pull/8963">#8963</a>)</li>
+<li>Mount WSGI apps such as Flask at their route and <code>prefix</code> so their routes resolve (<a href="https://github.com/holoviz/panel/pull/8967">#8967</a>)</li>
+<li>Change the ETag of a file served with <code>--static-dirs</code> when the file is rewritten, so browsers no longer keep a stale copy until a hard reload (<a href="https://github.com/holoviz/panel/pull/8961">#8961</a>)</li>
+<li>Read and write user files such as <code>--setup</code> scripts, auth templates, <code>panel convert</code> output and <code>panel compile</code> projects as UTF-8, fixing non-ASCII text on Windows (<a href="https://github.com/holoviz/panel/pull/9036">#9036</a>)</li>
+<li><strong>Behaviour change:</strong> Only install Panel’s SIGINT handler in <code>get_server</code> and <code>pn.serve</code> when <code>start=True</code>; applications that start the event loop themselves should handle SIGINT (<a href="https://github.com/holoviz/panel/pull/9003">#9003</a>)</li>
+<li>Reload the page when <code>pn.state.location.reload = True</code> is set while building the app, and no longer reload when it is set to <code>False</code> (<a href="https://github.com/holoviz/panel/pull/8964">#8964</a>)</li>
+<li>Give <code>pn.state.session_info</code> watchers distinct old and new values and make concurrent updates safe (<a href="https://github.com/holoviz/panel/pull/8957">#8957</a>, <a href="https://github.com/holoviz/panel/pull/9016">#9016</a>)</li>
+<li>Run <code>Terminal</code> subprocesses with <code>exec</code> so the server’s exit handlers no longer run in the forked child (<a href="https://github.com/holoviz/panel/pull/8940">#8940</a>)</li>
+<li>Inline component stylesheets, e.g.&nbsp;for <code>Tabulator</code>, when saving with <code>resources='inline'</code> (<a href="https://github.com/holoviz/panel/pull/8969">#8969</a>)</li>
+<li><strong>Behaviour change:</strong> Load lazily loaded component resources on hosts that rewrite or do not serve Panel’s <code>static/extensions/</code> routes, such as Shiny. A library the host already loaded under a rewritten URL is recognised instead of fetched again, a failed resource request is retried once from the CDN instead of hanging, and ESM components always carry the es-module-shims URL. With <code>resources='server'</code>, a page now makes a request to the configured CDN when a <code>static/extensions/</code> request fails; a working server never does, and an air-gapped one sees that request fail as well (<a href="https://github.com/holoviz/panel/pull/9020">#9020</a>)</li>
+<li>Only merge embedded widgets that share a label when their type and options also match (<a href="https://github.com/holoviz/panel/pull/8974">#8974</a>)</li>
+<li>Fix <code>pn.cache</code> returning the result for a different float with the same hash, such as <code>-1.0</code> for <code>-2.0</code> (<a href="https://github.com/holoviz/panel/pull/8922">#8922</a>)</li>
+<li>Avoid a <code>RecursionError</code> when passing self-referential containers to a <code>pn.cache</code> function (<a href="https://github.com/holoviz/panel/pull/8923">#8923</a>)</li>
+<li>Fix typos in <code>panel compile</code> messages (<a href="https://github.com/holoviz/panel/pull/8880">#8880</a>)</li>
+<li>Drop held changes to models the client has not been sent yet, which made the browser reject the whole patch with <code>reference ... isn't known</code> (<a href="https://github.com/holoviz/panel/pull/8906">#8906</a>, <a href="https://github.com/holoviz/panel/pull/9155">#9155</a>)</li>
+<li>Resize the container of ESM components, including the <code>panel-material-ui</code> ones, when their size changes after they rendered (<a href="https://github.com/holoviz/panel/pull/9108">#9108</a>)</li>
+<li>Resolve relative stylesheet urls against the route a session is on, so apps on nested routes load all their stylesheets (<a href="https://github.com/holoviz/panel/pull/9109">#9109</a>)</li>
+<li>Fix serving a Bokeh figure under a global template, which failed with <code>unexpected attribute 'design' to figure</code> (<a href="https://github.com/holoviz/panel/pull/9110">#9110</a>)</li>
+<li>Stream into a paginated <code>Tabulator</code> without “Scroll Error - Row not visible” errors or stale pages (<a href="https://github.com/holoviz/panel/pull/9111">#9111</a>)</li>
+<li>Stop a <code>hold()</code> running on the event loop from leaving the Document in <code>collect</code> mode when a callback on a worker thread released the same hold (<a href="https://github.com/holoviz/panel/pull/9117">#9117</a>)</li>
+<li>Stop a <code>hold()</code> released before the session loaded from writing the held Python changes back into their parameters (<a href="https://github.com/holoviz/panel/pull/9126">#9126</a>)</li>
+<li>Render Bokeh figures with a <code>SizeBar</code> annotation inside React based layouts such as the <code>panel-material-ui</code> ones (<a href="https://github.com/holoviz/panel/pull/9119">#9119</a>)</li>
+<li>Keep apps converted with <code>panel convert</code> working when the CDN does not have the wheel of the locally installed Bokeh version (<a href="https://github.com/holoviz/panel/pull/9121">#9121</a>)</li>
+<li>Keep the basemap of a <code>DeckGL</code> pane with a Carto <code>mapStyle</code> aligned with the deck.gl layers when the pane is created and when its <code>initialViewState</code> changes (<a href="https://github.com/holoviz/panel/pull/9122">#9122</a>, <a href="https://github.com/holoviz/panel/pull/9129">#9129</a>)</li>
+<li>Fix a race in <code>CodeEditor</code> with <code>on_keyup=True</code> where a stale <code>value_input</code> could overwrite a newer one (<a href="https://github.com/holoviz/panel/pull/9127">#9127</a>)</li>
+<li>Fire <code>Tabulator.on_edit</code> callbacks when the edit event arrives after the data patch (<a href="https://github.com/holoviz/panel/pull/9128">#9128</a>)</li>
+<li>Allow creating a <code>DatetimeRangeInput</code> without a <code>value</code> and without both <code>start</code> and <code>end</code> (<a href="https://github.com/holoviz/panel/pull/9132">#9132</a>)</li>
+<li>Keep an explicitly set <code>min_width</code> or <code>min_height</code> on a layout instead of replacing it with one inferred from its children (<a href="https://github.com/holoviz/panel/pull/9133">#9133</a>)</li>
+<li>Hash <code>datetime.time</code> and <code>datetime.timedelta</code> arguments by value in <code>pn.cache</code>, which could return the result for a different argument (<a href="https://github.com/holoviz/panel/pull/9137">#9137</a>)</li>
+<li>Resize a container-sized <code>Vega</code> chart whenever its container changes size (<a href="https://github.com/holoviz/panel/pull/9138">#9138</a>)</li>
+<li>Keep other query parameters unchanged when updating the URL query, so e.g.&nbsp;<code>02134</code> no longer becomes <code>2134</code> (<a href="https://github.com/holoviz/panel/pull/9141">#9141</a>)</li>
+<li>Select the matching option when a <code>Select</code> is created with a <code>None</code> value (<a href="https://github.com/holoviz/panel/pull/9143">#9143</a>)</li>
+<li>Keep tuple values when editing the value input generated for a range parameter, e.g.&nbsp;by <code>RangeSlider.controls(jslink=True)</code>, which raised a <code>ValueError</code> (<a href="https://github.com/holoviz/panel/pull/9135">#9135</a>)</li>
+<li>Apply changes that reach a view before it has rendered, e.g.&nbsp;the child of a React component that is not mounted, instead of aborting the rest of the patch, and apply Plotly relayouts and restyles sent before the plot rendered once it does (<a href="https://github.com/holoviz/panel/pull/9154">#9154</a>, <a href="https://github.com/holoviz/panel/pull/9156">#9156</a>)</li>
+<li>Allow defining a custom component with a pandas <code>param.DataFrame</code> default without polars installed (<a href="https://github.com/holoviz/panel/pull/9157">#9157</a>)</li>
+<li>Apply <code>disabled_options</code> to options inside groups of a <code>Select</code> (<a href="https://github.com/holoviz/panel/pull/9165">#9165</a>)</li>
+</ul>
+</section>
+<section id="compatibility" class="level3">
+<h3 class="anchored" data-anchor-id="compatibility">⚙️ Compatibility</h3>
+<ul>
+<li><strong>Behaviour change:</strong> <code>pn.state.as_cached</code> now requires <code>ttl</code> to be passed by keyword (<a href="https://github.com/holoviz/panel/pull/9123">#9123</a>)</li>
+<li><strong>Behaviour change:</strong> pandas is no longer a required dependency and moves to the <code>recommended</code> extra, as announced in the 1.9.0 release notes. <code>Tabulator</code>, the <code>DataFrame</code> widget, <code>Perspective</code>, <code>Vizzu</code> and <code>ChatMessage</code> work without it; the admin dashboard still requires pandas and raises a clear error without it (<a href="https://github.com/holoviz/panel/pull/8841">#8841</a>)</li>
+<li>Add compatibility with Bokeh 3.10.2, which clamps slider values to their range; editable sliders now widen their range in Python, and changing <code>fixed_start</code> or <code>fixed_end</code> clamps the value into the new bounds (<a href="https://github.com/holoviz/panel/pull/8927">#8927</a>)</li>
+<li>Stop passing the <code>HTTPServerRequest</code> arguments that Tornado 6.7 removed (<a href="https://github.com/holoviz/panel/pull/9046">#9046</a>)</li>
+<li>Bump <code>dompurify</code> to 3.4.17 (<a href="https://github.com/holoviz/panel/pull/8908">#8908</a>)</li>
+<li>Export the <code>Fullscreen</code> wrapper added in <code>panel-material-ui</code> 0.17 from <code>panel.ui</code> (<a href="https://github.com/holoviz/panel/pull/9144">#9144</a>)</li>
+</ul>
+</section>
+<section id="deprecations-and-removals" class="level3">
+<h3 class="anchored" data-anchor-id="deprecations-and-removals">⚠️ Deprecations and Removals</h3>
+<ul>
+<li><code>TerminalSubprocess.run</code> keyword arguments other than <code>shell</code>, <code>cwd</code>, <code>env</code> and <code>executable</code> (e.g.&nbsp;<code>timeout</code> or <code>check</code>) are now ignored with a deprecation warning and will be removed in Panel 2.0 (<a href="https://github.com/holoviz/panel/pull/8940">#8940</a>)</li>
+</ul>
+</section>
+<section id="documentation" class="level3">
+<h3 class="anchored" data-anchor-id="documentation">📚 Documentation</h3>
+<ul>
+<li>Add a Version 1.11 section to the upgrade guide, including the CDN fallback for server resources, and document the <code>compress</code> option of <code>pn.serve</code>, <code>PANEL_ADMIN_ENDPOINT</code> and the admin dashboard’s pandas requirement, PNG export with Playwright, when MathJax is loaded, and that pandas is no longer installed with Panel (<a href="https://github.com/holoviz/panel/pull/9078">#9078</a>, <a href="https://github.com/holoviz/panel/pull/9091">#9091</a>)</li>
+<li>Cover the 1.11 changes in the reference gallery, including Polars and PyArrow data in the <code>DataFrame</code> widget, <code>Perspective</code> and <code>Vizzu</code>, <code>Tabulator</code> header filter placeholders, <code>Matplotlib.high_dpi</code> and automatic MathJax loading in <code>Markdown</code> (<a href="https://github.com/holoviz/panel/pull/9079">#9079</a>)</li>
+<li>Add a how-to guide for serving a REST API next to an app with a <code>--plugins</code> module, and record what the deprecated REST providers still do (<a href="https://github.com/holoviz/panel/pull/9041">#9041</a>)</li>
+<li>Add an “Other DataFrame libraries” section with a Polars example to the <code>Tabulator</code> reference (<a href="https://github.com/holoviz/panel/pull/8841">#8841</a>)</li>
+<li>Point the “Using Panel with an AI assistant” guide at the <code>llms.txt</code> and Markdown URLs that resolve, and remove the leftover reference notebook for the LangChain <code>PanelCallbackHandler</code> removed in 1.10, mapping <code>StreamlitCallbackHandler</code> to <code>ChatStep</code> in the Streamlit chat migration guide instead (<a href="https://github.com/holoviz/panel/pull/9080">#9080</a>)</li>
+<li>Document how to sync a list of <code>Parameterized</code> objects with the URL (<a href="https://github.com/holoviz/panel/pull/8705">#8705</a>)</li>
+<li>Document setting a favicon on standalone exports (<a href="https://github.com/holoviz/panel/pull/9005">#9005</a>)</li>
+<li>Add an introductory article and video to the Getting Started resources (<a href="https://github.com/holoviz/panel/pull/8785">#8785</a>)</li>
+<li>Correct the <code>Tabulator</code> reference, which stated that hierarchical index levels default to the <code>sum</code> aggregator (<a href="https://github.com/holoviz/panel/pull/9011">#9011</a>)</li>
+<li>Restore the Architecture and Styling sections in the Explanation navigation (<a href="https://github.com/holoviz/panel/pull/8977">#8977</a>)</li>
+<li>Remove nonexistent parameters from the <code>on_msg</code> and <code>show_server</code> docstrings (<a href="https://github.com/holoviz/panel/pull/8926">#8926</a>)</li>
+<li>Show which library version Panel loads in the reference pages of JavaScript-backed panes (<a href="https://github.com/holoviz/panel/pull/9134">#9134</a>)</li>
+<li>Note that templates are trusted code that runs on the server and that values passed with <code>Template.add_variable</code> are not escaped (<a href="https://github.com/holoviz/panel/pull/9148">#9148</a>)</li>
+</ul>
+</section>
+</section>
+<section id="appendix-benchmark-results" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-benchmark-results">Appendix: Benchmark results</h2>
+<p>Medians for each scenario, measured as described in the <a href="#performance">Performance</a> section.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scenario</th>
+<th>1.10.1</th>
+<th>1.11.0 with param 2.4 and panel-material-ui 0.16</th>
+<th>1.11.0 with param 2.5 and panel-material-ui 0.17</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data transferred on first page load, classic</td>
+<td>5.5 MB</td>
+<td>1.0 MB</td>
+<td>1.0 MB</td>
+<td>5.4× less</td>
+</tr>
+<tr class="even">
+<td>Data transferred on first page load, Material</td>
+<td>5.0 MB</td>
+<td>1.5 MB</td>
+<td>1.5 MB</td>
+<td>3.2× less</td>
+</tr>
+<tr class="odd">
+<td>First page load until rendered, classic</td>
+<td>805 ms</td>
+<td>673 ms</td>
+<td>663 ms</td>
+<td>1.2×</td>
+</tr>
+<tr class="even">
+<td>First page load until rendered, Material</td>
+<td>1,115 ms</td>
+<td>834 ms</td>
+<td>707 ms</td>
+<td>1.6×</td>
+</tr>
+<tr class="odd">
+<td>Creating a session, classic</td>
+<td>339 ms</td>
+<td>232 ms</td>
+<td>230 ms</td>
+<td>1.5×</td>
+</tr>
+<tr class="even">
+<td>Creating a session, Material</td>
+<td>355 ms</td>
+<td>127 ms</td>
+<td>112 ms</td>
+<td>3.2×</td>
+</tr>
+<tr class="odd">
+<td>Sessions per second with 8 concurrent requests, Material</td>
+<td>2.7</td>
+<td>7.6</td>
+<td>8.3</td>
+<td>3.1×</td>
+</tr>
+<tr class="even">
+<td>Browser to Python to browser round trip, classic</td>
+<td>54 ms</td>
+<td>23 ms</td>
+<td>23 ms</td>
+<td>2.3×</td>
+</tr>
+<tr class="odd">
+<td>Browser to Python to browser round trip, Material</td>
+<td>67 ms</td>
+<td>23 ms</td>
+<td>24 ms</td>
+<td>2.8×</td>
+</tr>
+<tr class="even">
+<td>Round trip after 63 page loads without a websocket, classic</td>
+<td>76 ms</td>
+<td>26 ms</td>
+<td>25 ms</td>
+<td>3.0×</td>
+</tr>
+<tr class="odd">
+<td>Round trip after 63 page loads without a websocket, Material</td>
+<td>442 ms</td>
+<td>23 ms</td>
+<td>29 ms</td>
+<td>15×</td>
+</tr>
+<tr class="even">
+<td>Rendering a <code>pn.ui.Column</code> of 200 widgets</td>
+<td>376 ms</td>
+<td>106 ms</td>
+<td>94 ms</td>
+<td>4.0×</td>
+</tr>
+<tr class="odd">
+<td>Appending to a <code>Column</code> of 2,000 items</td>
+<td>77 ms</td>
+<td>4.1 ms</td>
+<td>4.3 ms</td>
+<td>18×</td>
+</tr>
+<tr class="even">
+<td>Changing the page of a 200,000 row <code>Tabulator</code> (remote pagination)</td>
+<td>9.5 ms</td>
+<td>0.35 ms</td>
+<td>0.33 ms</td>
+<td>29×</td>
+</tr>
+<tr class="odd">
+<td>Sorting a 200,000 row <code>Tabulator</code></td>
+<td>120 ms</td>
+<td>20 ms</td>
+<td>20 ms</td>
+<td>6.1×</td>
+</tr>
+<tr class="even">
+<td>Patching a cell of a sorted 200,000 row <code>Tabulator</code></td>
+<td>120 ms</td>
+<td>20 ms</td>
+<td>20 ms</td>
+<td>5.9×</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/blog\.holoviz\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Copyright 2023 Holoviz contributors</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/holoviz-dev/blog/edit/main/posts/panel_release_1.11/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/holoviz-dev/blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
